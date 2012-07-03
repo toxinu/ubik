@@ -1,2 +1,2 @@
-clint
-docopt
+docopt==0.4.1
+requests==0.13.2

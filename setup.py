@@ -95,6 +95,7 @@ def install():
 		open(log_file, 'w').close()
 
 	if args.get('--symlink', False):
+		print(' :: Create symlink')
 		try:
 			os.symlink('%s/bin/pkgmgr2' % prefix, '/usr/local/bin/pkgmgr2')
 		except:
@@ -109,6 +110,8 @@ if __name__ == "__main__":
 	prefix = args.get('--prefix', False)
 	if not prefix:
 		prefix = '/usr/local/pkgmgr'
+	else:
+		prefix = prefix + '/pkgmgr'
 
 	if args['description']:
 		print('\n%s (%s) - %s\n\n%s\n%s (%s).' % (name, version, info, description,  author, email))
