@@ -78,13 +78,6 @@ def install():
 	_f.write(f)
 	_f.close()
 
-	# Set init
-	f = open('pkgmgr/lib/__init__.py', 'r').read()
-	_f = open('%s/lib/__init__.py' % prefix, 'w')
-	f = f.replace('<prefix>', '%s' % prefix)
-	_f.write(f)
-	_f.close()
-
 	# Set config file
 	f = open('pkgmgr/etc/pkgmgr.conf', 'r').read()
 	_f = open('%s/etc/pkgmgr.conf' % prefix, 'w')
