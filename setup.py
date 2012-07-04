@@ -29,9 +29,9 @@ email		= 'geoffrey@lehee.name'
 
 # Check dependencies
 try:
-	import clint
+	import requests
 except Exception as err:
-	print('  -> Please install clint package (%s)' % err)
+	print('  -> Please install requests package (%s)' % err)
 	sys.exit(1)
 
 try:
