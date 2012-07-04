@@ -7,8 +7,8 @@ import shutil
 
 from ConfigParser import SafeConfigParser
 
-#debug = True
 debug = False
+#debug = True
 
 # Change path
 pathname = os.path.dirname(sys.argv[0])
@@ -52,7 +52,7 @@ Usage:
   setup.py --version
 
 Options:
-  --prefix=<path>   Installation prefix path [default: /usr/local/pkgmgr]
+  --prefix=<path>   Installation prefix path [default: /usr/local]
   --symlink         Create symlink into /usr/local/bin
 
 """
