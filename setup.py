@@ -23,7 +23,7 @@ os.chdir(os.path.abspath(pathname))
 # Settings
 name		= 'pkgmgr'
 info		= 'Minimal package manager'
-description	= open('README.rst').read()
+description	= open('README.md').read()
 version 	= '0.0.1'
 license		= open("LICENSE").read()
 author		= 'Geoffrey Lehee'
@@ -46,21 +46,31 @@ except Exception as err:
 doc = """Pkgmgr installer.
  
 Usage:
-  setup.py install [--prefix=<path>] [--symlink] [--user-owner=<user>] [--group-owner=<group>]
+  setup.py install [--prefix=<path>] [--symlink] [--user-owner=<user>] [--group-owner=<group>] [--canopsis]
   setup.py description
   setup.py license
   setup.py -h | --help
   setup.py --version
 
 Options:
-  --symlink                Create symlink into /usr/local/bin
-  --prefix=<path>          Installation prefix path [default: /usr/local/pkgmgr]
-  --user-owner=<user>      User owner [default: canopsis]
-  --group-owner=<group>    Group owner [default: canopsis]
+  --symlink                    Create symlink into /usr/local/bin
+  --canopsis                   Canopsis installation (use default canopsis settings)
+  --prefix=<path>              Installation prefix path [default: /usr/local/pkgmgr]
+  --user-owner=<user>          User owner [default: root]
+  --group-owner=<group>        Group owner [default: root]
 
 """
 
 def install():
+	if args.get('--canopsis', False):
+		if args['--user-owner'] == 'root':
+			args['--user-owner'] = 'canopsis'
+		if args['--group-owner'] == 'root':
+			args['--group-owner'] = 'canopsis'
+		if args['--prefix'] == '/usr/local/pkgmgr':
+			args['--prefix'] = '/opt/canopsis'
+
+	prefix = args['--prefix']
 
 	# Check user exist
 	print (' :: Check user and group')
@@ -123,23 +133,30 @@ def install():
 
     # Etc
 	print('    | Configuration files')
+	
 	root_src_dir = 'pkgmgr/etc'
 	root_dst_dir = '%s/etc' % prefix
 
-	for src_dir, dirs, files in os.walk(root_src_dir):
-		dst_dir = src_dir.replace(root_src_dir, root_dst_dir)
-    	if not os.path.exists(dst_dir):
-        	os.mkdir(dst_dir)
-        	os.chown(dst_dir, user_id, group_id)
-        	os.chmod(dst_dir, 0755)
-    	for file_ in files:
-			src_file = os.path.join(src_dir, file_)
-			dst_file = os.path.join(dst_dir, file_)
-			if os.path.exists(dst_file):
-				os.remove(dst_file)
-			shutil.copy(src_file, dst_dir)
-			os.chown(dst_file, user_id, group_id)
-			os.chmod(dst_file, 0755)
+	dst_dir = root_dst_dir
+	src_dir = root_src_dir
+	if not os.path.exists(dst_dir):
+		os.mkdir(dst_dir)
+	os.chown(dst_dir, user_id, group_id)
+	os.chmod(dst_dir, 0755)
+
+	if args.get('--canopsis', False):
+		src_file = os.path.join(src_dir, 'pkgmgr.conf.canopsis')
+	else:
+		src_file = os.path.join(src_dir, 'pkgmgr.conf')
+
+	dst_file = os.path.join(dst_dir, 'pkgmgr.conf')
+	
+	if os.path.exists(dst_file):
+		os.remove(dst_file)
+	
+	shutil.copy(src_file, dst_file)
+	os.chown(dst_file, user_id, group_id)
+	os.chmod(dst_file, 0755)
 
 	print(' :: Set prefix path')
 
@@ -158,7 +175,10 @@ def install():
 	_f.close()
 
 	# Set config file
-	f = open('pkgmgr/etc/pkgmgr.conf', 'r').read()
+	if args.get('--canopsis', False):
+		f = open('pkgmgr/etc/pkgmgr.conf.canopsis', 'r').read()
+	else:
+		f = open('pkgmgr/etc/pkgmgr.conf', 'r').read()
 	_f = open('%s/etc/pkgmgr.conf' % prefix, 'w')
 	f = f.replace('<prefix>', '%s' % prefix)
 	_f.write(f)
@@ -170,8 +190,12 @@ def install():
 	log_file = parser.get('settings', 'log_file')
 	if not os.path.exists(os.path.split(log_file)[0]):
 		os.makedirs(os.path.split(log_file)[0])
+		os.chown(os.path.split(log_file)[0], user_id, group_id)
+		os.chmod(os.path.split(log_file)[0], 0755)
 	if not os.path.exists(log_file):
 		open(log_file, 'w').close()
+		os.chown(log_file, user_id, group_id)
+		os.chmod(log_file, 0755)
 
 	if args.get('--symlink', False):
 		print(' :: Create symlink')
@@ -181,17 +205,11 @@ def install():
 			pass
 		os.chmod('%s/bin/pkgmgr' % prefix, 0755)
 
-	print(' :: Set user and group owner (%s/%s)' % (user_owner, group_owner))
-
 if __name__ == "__main__":
 	args = docopt(doc, version=version)
 	if debug:
 		print(args)
 	
-	prefix = args.get('--prefix', False)
-	if not prefix:
-		prefix = '/usr/local/pkgmgr'
-
 	if args['description']:
 		print('\n%s (%s) - %s\n\n%s\n%s (%s).' % (name, version, info, description,  author, email))
 		sys.exit(0)
