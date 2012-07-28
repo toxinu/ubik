@@ -5,6 +5,8 @@ import sys
 import os
 import shutil
 
+from pwd import getpwnam  
+from grp import getgrnam
 from ConfigParser import SafeConfigParser
 
 debug = False
@@ -44,29 +46,106 @@ except Exception as err:
 doc = """Pkgmgr installer.
  
 Usage:
-  setup.py install [--prefix=<path>] [--symlink]
-  setup.py reinstall [--prefix=<path>] [--symlink]
+  setup.py install [--prefix=<path>] [--symlink] [--user-owner=<user>] [--group-owner=<group>]
   setup.py description
   setup.py license
   setup.py -h | --help
   setup.py --version
 
 Options:
-  --prefix=<path>   Installation prefix path [default: /usr/local]
-  --symlink         Create symlink into /usr/local/bin
+  --symlink                Create symlink into /usr/local/bin
+  --prefix=<path>          Installation prefix path [default: /usr/local/pkgmgr]
+  --user-owner=<user>      User owner [default: canopsis]
+  --group-owner=<group>    Group owner [default: canopsis]
 
 """
 
 def install():
-	print(' :: Install')
-	print(' :: Create prefix (%s)' % prefix)
-	shutil.copytree('pkgmgr/lib', '%s/lib' % prefix)
-	shutil.copytree('pkgmgr/bin', '%s/bin' % prefix)
-	shutil.copytree('pkgmgr/etc', '%s/etc' % prefix)
+
+	# Check user exist
+	print (' :: Check user and group')
+	user_owner = args['--user-owner']
+	group_owner = args['--group-owner']
+	try:
+		user_id = getpwnam(user_owner).pw_uid
+		print('    | User %s found (%s)' % (user_owner, user_id))
+	except Exception as err:
+		print('Error: %s user not exit.\nTraceback: %s' % (user_owner, err))
+		sys.exit(1)
+	try:
+		group_id = getgrnam(group_owner).gr_gid
+		print('    | Group %s found (%s)' % (group_owner, group_id))
+	except Exception as err:
+		print('Error: %s group not exist.\nTraceback: %s' % (group_owner, err))
+		sys.exit(1)
+
+	print(' :: Copy files into %s' % prefix)
+
+	# Lib
+	print('    | Libraries')
+	root_src_dir = 'pkgmgr/lib'
+	root_dst_dir = '%s/lib' % prefix
+
+	for src_dir, dirs, files in os.walk(root_src_dir):
+		dst_dir = src_dir.replace(root_src_dir, root_dst_dir)
+    	if not os.path.exists(dst_dir):
+        	os.mkdir(dst_dir)
+        	os.chown(dst_dir, user_id, group_id)
+        	os.chmod(dst_dir, 0755)
+    	for file_ in files:
+			src_file = os.path.join(src_dir, file_)
+			dst_file = os.path.join(dst_dir, file_)
+			if os.path.exists(dst_file):
+				os.remove(dst_file)
+			shutil.copy(src_file, dst_dir)
+			os.chown(dst_file, user_id, group_id)
+			os.chmod(dst_file, 0755)
+
+    # Bin
+	print('    | Binaries')
+	root_src_dir = 'pkgmgr/bin'
+	root_dst_dir = '%s/bin' % prefix
+
+	for src_dir, dirs, files in os.walk(root_src_dir):
+		dst_dir = src_dir.replace(root_src_dir, root_dst_dir)
+    	if not os.path.exists(dst_dir):
+        	os.mkdir(dst_dir)
+        	os.chown(dst_dir, user_id, group_id)
+        	os.chmod(dst_dir, 0755)
+    	for file_ in files:
+			src_file = os.path.join(src_dir, file_)
+			dst_file = os.path.join(dst_dir, file_)
+			if os.path.exists(dst_file):
+				os.remove(dst_file)
+			shutil.copy(src_file, dst_dir)
+			os.chown(dst_file, user_id, group_id)
+			os.chmod(dst_file, 0755)
+
+    # Etc
+	print('    | Configuration files')
+	root_src_dir = 'pkgmgr/etc'
+	root_dst_dir = '%s/etc' % prefix
+
+	for src_dir, dirs, files in os.walk(root_src_dir):
+		dst_dir = src_dir.replace(root_src_dir, root_dst_dir)
+    	if not os.path.exists(dst_dir):
+        	os.mkdir(dst_dir)
+        	os.chown(dst_dir, user_id, group_id)
+        	os.chmod(dst_dir, 0755)
+    	for file_ in files:
+			src_file = os.path.join(src_dir, file_)
+			dst_file = os.path.join(dst_dir, file_)
+			if os.path.exists(dst_file):
+				os.remove(dst_file)
+			shutil.copy(src_file, dst_dir)
+			os.chown(dst_file, user_id, group_id)
+			os.chmod(dst_file, 0755)
+
+	print(' :: Set prefix path')
 
 	# Set binarie
-	f = open('pkgmgr/bin/pkgmgr2', 'r').read()
-	_f = open('%s/bin/pkgmgr2' % prefix, 'w')
+	f = open('pkgmgr/bin/pkgmgr', 'r').read()
+	_f = open('%s/bin/pkgmgr' % prefix, 'w')
 	f = f.replace('<prefix>', '%s' % prefix)
 	_f.write(f)
 	_f.close()
@@ -97,10 +176,12 @@ def install():
 	if args.get('--symlink', False):
 		print(' :: Create symlink')
 		try:
-			os.symlink('%s/bin/pkgmgr2' % prefix, '/usr/local/bin/pkgmgr2')
+			os.symlink('%s/bin/pkgmgr' % prefix, '/usr/local/bin/pkgmgr')
 		except:
 			pass
-		os.chmod('%s/bin/pkgmgr2' % prefix, 0755)
+		os.chmod('%s/bin/pkgmgr' % prefix, 0755)
+
+	print(' :: Set user and group owner (%s/%s)' % (user_owner, group_owner))
 
 if __name__ == "__main__":
 	args = docopt(doc, version=version)
@@ -110,8 +191,6 @@ if __name__ == "__main__":
 	prefix = args.get('--prefix', False)
 	if not prefix:
 		prefix = '/usr/local/pkgmgr'
-	else:
-		prefix = prefix + '/pkgmgr'
 
 	if args['description']:
 		print('\n%s (%s) - %s\n\n%s\n%s (%s).' % (name, version, info, description,  author, email))
@@ -120,17 +199,4 @@ if __name__ == "__main__":
 		print('\n%s' % license)
 		sys.exit(0)
 	elif args['install']:
-		if not os.path.exists(prefix):
-			install()
-		else:
-			print(' :: Pkgmgr already installed')
-			sys.exit(1)
-
-	elif args['reinstall']:
-		print(' :: Remove old installation')
-		try:
-			shutil.rmtree(prefix)
-			os.remove('/usr/local/bin/pkgmgr2')
-		except:
-			pass
 		install()
