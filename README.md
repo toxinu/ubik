@@ -6,7 +6,7 @@ Minimal package manager inspired by the ``pkgmgr`` of [Canopsis][1] pkgmgr writt
 Installation
 ============
 
-[Little installation guide][2].
+[Installation guide for Canopsis][2].
 
 License
 =======
