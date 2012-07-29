@@ -11,9 +11,10 @@ Installation
 License
 =======
 
-License is not definitive, it will be fully compatible with ``Canopsis``.
+License is [AGPL3][4], it fully compatible with ``Canopsis``.
 See [LICENSE][3].
 
 [1]: https://github.com/capensis/canopsis
 [2]: http://gist.io/3193620
 [3]: https://raw.github.com/Socketubs/pkgmgr/master/LICENSE
+[4]: http://www.gnu.org/licenses/agpl.html
