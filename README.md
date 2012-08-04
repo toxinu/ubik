@@ -1,12 +1,16 @@
 Description
 ===========
 
-Minimal package manager inspired by the ``pkgmgr`` of [Canopsis][1] pkgmgr written in bash.
+Minimal package manager inspired by the ``pkgmgr`` of [Canopsis][1] pkgmgr but rewritten in Python (from bash).
+Development is heavly oriented for Canopsis in a first time, but it will be more generic in a second.
+
+![pkgmgr screenshot01](http://dl.dropbox.com/u/79447684/Github/Pkgmgr/screenshot_01.png "Pkgmgr Screenshot01")
+![pkgmgr screenshot02](http://dl.dropbox.com/u/79447684/Github/Pkgmgr/screenshot_02.png "Pkgmgr Screenshot02")
 
 Installation
 ============
 
-[Guide for Canopsis][2].
+This a little guide for [Canopsis][2].
 
 License
 =======
