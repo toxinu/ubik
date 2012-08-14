@@ -39,7 +39,7 @@ pip install --install-option="--prefix=/opt/canopsis"`git+http://github.com/Sock
 Create package
 ==============
 
-You can see how to create ````wget``` package with __Pkgmgr__ in ```examples``` dir.
+You can see how to create ```wget``` package with __Pkgmgr__ in ```examples``` dir.
 
 ```
 cd /usr/local/src
@@ -50,7 +50,7 @@ vim src/usr/bin/hello.sh				# Create your bash hello world
 vim make.sh
 ...
 function install(){
-    cd -R $SRC $DST
+    cp -R $SRC $DST
 }
 ...
 ./make.sh install
