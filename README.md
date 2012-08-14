@@ -46,16 +46,11 @@ cd /usr/local/src
 pkgmgr-create my_package
 cd my_package
 mkdir -p src/usr/bin
-vim src/usr/bin/hello.sh		# Create your bash hello world
+vim src/usr/bin/hello.sh				# Create your bash hello world
 vim make.sh
 ...
 function install(){
-    cd $SRC
-    tar xvf wget-1.13.tar.gz
-    cd wget-1.13
-    ./configure --prefix=$DST --without-ssl
-    make
-    make install
+    cd -R $SRC $DST
 }
 ...
 ./make.sh install
