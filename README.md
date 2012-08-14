@@ -28,18 +28,39 @@ Installation
 ============
 
 ```
-pip install git+git://github.com/Socketubs/Pkgmgr.git
+pip install git+http://github.com/Socketubs/Pkgmgr.git
 ```
 
 For canopsis:
 ```
-pip install --install-option="--prefix=/opt/canopsis"`git+git://github.com/Socketubs/Pkgmgr.git`
+pip install --install-option="--prefix=/opt/canopsis"`git+http://github.com/Socketubs/Pkgmgr.git`
 ```
 
 Create package
 ==============
 
 You can see how to create ````wget``` package with __Pkgmgr__ in ```examples``` dir.
+
+```
+cd /usr/local/src
+pkgmgr-create my_package
+cd my_package
+mkdir -p src/usr/bin
+vim src/usr/bin/hello.sh		# Create your bash hello world
+vim make.sh
+...
+function install(){
+    cd $SRC
+    tar xvf wget-1.13.tar.gz
+    cd wget-1.13
+    ./configure --prefix=$DST --without-ssl
+    make
+    make install
+}
+...
+./make.sh install
+./make.sh package
+```
 
 Thanks
 ======
