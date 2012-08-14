@@ -1,1 +1,3 @@
-examples
+dist
+build
+*.egg-info

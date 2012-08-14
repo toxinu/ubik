@@ -2,7 +2,6 @@ Description
 ===========
 
 Minimal package manager inspired by the ``pkgmgr`` of [Canopsis][1] pkgmgr but rewritten in Python (from bash).  
-Development is heavly oriented for Canopsis in a first time, but it will be more generic in a second.
 
 For information:
 ```
@@ -28,7 +27,19 @@ Features
 Installation
 ============
 
-This a little guide for [Canopsis][2].
+```
+pip install git+git://github.com/Socketubs/Pkgmgr.git
+```
+
+For canopsis:
+```
+pip install --install-option="--prefix=/opt/canopsis"`git+git://github.com/Socketubs/Pkgmgr.git`
+```
+
+Create package
+==============
+
+You can see how to create ````wget``` package with __Pkgmgr__ in ```examples``` dir.
 
 Thanks
 ======
