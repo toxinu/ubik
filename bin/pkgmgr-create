@@ -134,17 +134,33 @@ function package(){
 	files_listing
 	files_blacklist
 
-	tar cfj ./\$NAME/files.bz2 -T ./\$NAME/files.lst
+	cd build
+	tar cfj ../\$NAME/files.bz2 -T ../\$NAME/files.lst
+	cd ..
 	cp ./control \$NAME
 	cp ./blacklist \$NAME
 	tar cf \$NAME.tar \$NAME 
 }
 #################################
 
+#################################
+# Clean
+#################################
+function clean(){
+	rm -rf \$NAME > /dev/null 2>&1
+	rm \$NAME.tar > /dev/null 2>&1
+	rm files.bz2 > /dev/null 2>&1
+	rm files.lst > /dev/null 2>&1
+}
+#################################
+
+. control
 if [ "\$1" == "install" ]; then
 	install
 elif [ "\$1" == "package" ]; then
 	package
+elif [ "\$1" == "clean" ]; then
+	clean
 else
 	help
 fi
