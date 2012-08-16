@@ -1,14 +1,7 @@
 Description
 ===========
 
-Minimal package manager inspired by the ``pkgmgr`` of [Canopsis][1] pkgmgr but rewritten in Python (from bash).  
-
-For information:
-```
-Canopsis is a hypervisor, built on top of all open source monitoring solutions
-to agregate, correlate and ponderate events flowing from them.
-```
-
+Pkgmgr is a minimal package manager inspired by the ``pkgmgr`` of [Canopsis][1] pkgmgr but rewritten in Python (from bash).  
 
 ![pkgmgr screenshot01](http://dl.dropbox.com/u/79447684/Github/Pkgmgr/screenshot_01.png "Pkgmgr Screenshot01")
 ![pkgmgr screenshot02](http://dl.dropbox.com/u/79447684/Github/Pkgmgr/screenshot_02.png "Pkgmgr Screenshot02")
@@ -62,6 +55,12 @@ Thanks
 ======
 
 Thanks to [Requests][5], [Docopt][6] and [ProgressBar][7] to be awesome tools.
+
+For information:
+```
+Canopsis is a hypervisor, built on top of all open source monitoring solutions
+to agregate, correlate and ponderate events flowing from them.
+```
 
 License
 =======
