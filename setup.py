@@ -25,6 +25,5 @@ setup(
 	keywords="pkgmgr package linux",
 	packages = ['pkgmgr'],
 	scripts=['bin/pkgmgr','bin/pkgmgr-postinstall','bin/pkgmgr-create'],
-	data_files=[('/etc/pkgmgr', ['etc/pkgmgr.conf'])],
 	install_requires=['progressbar', 'requests', 'docopt']
 )
