@@ -1,0 +1,171 @@
+#!/bin/bash
+
+if [ -z "$1" ]; then
+	echo "Usage: pkgmgr-create <package>"
+	exit 1
+fi
+
+NAME=$1
+echo " :: Create $NAME package structure"
+mkdir $NAME
+cd $NAME
+mkdir src
+mkdir build
+touch blacklist
+
+cat > ./control <<DELIM
+#!/bin/bash
+
+NAME="$NAME"
+VERSION=0.1
+RELEASE=0
+DESCRIPTION=""
+REQUIRES=""
+
+# NO_ARCH=true
+# NO_DIST=true
+# NO_DISTVERS=true
+
+function pre_install(){
+    echo "Pre-install \$NAME \$VERSION-\$RELEASE ..."
+    check_code \$?
+}
+
+function post_install(){
+    echo "Post-install \$NAME \$VERSION-\$RELEASE ..."
+    check_code \$?
+}
+
+function pre_remove(){
+    echo "Pre-remove \$NAME \$VERSION-\$RELEASE ..."
+    check_code \$?
+}
+
+function post_remove(){
+    echo "Post-remove \$NAME \$VERSION-\$RELEASE ..."
+    check_code \$?
+}
+
+function pre_update(){
+    echo "Pre-update \$NAME \$VERSION-\$RELEASE ..."
+    check_code \$?
+}
+
+function post_update(){
+    echo "Post-update \$NAME \$VERSION-\$RELEASE ..."
+    check_code \$?
+}
+
+function purge(){
+    echo "Purge \$NAME \$VERSION-\$RELEASE ..."
+    check_code \$?
+}
+DELIM
+
+cat > ./make.sh <<DELIM
+#!/bin/bash
+
+#################################
+# Variables
+#################################
+SRC="$(pwd)/src"
+DST="$(pwd)/build"
+#################################
+
+#################################
+# Install
+#################################
+function install(){
+	# Here your install procedure
+	# Never forget to set --prefix=\$DST !
+	true
+}
+#################################
+
+if [ -z "\$(ls -a | grep .libs.sh)" ]; then
+	echo "Need to be in package root"
+	exit 1
+else
+	. .libs.sh
+fi
+
+DELIM
+
+cat > ./.libs.sh <<DELIM
+#!/bin/bash
+
+#
+# This file contains libs to create package archive
+# Be carefull
+#
+
+function files_listing(){
+	cd build
+	find ./ -type f > ../\$NAME/files.lst
+	find ./ -type l >> ../\$NAME/files.lst
+	cd ..
+}
+
+function files_blacklist(){
+	for line in \$(cat ./blacklist); do
+		cat ./\$NAME/files.lst | grep -v "\$line" > ./\$NAME/files.lst.tmp
+		mv ./\$NAME/files.lst.tmp ./\$NAME/files.lst
+	done
+	rm ./\$NAMEfiles.lst.tmp > /dev/null 2>&1
+}
+
+function help(){
+	echo "Usage: make.sh (install|package|purge)"
+	echo ""
+	echo "  install     Build package"
+	echo "  package     Create package archive"
+	echo "  clean       Clean old archives"
+	echo ""
+}
+
+#################################
+# Make Package
+#################################
+function package(){
+	touch ./control
+	chmod +x ./control
+	mkdir \$NAME
+
+	files_listing
+	files_blacklist
+
+	cd build
+	tar cfj ../\$NAME/files.bz2 -T ../\$NAME/files.lst
+	cd ..
+	cp ./control \$NAME
+	cp ./blacklist \$NAME
+	tar cf \$NAME.tar \$NAME 
+}
+#################################
+
+#################################
+# Clean
+#################################
+function clean(){
+	rm -rf \$NAME > /dev/null 2>&1
+	rm \$NAME.tar > /dev/null 2>&1
+	rm files.bz2 > /dev/null 2>&1
+	rm files.lst > /dev/null 2>&1
+}
+#################################
+
+. control
+if [ "\$1" == "install" ]; then
+	install
+elif [ "\$1" == "package" ]; then
+	package
+elif [ "\$1" == "clean" ]; then
+	clean
+else
+	help
+fi
+
+DELIM
+
+chmod +x control make.sh .libs.sh
+echo " :: Done"
