@@ -48,3 +48,10 @@ Installer
 >>> installer.download()
 >>> installer.install()
 ```
+
+Configuration
+-------------
+
+Pkgmgr conf is a simple ``ConfigParser`` object. More docs [here][1].
+
+[1]: http://docs.python.org/library/configparser.html
