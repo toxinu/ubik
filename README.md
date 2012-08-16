@@ -31,9 +31,10 @@ Installation
 pip install git+http://github.com/Socketubs/Pkgmgr.git
 ```
 
-For canopsis:
+For canopsis on already installed env:
 ```
-pip install --install-option="--prefix=/opt/canopsis"`git+http://github.com/Socketubs/Pkgmgr.git`
+su - canopsis
+pip install git+http://github.com/Socketubs/Pkgmgr.git
 ```
 
 Create package
