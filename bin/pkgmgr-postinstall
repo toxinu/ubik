@@ -1,0 +1,47 @@
+#!/usr/bin/env python
+# coding: utf-8
+
+try:
+	from docopt import docopt
+except Exception as err:
+	print('  -> Please install docopt package (%s)' % err)
+	sys.exit(1)
+
+import os
+
+from pkgmgr.core import conf
+from pkgmgr.core import db
+from pkgmgr import status
+
+doc = """Pkgmgr post-install.
+Be careful, this cli tool is special develop for Canopsis.
+
+Usage:
+  pkgmgr-postinstall (update-db)
+  pkgmgr-postinstall update-db [--old-db=<path>]
+  pkgmgr-postinstall -h | --help
+  pkgmgr-postinstall -v | --version
+
+Options:
+  --old-db=<path>   Path to old database [default: /opt/canopsis/var/lib/pkgmgr/local_db]
+  -h --help         Show help.
+  -v --version      Show version.
+"""
+
+if __name__ == '__main__':
+	args = docopt(doc, version="0.0.1")
+	if args.get('update-db', False):
+		print(' :: Convert old packages database')
+
+		if os.path.exists(conf.get('paths', 'local_db')):
+			os.remove(conf.get('paths', 'local_db'))
+
+		if not os.path.exists(conf.get('paths', 'local_db')):
+			open(conf.get('paths', 'local_db'), 'w').close()
+
+		new_db_file = open(conf.get('paths', 'local_db'), 'w')
+		with open(args['--old-db']) as old_db_file:
+			for package in old_db_file.readlines():
+				new_db_file.write(package.replace('|installed|', '|20|'))
+		
+		os.rename(args['--old-db'], '%s.old' % args['--old-db'])
