@@ -44,7 +44,7 @@ vim src/usr/bin/hello.sh				# Create your bash hello world
 vim make.sh
 ...
 function install(){
-    cp -R $SRC $DST
+    cp -R $SRC/* $DST
 }
 ...
 ./make.sh install
