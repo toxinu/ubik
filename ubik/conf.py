@@ -1,5 +1,6 @@
 # coding: utf-8
 import os
+import sys
 import struct
 import platform
 import re
@@ -30,16 +31,20 @@ def get_conf(conf_path):
 			parser.set('system', 'arch', 'x86_64')
 
 	if not parser.has_option('system', 'dist'):
-		dist = platform.dist()[0].upper()
-		vers = 'n/a'
-		if dist == 'DEBIAN':
-			vers = platform.dist()[1].split('.')[0]
-		elif dist == 'UBUNTU':
-			vers = platform.dist()[1].replace('.', '')
-		elif dist == 'CENTOS':
-			vers = platform.dist()[1].split('.')[0]
-		elif dist == 'REDHAT':
-			vers = platform.dist()[1].split('.')[0]
+		if 'darwin' in str(sys.platform).lower():
+			dist = 'DARWIN'
+			vers = platform.mac_ver()[0]
+		else:
+			dist = platform.dist()[0].upper()
+			vers = 'n/a'
+			if dist == 'DEBIAN':
+				vers = platform.dist()[1].split('.')[0]
+			elif dist == 'UBUNTU':
+				vers = platform.dist()[1].replace('.', '')
+			elif dist == 'CENTOS':
+				vers = platform.dist()[1].split('.')[0]
+			elif dist == 'REDHAT':
+				vers = platform.dist()[1].split('.')[0]
 
 		parser.set('system', 'dist', dist)
 		parser.set('system', 'vers', vers)
