@@ -1,5 +1,8 @@
+Ubik
+====
+
 Description
-===========
+-----------
 
 Ubik is a minimal package manager inspired by the ``pkgmgr`` of [Canopsis][1] but rewritten in Python (from bash).  
 
@@ -7,7 +10,7 @@ Ubik is a minimal package manager inspired by the ``pkgmgr`` of [Canopsis][1] bu
 ![Ubik screenshot02](http://dl.dropbox.com/u/79447684/Github/Ubik/screenshot_02.png "Ubik Screenshot02")
 
 Features
-========
+--------
 
  * Install/Remove/Upgrade/Reinstall
  * Deps resolver for installation
@@ -18,7 +21,7 @@ Features
  * Python
 
 Installation
-============
+------------
 
 ```
 pip install git+http://github.com/Socketubs/Ubik.git
@@ -31,7 +34,7 @@ pip install git+http://github.com/Socketubs/Ubik.git
 ```
 
 Create package
-==============
+--------------
 
 You can see how to create ```wget``` package with __Ubik__ in ```examples``` dir.
 
@@ -52,7 +55,7 @@ function install(){
 ```
 
 Thanks
-======
+------
 
 Thanks to [Requests][5], [Docopt][6] and [ProgressBar][7] to be awesome tools.
 
@@ -63,7 +66,7 @@ to agregate, correlate and ponderate events flowing from them.
 ```
 
 License
-=======
+-------
 
 License is [AGPL3][4], it fully compatible with ``Canopsis``.
 See [LICENSE][3].
