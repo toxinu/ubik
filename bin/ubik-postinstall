@@ -9,21 +9,21 @@ except Exception as err:
 
 import os
 
-from pkgmgr.core import conf
-from pkgmgr.core import db
-from pkgmgr import status
+from ubik.core import conf
+from ubik.core import db
+from ubik import status
 
-doc = """Pkgmgr post-install.
+doc = """Ubik post-install.
 Be careful, this cli tool is special develop for Canopsis.
 
 Usage:
-  pkgmgr-postinstall (update-db)
-  pkgmgr-postinstall update-db [--old-db=<path>]
-  pkgmgr-postinstall -h | --help
-  pkgmgr-postinstall -v | --version
+  ubik-postinstall (update-db)
+  ubik-postinstall update-db [--old-db=<path>]
+  ubik-postinstall -h | --help
+  ubik-postinstall -v | --version
 
 Options:
-  --old-db=<path>   Path to old database [default: /opt/canopsis/var/lib/pkgmgr/local_db]
+  --old-db=<path>   Path to old database [default: /opt/canopsis/var/lib/ubik/local_db]
   -h --help         Show help.
   -v --version      Show version.
 """

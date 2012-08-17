@@ -1,7 +1,7 @@
 #!/bin/bash
 
 if [ -z "$1" ]; then
-	echo "Usage: pkgmgr-create <package>"
+	echo "Usage: ubik-create <package>"
 	exit 1
 fi
 

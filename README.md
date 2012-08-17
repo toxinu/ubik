@@ -1,10 +1,10 @@
 Description
 ===========
 
-Pkgmgr is a minimal package manager inspired by the ``pkgmgr`` of [Canopsis][1] pkgmgr but rewritten in Python (from bash).  
+Ubik is a minimal package manager inspired by the ``pkgmgr`` of [Canopsis][1] but rewritten in Python (from bash).  
 
-![pkgmgr screenshot01](http://dl.dropbox.com/u/79447684/Github/Pkgmgr/screenshot_01.png "Pkgmgr Screenshot01")
-![pkgmgr screenshot02](http://dl.dropbox.com/u/79447684/Github/Pkgmgr/screenshot_02.png "Pkgmgr Screenshot02")
+![Ubik screenshot01](http://dl.dropbox.com/u/79447684/Github/Ubik/screenshot_01.png "Ubik Screenshot01")
+![Ubik screenshot02](http://dl.dropbox.com/u/79447684/Github/Ubik/screenshot_02.png "Ubik Screenshot02")
 
 Features
 ========
@@ -21,23 +21,23 @@ Installation
 ============
 
 ```
-pip install git+http://github.com/Socketubs/Pkgmgr.git
+pip install git+http://github.com/Socketubs/Ubik.git
 ```
 
 For canopsis on already installed env:
 ```
 su - canopsis
-pip install git+http://github.com/Socketubs/Pkgmgr.git
+pip install git+http://github.com/Socketubs/Ubik.git
 ```
 
 Create package
 ==============
 
-You can see how to create ```wget``` package with __Pkgmgr__ in ```examples``` dir.
+You can see how to create ```wget``` package with __Ubik__ in ```examples``` dir.
 
 ```
 cd /usr/local/src
-pkgmgr-create my_package
+ubik-create my_package
 cd my_package
 mkdir -p src/usr/bin
 vim src/usr/bin/hello.sh				# Create your bash hello world
@@ -70,7 +70,7 @@ See [LICENSE][3].
 
 [1]: https://github.com/capensis/canopsis
 [2]: http://gist.io/3193620
-[3]: https://raw.github.com/Socketubs/pkgmgr/master/LICENSE
+[3]: https://raw.github.com/Socketubs/ubik/master/LICENSE
 [4]: http://www.gnu.org/licenses/agpl.html
 [5]: https://github.com/kennethreitz/requests
 [6]: https://github.com/docopt/docopt
