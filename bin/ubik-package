@@ -173,8 +173,8 @@ def create(package_name):
 		make_sh.write(make_sh_skel)
 	with open('.libs.sh', 'w') as libs_sh:
 		libs_sh.write(libs_sh_skel)
-	os.chmod('control', 755)
-	os.chmod('make.sh', 755)
+	os.chmod('control', 0755)
+	os.chmod('make.sh', 0755)
 	print(' :: Done')
 
 if __name__ == '__main__':
