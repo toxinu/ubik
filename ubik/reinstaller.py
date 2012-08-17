@@ -62,7 +62,7 @@ class Reinstaller(object):
 				# Invalid Md5
 				if not checkmd5(package):
 					logger.info('%s md5 invalid' % package.name)
-					self.logger.info('   | Md5 invalid, package corrumpt')	
+					stream_logger.info('   | Md5 invalid, package corrumpt')	
 					sys.exit(1)
 			# Cached
 			else:
@@ -73,7 +73,7 @@ class Reinstaller(object):
 					get_package(package)
 					if not checkmd5(package):
 						logger.info('%s md5 invalid' % package.name)
-						self.logger.info('   | Md5 invalid, package corrumpt')	
+						stream_logger.info('   | Md5 invalid, package corrumpt')	
 						sys.exit(1)
 				else:
 					stream_logger.info('    | %s already in cache' % package.name)
