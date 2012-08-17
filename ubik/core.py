@@ -21,7 +21,7 @@ except:
 	pass
 
 # Logger
-from ubik import logger
+from ubik.logger import logger
 
 # Get databases
 from ubik.database import Database
