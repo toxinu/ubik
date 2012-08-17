@@ -1,0 +1,29 @@
+#!/usr/bin/env python
+# coding: utf-8
+import sys
+
+from docopt import docopt
+from ubik.cli import Cli
+
+doc = """Ubik, mininal package manager.
+
+Usage:
+  ubik (list|update|upgrade|clean|conf) [--force]
+  ubik install <package>... [--force]
+  ubik reinstall <package>... [--force] [--with-deps]
+  ubik upgrade <package>... [--force]
+  ubik remove <package>... [--force]
+  ubik -h | --help
+  ubik -v | --version
+
+Options:
+  --force        Force confirmation questions.
+  --with-deps    Reinstall deps too.
+  -h --help      Show help.
+  -v --version   Show version.
+"""
+
+if __name__ == '__main__':
+	args = docopt(doc, version="0.0.1")
+	cli = Cli(**args)
+	cli.start()

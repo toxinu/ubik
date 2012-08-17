@@ -28,13 +28,13 @@ timeout		= 10
 level = 3
 
 [packages]
-pkg_blacklist	= "canohome canotools pkgmgr"
+pkg_blacklist	= "canohome canotools ubik"
 control_methods = /opt/canopsis/lib/common.sh
 # Backup configuration files under etc/
 safe_conf		= True
 
 [settings]
-var_path		= <prefix>/var/lib/pkgmgr
-log_file		= <prefix>/var/log/pkgmgr.log
-cache			= <prefix>/var/lib/pkgmgr/packages
+var_path		= <prefix>/var/lib/ubik
+log_file		= <prefix>/var/log/ubik.log
+cache			= <prefix>/var/lib/ubik/packages
 packages		= /opt/canopsis
