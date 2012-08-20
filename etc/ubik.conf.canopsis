@@ -34,7 +34,7 @@ control_methods = /opt/canopsis/lib/common.sh
 safe_conf		= True
 
 [settings]
-var_path		= <prefix>/var/lib/ubik
-log_file		= <prefix>/var/log/ubik.log
-cache			= <prefix>/var/lib/ubik/packages
+var_path		= /opt/canopsis/var/lib/ubik
+log_file		= /opt/canopsis/var/log/ubik.log
+cache			= /opt/canopsis/var/lib/ubik/packages
 packages		= /opt/canopsis
