@@ -4,7 +4,9 @@ Ubik
 Description
 -----------
 
-Ubik is a minimal package manager inspired by the ``pkgmgr`` of [Canopsis][1] but rewritten in Python (from bash).  
+Ubik is a minimal package manager inspired by the ``pkgmgr`` of [Canopsis][1] but rewritten in Python (from bash).
+
+Not as sexy as [Homebrew][8] for ``OsX`` but available for every ``Unix`` environment.
 
 ![Ubik screenshot01](http://dl.dropbox.com/u/79447684/Github/Ubik/screenshot_01.png "Ubik Screenshot01")
 ![Ubik screenshot02](http://dl.dropbox.com/u/79447684/Github/Ubik/screenshot_02.png "Ubik Screenshot02")
@@ -78,3 +80,4 @@ See [LICENSE][3].
 [5]: https://github.com/kennethreitz/requests
 [6]: https://github.com/docopt/docopt
 [7]: http://code.google.com/p/python-progressbar/
+[8]: http://mxcl.github.com/homebrew/
