@@ -7,8 +7,6 @@ from ubik.core import db
 from ubik.logger import stream_logger
 from ubik.logger import logger
 
-from ubik.installer import DepsResolver as InstallerResolver
-from ubik.reinstaller import DepsResolver as ReinstallerResolver
 from ubik.installer import Installer
 from ubik.reinstaller import Reinstaller
 from ubik.remover import Remover
@@ -72,23 +70,24 @@ class Cli(object):
 				packages = [self.args['<package>']]
 			else:
 				packages = self.args['<package>']
-			reinstaller.feed(packages)
 
 			if self.args.get('--with-deps', False):
 				for package in db.get(packages):
 					try:
-						deps_resolver = ReinstallerResolver(package)
-						deps_resolver.resolv()
-						reinstaller.feed(deps_resolver.resolved)
+						reinstaller.resolv(package)
+						reinstaller.feed(reinstaller.resolved)
 					except KeyError as err:
 						print(' :: Package not available (%s)' % err)
 						sys.exit(1)
 					except RuntimeError as err:
 						print(' :: Dependencies resolv failed (%s)' % err)
 						sys.exit(1)
+			else:
+				reinstaller.feed(packages)
 
+			logger.debug(reinstaller.packages)
 			if not reinstaller.packages:
-				stream_logger.info('    - No package(s) found')
+				stream_logger.info(' :: No package(s) to reinstall')
 				sys.exit(0)
 			stream_logger.info(' :: Following packages will be reinstalled:') 
 			for package in reinstaller.packages:
@@ -107,6 +106,7 @@ class Cli(object):
 					stream_logger.error('Error: %s' % err)
 					sys.exit(1)
 				reinstaller.install()
+
 		###################
 		# install         #
 		###################
@@ -130,9 +130,8 @@ class Cli(object):
 			try:
 				for package in db.get(packages):
 					try:
-						deps_resolver = InstallerResolver(package)
-						deps_resolver.resolv()
-						installer.feed(deps_resolver.resolved)
+						installer.resolv(package)
+						installer.feed(installer.resolved)
 					except RuntimeError as err:
 						print(' :: Dependencies resolv failed (%s)' % err)
 						sys.exit(1)

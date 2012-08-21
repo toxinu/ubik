@@ -37,12 +37,10 @@ Installer
 
 ```
 >>> from ubik.installer import Installer
->>> from ubik.installer import DepsResolver as InstallerResolver
 >>> db.sync()
 >>> installer = Installer()
->>> resolver = InstallerResolver(package)
->>> resolver.resolv()
->>> installer.feed(resolver.resolved)
+>>> installer.resolv(package)
+>>> installer.feed(install.resolved)
 >>> installer.packages
 [<ubik.package.Package object at 0x9688e6c>]
 >>> installer.download()
