@@ -88,7 +88,7 @@ def unarchiver(package):
 		raise Exception('Archive invalid (not a tarfile)')
 
 def unpacker(package):
-	archive = tarfile.open('%s/%s/files.bz2' % (conf.get('settings', 'cache'), package.name), 'r:bz2')
+	archive = tarfile.open('%s/%s/files.bz2' % (conf.get('settings', 'cache'), package.name), 'r:bz2', ignore_zeros=True)
 	root_content = '%s/%s/content' % (conf.get('settings', 'cache'), package.name)
 	if os.path.exists(root_content):
 		shutil.rmtree(root_content)
