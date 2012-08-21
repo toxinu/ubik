@@ -194,7 +194,7 @@ class Database(object):
 
 	def count_upgrades(self):
 		res = 0
-		for pacakge in self.packages.values():
+		for package in self.packages.values():
 			if package.status in ['1','2']:
 				res += 1
 		return res
@@ -208,7 +208,13 @@ class Database(object):
 
 	def count_installed(self):
 		res = 0
-		for pacakge in self.packages.values():
+		for package in self.packages.values():
 			if package.status in ['0','1','2','11','12','20','21']:
 				res += 1
 		return res
+
+	def get_packages(self):
+		return self.packages
+
+	def count_packages(self):
+		return len(self.packages)

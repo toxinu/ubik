@@ -180,7 +180,7 @@ class Cli(object):
 				packages = self.args['<package>']
 
 			if not packages:
-				packages += db.get_upgrades()
+				upgrader.feed(db.get_upgrades())
 			else:
 				upgrader.feed(packages)
 
