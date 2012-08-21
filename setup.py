@@ -25,5 +25,5 @@ setup(
 	keywords="ubik package linux",
 	packages = ['ubik'],
 	scripts=['bin/ubik','bin/ubik-postinstall','bin/ubik-package'],
-	install_requires=['progressbar', 'requests', 'docopt']
+	install_requires=['progressbar==2.3-dev', 'requests==0.13.8', 'docopt==0.5.0']
 )
