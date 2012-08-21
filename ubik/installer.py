@@ -13,26 +13,6 @@ from ubik.tools import cached
 from ubik.tools import checkmd5
 from ubik.exceptions import InstallerError
 
-class DepsResolver(object):
-	def __init__(self, package):
-		self.package = package
-		self.tree = [self.package]
-
-	def resolv(self):
-		self.resolved = []
-		self.deps_resolv(self.package, self.resolved, [])
-
-	def deps_resolv(self, package, resolved, unresolved):
-		self.unresolved = unresolved
-		self.unresolved.append(package)
-		for dep in db.get(package.deps):
-			if dep not in self.resolved:
-				if dep in self.unresolved:
-					raise Exception('Circular reference detected: %s -> %s' % (package.name, dep.name))
-				self.deps_resolv(dep, self.resolved, self.unresolved)
-		self.resolved.append(package)
-		self.unresolved.remove(package)
-
 class Installer(object):
 	def __init__(self):
 		self.packages = []
@@ -51,6 +31,23 @@ class Installer(object):
 					stream_logger.info('    - %s already installed' % package.name)
 			else:
 				logger.debug('=== %s ignored' % package.name)
+	
+	def resolv(self, package):
+		self.package = package
+		self.tree = [self.package]
+		self.resolved = []
+		self.deps_resolv(self.package, self.resolved, [])
+
+	def deps_resolv(self, package, resolved, unresolved):
+		self.unresolved = unresolved
+		self.unresolved.append(package)
+		for dep in db.get(package.deps):
+			if dep not in self.resolved:
+				if dep in self.unresolved:
+					raise Exception('Circular reference detected: %s -> %s' % (package.name, dep.name))
+				self.deps_resolv(dep, self.resolved, self.unresolved)
+		self.resolved.append(package)
+		self.unresolved.remove(package)
 
 	def download(self):
 		stream_logger.info(' :: Download')	
