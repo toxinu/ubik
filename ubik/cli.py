@@ -173,14 +173,19 @@ class Cli(object):
 				sys.exit(1)
 			# Create Upgrader
 			upgrader = Upgrader()
+			stream_logger.info(' :: Resolving') 
 			if not isinstance(self.args['<package>'], list):
 				packages = [self.args['<package>']]
 			else:
 				packages = self.args['<package>']
-			upgrader.feed(packages)
+
+			if not packages:
+				packages += db.get_upgrades()
+			else:
+				upgrader.feed(packages)
 
 			if not upgrader.packages:
-				stream_logger.info('    - No package(s) to upgrade')
+				stream_logger.info(' :: No package(s) to upgrade')
 				sys.exit(0)
 
 			stream_logger.info(' :: Following packages will be upgraded:')

@@ -27,13 +27,13 @@ class Upgrader(object):
 				if package.status in ['1','2']:
 					self.packages.append(package)
 				elif package.status == '0':
-					stream_logger.info(' - %s already up-to-date' % package.name)
+					stream_logger.info('    - %s already up-to-date' % package.name)
 				elif package.status == '10':
-					stream_logger.info(' - %s not installed' % package.name)
+					stream_logger.info('    - %s not installed' % package.name)
 				elif package.status in ['11','12']:
-					stream_logger.info(' - %s can not be downgraded' % package.name)
+					stream_logger.info('    - %s can not be downgraded' % package.name)
 				else:
-					stream_logger.info(' - %s can not be updated' % package.name)
+					stream_logger.info('    - %s can not be updated' % package.name)
 
 	def download(self):
 		stream_logger.info(' :: Download')
