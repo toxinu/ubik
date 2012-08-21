@@ -8,16 +8,16 @@ from ubik.cli import Cli
 doc = """Ubik, mininal package manager.
 
 Usage:
-  ubik (list|update|upgrade|clean|conf) [--force]
-  ubik install <package>... [--force]
-  ubik reinstall <package>... [--force] [--with-deps]
-  ubik upgrade <package>... [--force]
-  ubik remove <package>... [--force]
+  ubik (list|update|upgrade|clean|conf) [--force-yes]
+  ubik install <package>... [--force-yes]
+  ubik reinstall <package>... [--force-yes] [--with-deps]
+  ubik upgrade <package>... [--force-yes]
+  ubik remove <package>... [--force-yes]
   ubik -h | --help
   ubik -v | --version
 
 Options:
-  --force        Force confirmation questions.
+  --force-yes    Force confirmation questions.
   --with-deps    Reinstall deps too.
   -h --help      Show help.
   -v --version   Show version.

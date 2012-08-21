@@ -92,7 +92,7 @@ class Cli(object):
 			stream_logger.info(' :: Following packages will be reinstalled:') 
 			for package in reinstaller.packages:
 				print('    - %s' % package.name)
-			if not self.args.get('--force', False):
+			if not self.args.get('--force-yes', False):
 				if confirm():
 					reinstaller.download()
 					reinstaller.install()
@@ -146,7 +146,7 @@ class Cli(object):
 			for dep in installer.packages:
 				print('    - %s' % dep.name)
 		
-			if not self.args.get('--force', False):
+			if not self.args.get('--force-yes', False):
 				if confirm():
 					installer.download()
 					installer.install()
@@ -192,7 +192,7 @@ class Cli(object):
 			for package in upgrader.packages:
 				print('    - %s' % package.name)
 		
-			if not self.args.get('--force', False):
+			if not self.args.get('--force-yes', False):
 				if confirm():
 					try:
 						upgrader.download()
@@ -230,7 +230,7 @@ class Cli(object):
 			for package in remover.packages:
 				print('    - %s' % package.name)
 		
-			if not self.args.get('--force', False):
+			if not self.args.get('--force-yes', False):
 				if confirm():
 					remover.remove()
 				else:
