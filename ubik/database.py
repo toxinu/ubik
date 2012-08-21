@@ -78,19 +78,19 @@ class Database(object):
 		if isinstance(packages_name, list):
 			result = []
 			for package in packages_name:
-					if regexp:
-						for key,value in self.packages.items():
-							if package[-1] != '*':
-								pattern = re.compile(r'%s$' % package)
-							else:
-								pattern = re.compile(package)
-							if re.search(pattern, key):
-								result.append(value)
-					else:
-						try:
-							result.append(self.packages[package])
-						except:
-							raise DatabaseException('Package %s not available' % package)
+				if regexp:
+					for key,value in self.packages.items():
+						if package[-1] != '*':
+							pattern = re.compile(r'%s$' % package)
+						else:
+							pattern = re.compile(package)
+						if re.search(pattern, key):
+							result.append(value)
+				else:
+					try:
+						result.append(self.packages[package])
+					except:
+						raise DatabaseException('Package %s not available' % package)
 			return result
 		else:
 			if regexp:

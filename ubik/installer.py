@@ -44,11 +44,13 @@ class Installer(object):
 			packages = db.get(packages)
 
 		for package in packages:
-				if package not in self.packages:
-					if package.status in ['10']:
-						self.packages.append(package)
-					else:
-						stream_logger.info('    - %s already installed' % package.name)
+			if package not in self.packages:
+				if package.status in ['10']:
+					self.packages.append(package)
+				else:
+					stream_logger.info('    - %s already installed' % package.name)
+			else:
+				logger.debug('=== %s ignored' % package.name)
 
 	def download(self):
 		stream_logger.info(' :: Download')	
