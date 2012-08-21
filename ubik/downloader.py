@@ -84,7 +84,16 @@ def get_package(package):
 
 	size = int(r.headers['Content-Length'].strip())
 	bytes = 0
-	widgets = [package.name, ":", Bar(marker="|", left="[", right=" "),
+
+	max_len = 25
+	end_mark = '. '
+	if len(package.name) > max_len:
+		_diff = max_len - len(end_mark)
+		package_name = package.name[_diff] + end_mark
+	else:
+		package_name = package.name + (max_len - len(package.name)) * ' '
+
+	widgets = [package_name, Bar(marker="=", left="[", right=" "),
 		Percentage(), " ",  FileTransferSpeed(), "] ",
 		"{0}MB".format(str(round(size / 1024 / 1024, 2))[:4])]
 	pbar = ProgressBar(widgets=widgets, maxval=size).start()
