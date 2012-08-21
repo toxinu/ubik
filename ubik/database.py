@@ -184,3 +184,31 @@ class Database(object):
 		for package in self.packages.values():
 			with open(path, 'a') as f:
 				f.write(package.get_raw() + '\n')
+
+	def get_upgrades(self):
+		res = []
+		for package in self.packages.values():
+			if package.status in ['1','2']:
+				res.append(package)
+		return res
+
+	def count_upgrades(self):
+		res = 0
+		for pacakge in self.packages.values():
+			if package.status in ['1','2']:
+				res += 1
+		return res
+
+	def get_installed(self):
+		res = []
+		for package in self.packages.values():
+			if package.status in ['0','1','2','11','12','20','21']:
+				res.append(package)
+		return res
+
+	def count_installed(self):
+		res = 0
+		for pacakge in self.packages.values():
+			if package.status in ['0','1','2','11','12','20','21']:
+				res += 1
+		return res
