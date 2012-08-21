@@ -1,5 +1,6 @@
 # coding: utf-8
 import os
+import sys
 import hashlib
 import subprocess
 import tarfile
@@ -8,6 +9,7 @@ import bz2
 
 from ubik.core import conf
 from ubik.logger import logger
+from ubik.logger import stream_logger
 from ubik.exceptions import CmdError
 
 import ubik.package
@@ -50,24 +52,28 @@ def launch_cmd(cmd):
 		raise CmdError('Cmd failed (%s)' % cmd)
 
 def confirm(prompt=None, resp=False):
-	if prompt is None:
-		prompt = 'Confirm'
+	try:
+		if prompt is None:
+			prompt = 'Confirm'
 
-	if resp:
-		prompt = '%s [%s|%s]: ' % (prompt, 'n', 'Y')
-	else:
-		prompt = '%s [%s|%s]: ' % (prompt, 'y', 'N')
-		
-	while True:
-		ans = raw_input(prompt)
-		if not ans:
-			return resp
-		if ans == 'y' or ans == 'Y':
-			return True
-		if ans == 'n' or ans == 'N':
-			return False
+		if resp:
+			prompt = '%s [%s|%s]: ' % (prompt, 'n', 'Y')
 		else:
-			return False
+			prompt = '%s [%s|%s]: ' % (prompt, 'y', 'N')
+		
+		while True:
+			ans = raw_input(prompt)
+			if not ans:
+				return resp
+			if ans == 'y' or ans == 'Y':
+				return True
+			if ans == 'n' or ans == 'N':
+				return False
+			else:
+				return False
+	except KeyboardInterrupt:
+		stream_logger.info('\nAbort.')
+		sys.exit(1)
 
 def clean():
 	files = os.listdir(conf.get('settings', 'cache'))
