@@ -42,10 +42,10 @@ You can see how to create ```wget``` package with __Ubik__ in ```examples``` dir
 
 ```
 cd /usr/local/src
-ubik-create my_package
+ubik-package create my_package
 cd my_package
 mkdir -p src/usr/bin
-vim src/usr/bin/hello.sh				# Create your bash hello world
+vim src/usr/bin/hello.sh
 vim make.sh
 ...
 function install(){
