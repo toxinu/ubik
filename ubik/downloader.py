@@ -79,7 +79,7 @@ def get_package(package):
 	proxies = get_proxies()
 	timeout = get_timeout()
 
-	r = requests.get(url, timeout=timeout, proxies=proxies)
+	r = requests.get(url, timeout=timeout, proxies=proxies, pre_fetch=False)
 	r.raise_for_status()	
 
 	size = int(r.headers['Content-Length'].strip())
