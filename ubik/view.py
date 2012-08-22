@@ -9,6 +9,15 @@ from ubik.core import db
 from ubik.database import Database
 from ubik.status import status
 
+def get_conf():
+	fmt = [('Section/Key', 'key', 25), ('Value', 'value', 50)]
+	data = []
+	for section in conf.sections():
+		for key, value in conf.items(section):
+			data.append({'key': '%s/%s' % (section, key), 'value': value})
+	print('\n' + TablePrinter(fmt, ul='=')(data) + '\n')
+
+
 def get_view():
 	fmt = [	('Name',	'name',		25),
 			('Version',	'version',	25),

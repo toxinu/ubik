@@ -19,10 +19,10 @@ class Upgrader(object):
 	def feed(self, packages):
 		if not isinstance(packages, list):
 			packages = [packages]
-		if not isinstance(packages[0], Package):
-			packages = db.get(packages)
 
 		for package in packages:
+			if not isinstance(package, Package):
+				package = db.get(package)[0]
 			if package not in self.packages:
 				if package.status in ['1','2']:
 					self.packages.append(package)
