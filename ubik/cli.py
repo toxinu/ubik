@@ -14,6 +14,7 @@ from ubik.upgrader import Upgrader
 
 from ubik.view import get_view
 from ubik.view import get_conf
+from ubik.view import get_stats
 from ubik.view import TablePrinter
 
 from ubik.tools import confirm
@@ -32,6 +33,11 @@ class Cli(object):
 		###################
 		if self.args.get('conf', False):
 			get_conf()
+		###################
+		# stats           #
+		###################
+		if self.args.get('stats', False):
+			get_stats()
 		###################
 		# list            #
 		###################

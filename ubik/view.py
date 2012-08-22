@@ -9,6 +9,17 @@ from ubik.core import db
 from ubik.database import Database
 from ubik.status import status
 
+def get_stats():
+	fmt = [	('Key', 'info', 25),
+			('Value', 'data', 5)]
+	data = [{	'info': 'Installed packages',
+				'data': db.count_installed()},
+			{	'info': 'Updates available',
+				'data': db.count_upgrades()},
+			{	'info': 'Total packages',
+				'data': db.count_packages()}]
+	print('\n' + TablePrinter(fmt, ul='=')(data) + '\n')
+
 def get_conf():
 	fmt = [('Section/Key', 'key', 25), ('Value', 'value', 50)]
 	data = []
