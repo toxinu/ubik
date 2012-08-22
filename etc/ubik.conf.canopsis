@@ -1,13 +1,13 @@
 [repo]
-url		= http://repo.canopsis.org:80
+url	= http://repo.canopsis.org:80
 base	= 
 vers	= stable
 
 [system]
 # Uncomment to overwrite system info
-arch		= x86_64
-# dist		= 
-# vers		= 
+# arch		= x86_64
+# dist		= DEBIAN
+# vers		= 6
 
 [proxy]
 # Http proxy: localhost:8888
