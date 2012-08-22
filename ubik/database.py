@@ -74,39 +74,29 @@ class Database(object):
 			{'last_update': time.ctime()},
 		open(conf.get('paths', 'infos'), 'w'))
 
-	def get(self, packages_name, regexp = True):
-		if isinstance(packages_name, list):
-			result = []
-			for package in packages_name:
-				if regexp:
-					for key,value in self.packages.items():
-						if package[-1] != '*':
-							pattern = re.compile(r'%s$' % package)
-						else:
-							pattern = re.compile(package)
-						if re.search(pattern, key):
-							result.append(value)
-				else:
-					try:
-						result.append(self.packages[package])
-					except:
-						raise DatabaseException('Package %s not available' % package)
-			return result
-		else:
+	def get(self, packages, regexp = True):
+		if not isinstance(packages, list):
+			packages = [packages]
+
+		result = []
+		for package in packages:
 			if regexp:
 				for key,value in self.packages.items():
 					if package[-1] != '*':
 						pattern = re.compile(r'%s$' % package)
 					else:
+						logger.debug(package)
 						pattern = re.compile(package)
 					if re.search(pattern, key):
 						result.append(value)
 			else:
 				try:
-					return [self.packages[packages_name]]
+					result.append(self.packages[package])
 				except:
 					raise DatabaseException('Package %s not available' % package)
 
+		return result
+		
 	def check_system(self, package):
 		if package.arch != conf.get('system', 'arch'):
 			if package.arch != "noarch":

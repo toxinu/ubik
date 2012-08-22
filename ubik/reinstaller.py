@@ -21,15 +21,15 @@ class Reinstaller(object):
 	def feed(self, packages):
 		if not isinstance(packages, list):
 			packages = [packages]
-		if not isinstance(packages[0], Package):
-			packages = db.get(packages)
 
 		for package in packages:
-				if package not in self.packages:
-					if package.status not in ['10']:
-						self.packages.append(package)
-					else:
-						stream_logger.info('    - %s not installed' % package.name)
+			if not isinstance(package, Package):
+				package = db.get(package)
+			if package not in self.packages:
+				if package.status not in ['10']:
+					self.packages.append(package)
+				else:
+					stream_logger.info('    - %s not installed' % package.name)
 
 	def resolv(self, package):
 		self.package = package

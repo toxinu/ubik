@@ -8,9 +8,10 @@ from ubik.cli import Cli
 doc = """Ubik, mininal package manager.
 
 Usage:
-  ubik (list|update|upgrade|clean|conf) [--force-yes]
+  ubik (list|update|clean|conf)
   ubik install <package>... [--force-yes]
   ubik reinstall <package>... [--force-yes] [--with-deps]
+  ubik upgrade [--force-yes]
   ubik upgrade <package>... [--force-yes]
   ubik remove <package>... [--force-yes]
   ubik -h | --help

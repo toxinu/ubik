@@ -13,6 +13,7 @@ from ubik.remover import Remover
 from ubik.upgrader import Upgrader
 
 from ubik.view import get_view
+from ubik.view import get_conf
 from ubik.view import TablePrinter
 
 from ubik.tools import confirm
@@ -30,7 +31,7 @@ class Cli(object):
 		# conf            #
 		###################
 		if self.args.get('conf', False):
-			self.conf()
+			get_conf()
 		###################
 		# list            #
 		###################
@@ -212,6 +213,7 @@ class Cli(object):
 		elif self.args.get('remove', False):
 			# Create remover
 			remover = Remover()
+			stream_logger.info(' :: Resolving') 
 			if not isinstance(self.args['<package>'], list):
 				packages = [self.args['<package>']]
 			else:
@@ -238,11 +240,3 @@ class Cli(object):
 					sys.exit(1)
 			else:
 				remover.remove()
-
-	def conf(self):
-		fmt = [('Section/Key', 'key', 25), ('Value', 'value', 50)]
-		data = []
-		for section in conf.sections():
-			for key, value in conf.items(section):
-				data.append({'key': '%s/%s' % (section, key), 'value': value})
-		print('\n' + TablePrinter(fmt, ul='=')(data) + '\n')
