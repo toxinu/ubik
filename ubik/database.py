@@ -21,10 +21,9 @@ class Database(object):
 		self.packages = self.parse()
 
 	def sync(self):
-		stream_logger.info('    | Get %s/%s/%s/Packages.list' % (
+		stream_logger.info('    | Get %s/%s/Packages.list' % (
 						conf.get('repo', 'url'),
-						conf.get('repo', 'base'),
-						conf.get('repo', 'vers')))
+						conf.get('repo', 'base')))
 		db_remote = Database(get_database())
 
 		for package in db_remote.packages.values():

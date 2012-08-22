@@ -1,5 +1,5 @@
 [repo]
-url	= http://repo.canopsis.org:80
+url		= http://repo.canopsis.org:80
 base	= 
 vers	= stable
 
