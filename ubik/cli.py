@@ -102,17 +102,19 @@ class Cli(object):
 			if not self.args.get('--force-yes', False):
 				if confirm():
 					reinstaller.download()
-					reinstaller.install()
+					try:
+						reinstaller.reinstall(ignore_errors=self.args.get('--ignore-errors', False))
+					except Exception as err:
+						raise
 				else:
 					print('Abort.')
 					sys.exit(1)
 			else:
+				reinstaller.download()
 				try:
-					reinstaller.download()
+					reinstaller.reinstall(ignore_errors=self.args.get('--ignore-errors', False))
 				except Exception as err:
-					stream_logger.error('Error: %s' % err)
-					sys.exit(1)
-				reinstaller.install()
+					raise
 
 		###################
 		# install         #
@@ -142,7 +144,7 @@ class Cli(object):
 					except RuntimeError as err:
 						print(' :: Dependencies resolv failed (%s)' % err)
 						sys.exit(1)
-			except DatabaseException as err:
+			except DatabaseError as err:
 				print(' :: %s' % err)
 				sys.exit(1)
 
@@ -156,17 +158,19 @@ class Cli(object):
 			if not self.args.get('--force-yes', False):
 				if confirm():
 					installer.download()
-					installer.install()
+					try:
+						installer.install(ignore_errors=self.args.get('--ignore-errors', False))
+					except Exception as err:
+						raise
 				else:
 					print('Abort.')
 					sys.exit(1)
 			else:
+				installer.download()
 				try:
-					installer.download()
+					installer.install(ignore_errors=self.args.get('--ignore-errors', False))
 				except Exception as err:
-					stream_logger.error('Error: %s' % err)
-					sys.exit(1)
-				installer.install()
+					raise
 		###################
 		# upgrade         #
 		###################
@@ -201,18 +205,20 @@ class Cli(object):
 		
 			if not self.args.get('--force-yes', False):
 				if confirm():
+					upgrader.download()
 					try:
-						upgrader.download()
+						upgrader.upgrade(ignore_errors=self.args.get('--ignore-errors', False))
 					except Exception as err:
-						stream_logger.error('Error: %s' % err)
-						sys.exit(1)
-					upgrader.upgrade()
+						raise
 				else:
 					print('Abort.')
 					sys.exit(1)
 			else:
 				upgrader.download()
-				upgrader.upgrade()
+				try:
+					upgrader.upgrade(ignore_errors=self.args.get('--ignore-errors', False))
+				except Exception as err:
+					raise
 		###################
 		# remove          #
 		###################
@@ -227,7 +233,7 @@ class Cli(object):
 
 			try:
 				remover.feed(packages)
-			except DatabaseException as err:
+			except DatabaseError as err:
 				stream_logger.info(' :: %s' % err)
 				sys.exit(1)
 
@@ -240,9 +246,12 @@ class Cli(object):
 		
 			if not self.args.get('--force-yes', False):
 				if confirm():
-					remover.remove()
+					remover.remove(ignore_errors=self.args.get('--ignore-errors', False))
 				else:
 					print('Abort.')
 					sys.exit(1)
 			else:
-				remover.remove()
+				try:
+					remover.remove(ignore_errors=self.args.get('--ignore-errors', False))
+				except Exception as err:
+					raise

@@ -1,6 +1,4 @@
 # coding: utf-8
-import sys
-
 from ubik.core import db
 from ubik.core import conf
 
@@ -43,14 +41,14 @@ class Upgrader(object):
 			if not checkmd5(package):
 				logger.info('%s md5 invalid' % package.name)
 				stream_logger.info('   | Md5 invalid, package corrumpt')	
-				sys.exit(1)
+				UpgraderError('Invalid Md5')
 
-	def upgrade(self):
+	def upgrade(self, ignore_errors=False):
 		if not self.packages:
 			raise UpgraderError('Nothing to upgrade')
 		stream_logger.info(' :: Upgrade')	
 		for package in self.packages:
-			package.upgrade()
+			package.upgrade(ignore_errors)
 			stream_logger.info('      | Update database')
 			package.status = "0"
 			package.set_raw_version(package.remote_vers)

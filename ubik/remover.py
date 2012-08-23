@@ -30,12 +30,12 @@ class Remover(object):
 				else:
 					stream_logger.info(' :: %s not installed' % package.name)
 
-	def remove(self):
+	def remove(self, ignore_errors=False):
 		if not self.packages:
 			raise RemoverError('Nothing to remove')
 		stream_logger.info(' :: Remove')
 		for package in self.packages:
-			package.remove()
+			package.remove(ignore_errors)
 			stream_logger.info('     | Update database')
 			package.status = "10"
 			package.remote_vers = package.raw_version

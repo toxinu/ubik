@@ -1,6 +1,5 @@
 # coding: utf-8
 import os
-import sys
 import shutil
 
 from ubik.core import conf
@@ -82,52 +81,35 @@ class Package(object):
 	def unarchive(self):
 		unarchiver(self)
 
-	def install(self, force=False):
+	def install(self, ignore_errors=False):
 		stream_logger.info('    - %s' % self.name)
 		stream_logger.info('      | Unarchive')
 		self.unarchive()
-		control = Control(self)
+		control = Control(self, ignore_errors)
 		stream_logger.info('      | Pre Install')
-		try:
-			control.pre_install()
-		except CmdError as err:
-			stream_logger.info('Error: %s' % err)
-			sys.exit(1)
+		control.pre_install()
 		stream_logger.info('      | Unpack')
 		unpacker(self)
 		stream_logger.info('      | Post Install')
-		try:
-			control.post_install()
-		except CmdError as err:
-			stream_logger.info('Error: %s' % err)
-			sys.exit(1)
+		control.post_install()
 		stream_logger.info('      | Clean')
 		shutil.rmtree('%s/%s' % (conf.get('settings', 'cache'), self.name))
 
-	def upgrade(self):
-		stream_logger = get_stream_logger()
+	def upgrade(self, ignore_errors=False):
 		stream_logger.info('    - %s' % self.name)
 		stream_logger.info('      | Unarchive')
 		self.unarchive()
-		control = Control(self)
+		control = Control(self, ignore_errors)
 		stream_logger.info('      | Pre Update')
-		try:
-			control.pre_update()
-		except CmdError as err:
-			stream_logger.info('Error: %s' % err)
-			sys.exit(1)
+		control.pre_update()
 		stream_logger.info('      | Unpack')
 		unpacker(self)
 		stream_logger.info('      | Post Update')
-		try:
-			control.post_update()
-		except CmdError as err:
-			stream_logger.info('Error: %s' % err)
-			sys.exit(1)
+		control.post_update()
 		stream_logger.info('      | Clean')
 		shutil.rmtree('%s/%s' % (conf.get('settings', 'cache'), self.name))
 
-	def remove(self):
+	def remove(self, ignore_errors=False):
 		stream_logger.info('   - %s' % self.name)
 
 		# If archive not already extract
@@ -136,15 +118,11 @@ class Package(object):
 					self.name)):
 			self.unarchive()
 
-		control = Control(self)
+		control = Control(self, ignore_errors)
 
 		# Pre Remove
 		stream_logger.info('     | Pre Remove')
-		try:
-			control.pre_remove()
-		except CmdError as err:
-			stream_logger.info('Error: %s' % err)
-			sys.exit(1)
+		control.pre_remove()
 
 		# Remove
 		stream_logger.info('     | Remove')
@@ -158,11 +136,7 @@ class Package(object):
 				pass
 		# Post Remove
 		stream_logger.info('     | Post Remove')
-		try:
-			control.post_remove()
-		except CmdError as err:
-			stream_logger.info('Error: %s' % err)
-			sys.exit(1)
+		control.post_remove()
 
 		stream_logger.info('     | Clean')
 		shutil.rmtree('%s/%s' % (conf.get('settings', 'cache'), self.name))

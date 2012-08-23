@@ -44,9 +44,10 @@ def get_timeout():
 	return float(timeout)
 
 def get_database(file_path=None):
-	url = '%s/%s/Packages.list' % (
+	url = '%s/%s/%s/Packages.list' % (
 		conf.get('repo', 'url'),
-		conf.get('repo', 'base'))
+		conf.get('repo', 'base'),
+		conf.get('repo', 'vers'))
 	proxies = get_proxies()
 	timeout = get_timeout()
 

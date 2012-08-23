@@ -41,7 +41,7 @@ def checkmd5(package):
 		return False
 	return True
 
-def launch_cmd(cmd):
+def launch_cmd(cmd, ignore_errors=False):
 	if conf.get('packages', 'control_methods'):
 		cmd = ['bash', '-c', '. %s; %s' % (conf.get('packages', 'control_methods'), cmd)]
 	else:
@@ -49,7 +49,10 @@ def launch_cmd(cmd):
 	popen = subprocess.Popen(cmd)
 	popen.wait()
 	if popen.returncode >= 1:
-		raise CmdError('Cmd failed (%s)' % cmd)
+		if ignore_errors:
+			stream_logger.info('Cmd failed (%s)' % cmd)
+		else:
+			raise CmdError('Cmd failed (%s)' % cmd)
 
 def confirm(prompt=None, resp=False):
 	try:
