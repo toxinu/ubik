@@ -12,7 +12,7 @@ from ubik.core import conf
 from ubik.package import Package
 
 from ubik.downloader import get_database
-from ubik.exceptions import DatabaseError
+from ubik.exceptions import DatabaseException
 
 class Database(object):
 	def __init__(self, content=None):
@@ -93,7 +93,7 @@ class Database(object):
 				try:
 					result.append(self.packages[package])
 				except:
-					raise DatabaseError('Package %s not available' % package)
+					raise DatabaseException('Package %s not available' % package)
 
 		return result
 		
@@ -155,7 +155,7 @@ class Database(object):
 
 	def add(self, package):
 		if not isinstance(package, Package):
-			raise DatabaseError('Package must be Package object')
+			raise DatabaseException('Package must be Package object')
 		self.packages[package.name] = package
 
 	def delete(self, package):

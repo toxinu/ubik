@@ -7,7 +7,7 @@ from ubik.downloader import get_package
 
 from ubik.tools import cached
 from ubik.tools import checkmd5
-from ubik.exceptions import ReinstallerError
+from ubik.exceptions import ReinstallerException
 
 from ubik.logger import logger
 from ubik.logger import stream_logger
@@ -58,7 +58,7 @@ class Reinstaller(object):
 				if not checkmd5(package):
 					logger.info('%s md5 invalid' % package.name)
 					stream_logger.info('   | Md5 invalid, package corrumpt')	
-					ReinstallerError('Invalid Md5')
+					ReinstallerException('Invalid Md5')
 			# Cached
 			else:
 				logger.info('%s already in cache' % package.name)
@@ -69,13 +69,13 @@ class Reinstaller(object):
 					if not checkmd5(package):
 						logger.info('%s md5 invalid' % package.name)
 						stream_logger.info('   | Md5 invalid, package corrumpt')	
-						ReinstallerError('Invalid Md5')
+						ReinstallerException('Invalid Md5')
 				else:
 					stream_logger.info('    | %s already in cache' % package.name)
 
 	def reinstall(self, ignore_errors=False):
 		if not self.packages:
-			raise InstallerError('Nothing to reinstall')
+			raise InstallerException('Nothing to reinstall')
 		stream_logger.info(' :: Reinstall')	
 		for package in self.packages:
 			package.install(ignore_errors)

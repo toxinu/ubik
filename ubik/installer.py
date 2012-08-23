@@ -9,7 +9,7 @@ from ubik.package import Package
 from ubik.downloader import get_package
 from ubik.tools import cached
 from ubik.tools import checkmd5
-from ubik.exceptions import InstallerError
+from ubik.exceptions import InstallerException
 
 class Installer(object):
 	def __init__(self):
@@ -59,7 +59,7 @@ class Installer(object):
 				if not checkmd5(package):
 					logger.info('%s md5 invalid' % package.name)
 					self.logger.info('   | Md5 invalid, package corrumpt')	
-					InstallerError('Invalid Md5')
+					InstallerException('Invalid Md5')
 			# Cached
 			else:
 				logger.info('%s already in cache' % package.name)
@@ -70,13 +70,13 @@ class Installer(object):
 					if not checkmd5(package):
 						logger.info('%s md5 invalid' % package.name)
 						self.logger.info('   | Md5 invalid, package corrumpt')	
-						InstallerError('Invalid Md5')
+						InstallerException('Invalid Md5')
 				else:
 					stream_logger.info('    | %s already in cache' % package.name)
 
 	def install(self, ignore_errors=False):
 		if not self.packages:
-			raise InstallerError('Nothing to install')
+			raise InstallerException('Nothing to install')
 		stream_logger.info(' :: Install')	
 		for package in self.packages:
 			package.install(ignore_errors=ignore_errors)

@@ -7,7 +7,7 @@ from ubik.logger import logger
 from ubik.logger import stream_logger
 
 from ubik.package import Package
-from ubik.exceptions import RemoverError
+from ubik.exceptions import RemoverException
 
 class Remover(object):
 	def __init__(self):
@@ -32,7 +32,7 @@ class Remover(object):
 
 	def remove(self, ignore_errors=False):
 		if not self.packages:
-			raise RemoverError('Nothing to remove')
+			raise RemoverException('Nothing to remove')
 		stream_logger.info(' :: Remove')
 		for package in self.packages:
 			package.remove(ignore_errors)

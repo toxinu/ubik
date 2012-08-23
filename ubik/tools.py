@@ -10,7 +10,7 @@ import bz2
 from ubik.core import conf
 from ubik.logger import logger
 from ubik.logger import stream_logger
-from ubik.exceptions import CmdError
+from ubik.exceptions import CmdException
 
 import ubik.package
 
@@ -52,7 +52,7 @@ def launch_cmd(cmd, ignore_errors=False):
 		if ignore_errors:
 			stream_logger.info('Cmd failed (%s)' % cmd)
 		else:
-			raise CmdError('Cmd failed (%s)' % cmd)
+			raise CmdException('Cmd failed (%s)' % cmd)
 
 def confirm(prompt=None, resp=False):
 	try:
