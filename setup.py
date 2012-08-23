@@ -24,7 +24,7 @@ setup(
 	url='https://github.com/socketubs/Ubik/',
 	keywords="ubik package linux",
 	packages = ['ubik'],
-	scripts=['bin/ubik','bin/ubik-postinstall','bin/ubik-package'],
+	scripts=['bin/ubik','bin/ubik-postinstall'],
 	install_requires=['progressbar==2.3', 'requests==0.13.8', 'docopt==0.5.0'],
 	classifiers=(
 		'Intended Audience :: Developers',
