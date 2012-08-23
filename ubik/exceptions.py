@@ -1,5 +1,15 @@
 # coding: utf-8
 
+# Core
+class CoreException(RuntimeError):
+	""" Core Error """
+
+class CoreError(CoreException):
+	def __init__(self, value):
+		self.parameter = value
+	def __str__(self):
+		return repr(self.parameter)
+
 # Database
 class DatabaseException(RuntimeError):
 	""" Database Error """

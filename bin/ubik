@@ -3,7 +3,12 @@
 import sys
 
 from docopt import docopt
-from ubik.cli import Cli
+
+try:
+	from ubik.cli import Cli
+except Exception as err:
+	print(err)
+	sys.exit(1)
 
 doc = """Ubik, mininal package manager.
 

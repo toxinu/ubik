@@ -83,9 +83,6 @@ class Cli(object):
 					try:
 						reinstaller.resolv(package)
 						reinstaller.feed(reinstaller.resolved)
-					except KeyError as err:
-						print(' :: Package not available (%s)' % err)
-						sys.exit(1)
 					except RuntimeError as err:
 						print(' :: Dependencies resolv failed (%s)' % err)
 						sys.exit(1)
@@ -144,7 +141,7 @@ class Cli(object):
 					except RuntimeError as err:
 						print(' :: Dependencies resolv failed (%s)' % err)
 						sys.exit(1)
-			except DatabaseError as err:
+			except DatabaseException as err:
 				print(' :: %s' % err)
 				sys.exit(1)
 
@@ -233,7 +230,7 @@ class Cli(object):
 
 			try:
 				remover.feed(packages)
-			except DatabaseError as err:
+			except DatabaseException as err:
 				stream_logger.info(' :: %s' % err)
 				sys.exit(1)
 
