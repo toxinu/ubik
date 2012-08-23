@@ -8,30 +8,31 @@ from ubik.tools import launch_cmd
 import ubik.package
 
 class Control(object):
-	def __init__(self, package):
+	def __init__(self, package, ignore_errors):
 		if not isinstance(package, ubik.package.Package):
 			raise Exception('Need a Package object')
 		self.control_file = '%s/%s/control' % (
 					conf.get('settings', 'cache'),
 					package.name)
+		self.ignore_errors = ignore_errors
 
 	def pre_install(self):
-		launch_cmd('. %s; pre_install' % self.control_file)
+		launch_cmd('. %s; pre_install' % self.control_file, self.ignore_errors)
 
 	def post_install(self):
-		launch_cmd('. %s; post_install' % self.control_file)
+		launch_cmd('. %s; post_install' % self.control_file, self.ignore_errors)
 
 	def pre_remove(self):
-		launch_cmd('. %s; pre_remove' % self.control_file)
+		launch_cmd('. %s; pre_remove' % self.control_file, self.ignore_errors)
 
 	def post_remove(self):
-		launch_cmd('. %s; post_remove' % self.control_file)
+		launch_cmd('. %s; post_remove' % self.control_file, self.ignore_errors)
 
 	def pre_update(self):
-		launch_cmd('. %s; pre_update' % self.control_file)
+		launch_cmd('. %s; pre_update' % self.control_file, self.ignore_errors)
 
 	def post_update(self):
-		launch_cmd('. %s; post_update' % self.control_file)
+		launch_cmd('. %s; post_update' % self.control_file, self.ignore_errors)
 
 	def purge(self):
-		launch_cmd('. %s; purge' % self.control_file)
+		launch_cmd('. %s; purge' % self.control_file, self.ignore_errors)

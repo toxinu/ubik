@@ -12,7 +12,7 @@ from ubik.core import conf
 from ubik.package import Package
 
 from ubik.downloader import get_database
-from ubik.exceptions import DatabaseException
+from ubik.exceptions import DatabaseError
 
 class Database(object):
 	def __init__(self, content=None):
@@ -21,9 +21,10 @@ class Database(object):
 		self.packages = self.parse()
 
 	def sync(self):
-		stream_logger.info('    | Get %s/%s/Packages.list' % (
+		stream_logger.info('    | Get %s/%s/%s/Packages.list' % (
 						conf.get('repo', 'url'),
-						conf.get('repo', 'base')))
+						conf.get('repo', 'base'),
+						conf.get('repo', 'vers')))
 		db_remote = Database(get_database())
 
 		for package in db_remote.packages.values():
@@ -92,7 +93,7 @@ class Database(object):
 				try:
 					result.append(self.packages[package])
 				except:
-					raise DatabaseException('Package %s not available' % package)
+					raise DatabaseError('Package %s not available' % package)
 
 		return result
 		
@@ -154,7 +155,7 @@ class Database(object):
 
 	def add(self, package):
 		if not isinstance(package, Package):
-			raise DatabaseException('Package must be Package object')
+			raise DatabaseError('Package must be Package object')
 		self.packages[package.name] = package
 
 	def delete(self, package):

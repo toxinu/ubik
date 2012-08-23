@@ -9,19 +9,20 @@ doc = """Ubik, mininal package manager.
 
 Usage:
   ubik (list|update|clean|stats|conf)
-  ubik install <package>... [--force-yes]
-  ubik reinstall <package>... [--force-yes] [--with-deps]
-  ubik upgrade [--force-yes]
-  ubik upgrade <package>... [--force-yes]
-  ubik remove <package>... [--force-yes]
+  ubik install <package>... [--force-yes] [--ignore-errors]
+  ubik reinstall <package>... [--force-yes] [--with-deps] [--ignore-errors]
+  ubik upgrade [--force-yes] [--ignore-errors]
+  ubik upgrade <package>... [--force-yes] [--ignore-errors]
+  ubik remove <package>... [--force-yes] [--ignore-errors]
   ubik -h | --help
   ubik -v | --version
 
 Options:
-  --force-yes    Force confirmation questions.
-  --with-deps    Reinstall deps too.
-  -h --help      Show help.
-  -v --version   Show version.
+  --force-yes      Force confirmation questions
+  --with-deps      Reinstall deps too
+  --ignore-errors  Ignore control commands errors
+  -h --help        Show help
+  -v --version     Show version
 """
 
 if __name__ == '__main__':

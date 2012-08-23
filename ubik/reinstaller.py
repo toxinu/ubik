@@ -1,6 +1,4 @@
 # coding: utf-8
-import sys
-
 from ubik.core import db
 from ubik.core import conf
 
@@ -60,7 +58,7 @@ class Reinstaller(object):
 				if not checkmd5(package):
 					logger.info('%s md5 invalid' % package.name)
 					stream_logger.info('   | Md5 invalid, package corrumpt')	
-					sys.exit(1)
+					ReinstallerError('Invalid Md5')
 			# Cached
 			else:
 				logger.info('%s already in cache' % package.name)
@@ -71,16 +69,16 @@ class Reinstaller(object):
 					if not checkmd5(package):
 						logger.info('%s md5 invalid' % package.name)
 						stream_logger.info('   | Md5 invalid, package corrumpt')	
-						sys.exit(1)
+						ReinstallerError('Invalid Md5')
 				else:
 					stream_logger.info('    | %s already in cache' % package.name)
 
-	def install(self):
+	def reinstall(self, ignore_errors=False):
 		if not self.packages:
 			raise InstallerError('Nothing to reinstall')
 		stream_logger.info(' :: Reinstall')	
 		for package in self.packages:
-			package.install()
+			package.install(ignore_errors)
 			stream_logger.info('      | Update database')
 			package.status = "0"
 			package.set_raw_version(package.remote_vers)
