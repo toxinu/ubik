@@ -78,16 +78,20 @@ class Cli(object):
 			else:
 				packages = self.args['<package>']
 
-			if self.args.get('--with-deps', False):
-				for package in db.get(packages):
-					try:
-						reinstaller.resolv(package)
-						reinstaller.feed(reinstaller.resolved)
-					except RuntimeError as err:
-						print(' :: Dependencies resolv failed (%s)' % err)
-						sys.exit(1)
-			else:
-				reinstaller.feed(packages)
+			try:
+				if self.args.get('--with-deps', False):
+					for package in db.get(packages):
+						try:
+							reinstaller.resolv(package)
+							reinstaller.feed(reinstaller.resolved)
+						except RuntimeError as err:
+							print(' :: Dependencies resolv failed (%s)' % err)
+							sys.exit(1)
+				else:
+					reinstaller.feed(db.get(packages))
+			except DatabaseException as err:
+				print(' :: %s' % err)
+				sys.exit(1)
 
 			logger.debug(reinstaller.packages)
 			if not reinstaller.packages:
