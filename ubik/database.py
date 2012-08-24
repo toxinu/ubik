@@ -25,7 +25,7 @@ class Database(object):
 		stream_logger.info('    | Get %s/%s/%s/Packages.json' % (
 						conf.get('repo', 'url'),
 						conf.get('repo', 'base'),
-						conf.get('repo', 'vers')))
+						conf.get('repo', 'branch')))
 		db_remote = Database(get_database())
 
 		for package in db_remote.packages.values():
@@ -50,7 +50,6 @@ class Database(object):
 				package.status = '0'
 				
 			if package.status in ['1','2','11','12']:
-				logger.debug('BIMMMM')
 				package.repo_version = package.version
 				package.repo_release = package.release
 				package.version = self.packages[package.name].version
@@ -60,13 +59,10 @@ class Database(object):
 				package.repo_release = package.release
 				package.version = ''
 				package.release = ''
-				logger.debug('BOMMMM (%s-%s)' % (package.repo_version, package.repo_release))
 			else:
-				logger.debug('BAMMMM')
 				package.repo_versions = ''
 				package.repo_release = ''
 
-			logger.debug(' 2SELF: %s-%s' % (package.version, package.release))
 			self.packages[package.name] = package
 
 		# Save databases

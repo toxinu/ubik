@@ -29,8 +29,6 @@ class Package(object):
 		self.repo_version = ''
 		self.repo_release = ''
 
-		self.raw_requires = self.get_raw_requires()
-
 	def fill(self, **kwargs):
 		for key in kwargs:
 			if key == 'name':
@@ -56,9 +54,6 @@ class Package(object):
 			elif key == 'repo_release':
 				self.repo_release = kwargs[key]
 		logger.debug(' SELF: %s-%s' % (self.version, self.release))
-
-	def get_raw_requires(self):
-		return ' '.join(self.requires)
 
 	def unarchive(self):
 		unarchiver(self)
