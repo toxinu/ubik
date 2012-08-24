@@ -44,7 +44,7 @@ def get_timeout():
 	return float(timeout)
 
 def get_database(file_path=None):
-	url = '%s/%s/%s/Packages.list' % (
+	url = '%s/%s/%s/Packages.json' % (
 		conf.get('repo', 'url'),
 		conf.get('repo', 'base'),
 		conf.get('repo', 'vers'))
@@ -57,11 +57,10 @@ def get_database(file_path=None):
 	if file_path:
 		if os.path.exists(file_path):
 			os.remove(file_path)
-		f = open(file_path, 'w')		
-		f.write(r.text)
+		json.dump(r.json, open(file_path, 'w'))
 		return r
 	else:
-		return r.text.split('\n')[:-1]
+		return r.json
 
 def get_package(package):
 	if not isinstance(package, ubik.package.Package):

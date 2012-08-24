@@ -39,7 +39,7 @@ class Installer(object):
 	def deps_resolv(self, package, resolved, unresolved):
 		self.unresolved = unresolved
 		self.unresolved.append(package)
-		for dep in db.get(package.deps):
+		for dep in db.get(package.requires):
 			if dep not in self.resolved:
 				if dep in self.unresolved:
 					raise Exception('Circular reference detected: %s -> %s' % (package.name, dep.name))
@@ -82,7 +82,9 @@ class Installer(object):
 			package.install(ignore_errors=ignore_errors)
 			stream_logger.info('      | Update database')
 			package.status = "0"
-			package.set_raw_version(package.remote_vers)
-			package.remote_vers = ''
+			package.version = package.repo_version
+			package.release = package.repo_release
+			package.repo_version = ''
+			package.repo_release = ''
 			db.add(package)
 			db.save(conf.get('paths', 'local_db'))

@@ -38,8 +38,8 @@ class Remover(object):
 			package.remove(ignore_errors)
 			stream_logger.info('     | Update database')
 			package.status = "10"
-			package.remote_vers = package.raw_version
-			package.raw_version = ''
+			package.repo_version = package.version
+			package.repo_release = package.release
 			package.version = ''
 			package.release = ''
 			db.add(package)
