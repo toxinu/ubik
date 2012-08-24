@@ -30,6 +30,25 @@ def get_conf():
 
 
 def get_view():
+
+	if not os.path.exists(conf.get('paths', 'infos')):
+		last_update = "Never"
+	else:
+		last_update = json.load(open(conf.get('paths', 'infos')))['last_update']
+
+	header = """
+ System : %s %s %s
+ Repo   : %s/%s/%s
+ Last Update : %s
+
+""" % (	conf.get('system', 'dist').title(),
+		conf.get('system', 'vers'),
+		conf.get('system', 'arch'),
+		conf.get('repo', 'url'),
+		conf.get('repo', 'base'),
+		conf.get('repo', 'branch'),
+		last_update)
+
 	fmt = [	('Name',	'name',		25),
 			('Version',	'version',	25),
 			('Status',	'status',	20)]
@@ -52,27 +71,10 @@ def get_view():
 						'status': status[package.status]})
 
 	if not data:
-		data.append({'name': 'No package installed'})
+		print(header + 'No package installed')
+		return
 
 	data = sorted(data, key=lambda k: k['name'])
-
-	if not os.path.exists(conf.get('paths', 'infos')):
-		last_update = "Never"
-	else:
-		last_update = json.load(open(conf.get('paths', 'infos')))['last_update']
-
-	header = """
- System : %s %s %s
- Repo   : %s/%s/%s
- Last Update : %s
-
-""" % (	conf.get('system', 'dist'),
-		conf.get('system', 'vers'),
-		conf.get('system', 'arch'),
-		conf.get('repo', 'url'),
-		conf.get('repo', 'base'),
-		conf.get('repo', 'branch'),
-		last_update)
 
 	print(header + TablePrinter(fmt, ul='-')(data))
 
