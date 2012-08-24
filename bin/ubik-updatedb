@@ -1,0 +1,48 @@
+#!/usr/bin/env python
+# coding: utf-8
+import os
+import json
+
+from docopt import docopt
+from ubik.core import conf
+
+doc = """Ubik update db.
+Be careful, this cli tool is special develop for Canopsis.
+
+Usage:
+  ubik-updatedb [--old-db=<path>]
+  ubik-updatedb -h | --help
+  ubik-updatedb -v | --version
+
+Options:
+  --old-db=<path>   Path to old database [default: /opt/canopsis/var/lib/ubik/local_db]
+  -h --help         Show help.
+  -v --version      Show version.
+"""
+
+if __name__ == '__main__':
+	args = docopt(doc, version="0.0.1")
+	print(' :: Convert old packages database')
+
+	if os.path.exists(conf.get('paths', 'local_db')):
+		os.remove(conf.get('paths', 'local_db'))
+
+	if not os.path.exists(conf.get('paths', 'local_db')):
+		open(conf.get('paths', 'local_db'), 'w').close()
+
+	new_db_file = open(conf.get('paths', 'local_db'), 'w')
+	_json = []
+	with open(args['--old-db']) as old_db_file:
+		for line in old_db_file.readlines():
+			info = {'version': line.split('|')[1].split('-')[:-1],
+					'release': line.split('|')[1].split('-')[-1],
+					'status' : "20",
+					'md5'	 : line.split('|')[3],
+					'deps'	 : line.split('|')[4].split(),
+					'arch'	 : line.split('|')[5],
+					'dist'	 : line.split('|')[6],
+					'vers'	 : line.split('|')[7]}
+			_json.append(info)
+	
+	json.dump(_json, new_db_file)	
+	os.rename(args['--old-db'], '%s.old' % args['--old-db'])
