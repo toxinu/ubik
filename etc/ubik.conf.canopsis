@@ -1,7 +1,7 @@
 [repo]
 url		= http://repo.canopsis.org:80
 base	= 
-vers	= stable
+branch	= stable
 
 [system]
 # Uncomment to overwrite system info

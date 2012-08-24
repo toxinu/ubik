@@ -47,7 +47,7 @@ def get_database(file_path=None):
 	url = '%s/%s/%s/Packages.json' % (
 		conf.get('repo', 'url'),
 		conf.get('repo', 'base'),
-		conf.get('repo', 'vers'))
+		conf.get('repo', 'branch'))
 	proxies = get_proxies()
 	timeout = get_timeout()
 
@@ -69,7 +69,7 @@ def get_package(package):
 	url = '%s/%s/%s/%s/%s/%s/%s.tar' % (
 		conf.get('repo', 'url'),
 		conf.get('repo', 'base'),
-		conf.get('repo', 'vers'),
+		conf.get('repo', 'branch'),
 		package.arch,
 		package.dist,
 		package.vers,

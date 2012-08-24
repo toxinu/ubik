@@ -11,7 +11,7 @@ from ubik.exceptions import CoreException
 ###################
 conf_file = os.environ.get('UBIK_CONF', '/etc/ubik.conf')
 if not os.path.exists(conf_file):
-	raise CoreException('Configuration file not found (%s).\nSet UBIK_CONF env variable' % conf_file)
+	raise CoreException('Configuration file not found (%s)\nSet UBIK_CONF env variable' % conf_file)
 conf = get_conf(conf_file)
 
 ###################

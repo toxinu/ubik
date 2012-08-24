@@ -71,7 +71,7 @@ def get_view():
 		conf.get('system', 'arch'),
 		conf.get('repo', 'url'),
 		conf.get('repo', 'base'),
-		conf.get('repo', 'vers'),
+		conf.get('repo', 'branch'),
 		last_update)
 
 	print(header + TablePrinter(fmt, ul='-')(data))

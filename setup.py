@@ -15,7 +15,7 @@ if sys.argv[-1] == 'publish':
 
 setup(
 	name='ubik',
-	version='0.1',
+	version='0.2-dev',
 	description='Minimal packages manager',
 	long_description=open('README.md').read(), 
 	license=open("LICENSE").read(),
@@ -24,7 +24,7 @@ setup(
 	url='https://github.com/socketubs/Ubik/',
 	keywords="ubik package linux",
 	packages = ['ubik'],
-	scripts=['bin/ubik','bin/ubik-postinstall'],
+	scripts=['bin/ubik','bin/ubik-updatedb'],
 	install_requires=['progressbar==2.3', 'requests==0.13.8', 'docopt==0.5.0'],
 	classifiers=(
 		'Intended Audience :: Developers',
