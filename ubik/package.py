@@ -53,7 +53,6 @@ class Package(object):
 				self.repo_version = kwargs[key]
 			elif key == 'repo_release':
 				self.repo_release = kwargs[key]
-		logger.debug(' SELF: %s-%s' % (self.version, self.release))
 
 	def unarchive(self):
 		unarchiver(self)
