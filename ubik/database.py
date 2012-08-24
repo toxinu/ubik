@@ -18,10 +18,11 @@ class Database(object):
 	def __init__(self, content=None):
 		self.content = content
 		self.file_path = None
-		self.packages = self.parse()
+		
+		self.parse()
 
 	def sync(self):
-		stream_logger.info('    | Get %s/%s/%s/Packages.list' % (
+		stream_logger.info('    | Get %s/%s/%s/Packages.json' % (
 						conf.get('repo', 'url'),
 						conf.get('repo', 'base'),
 						conf.get('repo', 'vers')))
@@ -30,37 +31,42 @@ class Database(object):
 		for package in db_remote.packages.values():
 			# Check installed
 			if package.name not in self.packages.keys():
-				package.status = "10"
+				package.status = '10'
 				self.packages[package.name] = package
-			elif self.packages[package.name].status == "10":
-				package.status = "10"
+			elif self.packages[package.name].status == '10':
+				package.status = '10'
 			# Check version
 			elif package.version > self.packages[package.name].version:
-				package.status = "1"
+				package.status = '1'
 			elif package.version < self.packages[package.name].version:
-				package.status = "11"
+				package.status = '11'
 			# Check release
 			elif package.release > self.packages[package.name].release:
-				package.status = "2"
+				package.status = '2'
 			elif package.release < self.packages[package.name].release:
-				package.status = "12"
+				package.status = '12'
 			# Up-to-date
 			else:
-				package.status = 0
+				package.status = '0'
 				
 			if package.status in ['1','2','11','12']:
-				package.remote_vers = package.raw_version
-				package.raw_version = self.packages[package.name].raw_version
+				logger.debug('BIMMMM')
+				package.repo_version = package.version
+				package.repo_release = package.release
 				package.version = self.packages[package.name].version
 				package.release = self.packages[package.name].release
 			elif package.status in ['10']:
-				package.remote_vers = package.raw_version
+				package.repo_version = package.version
+				package.repo_release = package.release
 				package.version = ''
 				package.release = ''
-				package.raw_version = ''
+				logger.debug('BOMMMM (%s-%s)' % (package.repo_version, package.repo_release))
 			else:
-				package.remote_vers = ''
+				logger.debug('BAMMMM')
+				package.repo_versions = ''
+				package.repo_release = ''
 
+			logger.debug(' 2SELF: %s-%s' % (package.version, package.release))
 			self.packages[package.name] = package
 
 		# Save databases
@@ -118,31 +124,10 @@ class Database(object):
 
 	def parse(self):
 		packages = {}
-		for line in self.content:
-			name = line.split('|')[0]
-			if len(line.split('|')) == 9:
-				infos = {	'raw_version': line.split('|')[1],
-							'version': line.split('|')[1].split('-')[:-1],
-							'release': line.split('|')[1].split('-')[-1],
-							'status' : line.split('|')[2],
-							'md5'	 : line.split('|')[3],
-							'deps'	 : line.split('|')[4].split(),
-							'arch'	 : line.split('|')[5],
-							'dist'	 : line.split('|')[6],
-							'vers'	 : line.split('|')[7],
-							'remote_vers': line.split('|')[8].replace('\n', '')}
-			else:
-				infos = {	'raw_version': line.split('|')[1],
-							'version': line.split('|')[1].split('-')[:-1],
-							'release': line.split('|')[1].split('-')[-1],
-							'status' : line.split('|')[2],
-							'md5'	 : line.split('|')[3],
-							'deps'	 : line.split('|')[4].split(),
-							'arch'	 : line.split('|')[5],
-							'dist'	 : line.split('|')[6],
-							'vers'	 : line.split('|')[7].replace('\n', '')}
+		for package in self.content:
+			name = package['name']
 			p = Package(name)
-			p.fill(**infos)
+			p.fill(**package)
 
 			if not self.check_system(p):
 				continue
@@ -150,8 +135,8 @@ class Database(object):
 			if packages.get(name, False):
 				if not self.check_packages(p, packages[name]):
 					continue
-			packages[name] = p
-		return packages
+			packages[package['name']] = p
+		self.packages = packages
 
 	def add(self, package):
 		if not isinstance(package, Package):
@@ -171,9 +156,22 @@ class Database(object):
 	def save(self, path):
 		self.file_path = path
 		open(path, 'w').close()
+		new_json = []
 		for package in self.packages.values():
-			with open(path, 'a') as f:
-				f.write(package.get_raw() + '\n')
+			_package = {'name': package.name,
+						'version': package.version,
+						'release': package.release,
+						'status': package.status,
+						'requires': package.requires,
+						'md5': package.md5,
+						'arch': package.arch,
+						'dist': package.dist,
+						'vers': package.vers,
+						'repo_version': package.repo_version,
+						'repo_release': package.repo_release}
+			new_json.append(_package)
+		
+		json.dump(new_json, open(path, 'w'))	
 
 	def get_upgrades(self):
 		res = []

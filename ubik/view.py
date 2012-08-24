@@ -38,13 +38,14 @@ def get_view():
 	# Package.db	
 	for name, package in db.packages.items():
 		# Version output
-		if package.remote_vers:
-			if not package.raw_version:
-				version = '[%s]' % package.remote_vers
+		if package.repo_version:
+			if not package.version:
+				version = '[%s-%s]' % (package.repo_version, package.repo_release)
 			else:
-				version = '%s [%s]' % (package.raw_version, package.remote_vers)
+				version = '%s-%s [%s-%s]' % (	package.version, package.release,
+												package.repo_version, package.repo_release)
 		else:
-			version = package.raw_version
+			version = package.version + '-' + package.release
 
 		data.append({	'name': name,
 						'version': version,

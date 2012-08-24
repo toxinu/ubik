@@ -38,7 +38,7 @@ class Reinstaller(object):
 	def deps_resolv(self, package, resolved, unresolved):
 		self.unresolved = unresolved
 		self.unresolved.append(package)
-		for dep in db.get(package.deps):
+		for dep in db.get(package.requires):
 			if dep not in self.resolved:
 				if dep in self.unresolved:
 					raise Exception('Circular reference detected: %s -> %s' % (package.name, dep.name))
