@@ -1,7 +1,7 @@
 HISTORY
 =======
 
-0.1.1
+0.1
 ---
 
 __Important__:
@@ -11,10 +11,5 @@ __Important__:
 
 * Change ``Packages.db`` format from funky to ``json``
 * External package for management ([Ubik-toolbelt][1])
-
-0.1
----
-
-* Initial release
 
 [1]: https://github.com/Socketubs/Ubik-toolbelt
