@@ -15,7 +15,7 @@ if sys.argv[-1] == 'publish':
 
 setup(
 	name='ubik',
-	version='0.2-dev',
+	version='0.1',
 	description='Minimal packages manager',
 	long_description=open('README.md').read(), 
 	license=open("LICENSE").read(),
