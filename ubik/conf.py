@@ -37,13 +37,13 @@ def get_conf(conf_path):
 		else:
 			dist = platform.dist()[0].upper()
 			vers = 'n/a'
-			if dist == 'debian':
+			if dist == 'DEBIAN':
 				vers = platform.dist()[1].split('.')[0]
-			elif dist == 'ubuntu':
+			elif dist == 'UBUNTU':
 				vers = platform.dist()[1].replace('.', '')
-			elif dist == 'centos':
+			elif dist == 'CENTOS':
 				vers = platform.dist()[1].split('.')[0]
-			elif dist == 'redhat':
+			elif dist == 'REDHAT':
 				vers = platform.dist()[1].split('.')[0]
 
 		parser.set('system', 'dist', dist)
