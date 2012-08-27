@@ -35,15 +35,15 @@ def get_conf(conf_path):
 			dist = 'darwin'
 			vers = platform.mac_ver()[0]
 		else:
-			dist = platform.dist()[0].upper()
+			dist = platform.dist()[0].lower()
 			vers = 'n/a'
-			if dist == 'DEBIAN':
+			if dist == 'debian':
 				vers = platform.dist()[1].split('.')[0]
-			elif dist == 'UBUNTU':
+			elif dist == 'ubuntu':
 				vers = platform.dist()[1].replace('.', '')
-			elif dist == 'CENTOS':
+			elif dist == 'centos':
 				vers = platform.dist()[1].split('.')[0]
-			elif dist == 'REDHAT':
+			elif dist == 'redhat':
 				vers = platform.dist()[1].split('.')[0]
 
 		parser.set('system', 'dist', dist)
