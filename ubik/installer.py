@@ -58,7 +58,7 @@ class Installer(object):
 				# Invalid Md5
 				if not checkmd5(package):
 					logger.info('%s md5 invalid' % package.name)
-					self.logger.info('   | Md5 invalid, package corrumpt')	
+					stream_logger.info('   | Md5 invalid, package corrumpt')	
 					InstallerException('Invalid Md5')
 			# Cached
 			else:
@@ -69,7 +69,7 @@ class Installer(object):
 					get_package(package)
 					if not checkmd5(package):
 						logger.info('%s md5 invalid' % package.name)
-						self.logger.info('   | Md5 invalid, package corrumpt')	
+						stream_logger.info('   | Md5 invalid, package corrumpt')	
 						InstallerException('Invalid Md5')
 				else:
 					stream_logger.info('    | %s already in cache' % package.name)
