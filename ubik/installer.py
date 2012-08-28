@@ -42,7 +42,7 @@ class Installer(object):
 		self.unresolved = unresolved
 		self.unresolved.append(package)
 		for dep in db.get(package.requires, regexp = False):
-			logger.debug(" + %s: %s" % (level, dep.name ,dep.requires))
+			logger.debug(" + %s: %s" % (dep.name ,dep.requires))
 			if dep not in self.resolved:
 				if dep in self.unresolved:
 					raise Exception('Circular reference detected: %s -> %s' % (package.name, dep.name))
