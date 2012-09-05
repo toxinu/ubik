@@ -17,7 +17,9 @@ setup(
 	name='ubik',
 	version='0.1.1',
 	description='Minimal packages manager',
-	long_description=open('README.md').read(), 
+	long_description=	open('README.rst').read() + '\n\n' +
+						open('API.rst').read() + '\n\n' +
+						open('HISTORY.rst').read(), 
 	license=open("LICENSE").read(),
 	author="Geoffrey Lehee",
 	author_email="geoffrey@lehee.name",
