@@ -21,14 +21,17 @@ class Installer(object):
 
 		for package in packages:
 			if not isinstance(package, Package):
-				package = db.get(package)
+				packages += db.get(package)
+				del packages[packages.index(package)]
+
+		for package in packages:
 			if package not in self.packages:
 				if package.status in ['10']:
 					self.packages.append(package)
 				else:
 					stream_logger.info('    - %s already installed' % package.name)
 			else:
-				logger.debug('=== %s ignored' % package.name)
+				logger.debug('%s ignored' % package.name)
 	
 	def resolv(self, package):
 		self.package = package

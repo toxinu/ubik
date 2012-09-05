@@ -22,7 +22,10 @@ class Reinstaller(object):
 
 		for package in packages:
 			if not isinstance(package, Package):
-				package = db.get(package)
+				packages += db.get(package)
+				del packages[packages.index(package)]
+
+		for package in packages:
 			if package not in self.packages:
 				if package.status not in ['10']:
 					self.packages.append(package)
