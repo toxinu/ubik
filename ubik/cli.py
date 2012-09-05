@@ -151,7 +151,7 @@ class Cli(object):
 
 			if not installer.packages:
 				stream_logger.info('    - No package(s) found')
-				sys.exit(0)
+				sys.exit(1)
 			stream_logger.info(' :: Following dependencies will be installed:') 
 			for dep in installer.packages:
 				print('    - %s' % dep.name)
