@@ -20,7 +20,10 @@ class Upgrader(object):
 
 		for package in packages:
 			if not isinstance(package, Package):
-				package = db.get(package)[0]
+				packages += db.get(package)
+				del packages[packages.index(package)]
+
+		for package in packages:
 			if package not in self.packages:
 				if package.status in ['1','2']:
 					self.packages.append(package)

@@ -84,10 +84,9 @@ class Database(object):
 		for package in packages:
 			if regexp:
 				for key,value in self.packages.items():
-					if package[-1] != '*':
+					if package[-1] != '*' and len(package) > 1:
 						pattern = re.compile(r'%s$' % package)
 					else:
-						logger.debug(package)
 						pattern = re.compile(package)
 					if re.search(pattern, key):
 						result.append(value)
