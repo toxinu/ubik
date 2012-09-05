@@ -34,6 +34,11 @@ What about packages and repositories management ?
 
 Take a look at [Ubik toolbelt][2].
 
+Tests
+-----
+
+You can run tests with ``/tests/run_tests.sh``.
+
 Thanks
 ------
 
