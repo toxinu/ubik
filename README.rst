@@ -29,7 +29,7 @@ Installation
 
 ::
 
-    pip install git+http://github.com/Socketubs/Ubik.git
+    pip install ubik
 
 What about packages and repositories management ?
 -------------------------------------------------
@@ -47,6 +47,7 @@ Thanks
 Thanks to `Requests`_, `Docopt`_ and `ProgressBar`_ to be awesome tools.
 
 For information:
+
 ``Canopsis is a hypervisor, built on top of all open source monitoring solutions to agregate, correlate and ponderate events flowing from them.``
 
 License
