@@ -7,29 +7,31 @@ Database
 --------
 
 ```
->>> import ubik
->>> db = ubik.core.db
+>>> import ubik.core as api
+>>> db = api.db
 >>> db.packages
-{'hello_world': <ubik.package.Package object at 0x9688e6c>}
+{u'hello_hell': <ubik.package.Package object at 0x100965650>, u'test_deps': <ubik.package.Package object at 0x100965c10>, u'hello_world': <ubik.package.Package object at 0x100976f10>}
 >>> db.sync()
 ```
 
 Package
 -------
 
+There are many ways to get a package from database.
+
 ```
->>> package = db.packages['hello_world']
->>> package = db.get('hello_world')
->>> packages = db.get(['hello_world', 'another_package'])
+>>> db.get(['test_deps', 'hello_world'])
+>>> db['test_deps']
+>>> db.get('hello*')
+>>> db.get('hello', regexp = False)
+```
+
+```
+>>> package = db.get('test_deps')[0]
 >>> package.md5
-'34025837699c48233ba94dba3722f523'
->>> package.name
-'hello_world'
->>> package.deps
-[]
->>> package.arch
-'noarch'
-...
+u'd41eaca692c35abd4d6bd68e914eef16'
+>>> package.requires
+[u'hello_world']
 ```
 
 Installer
@@ -40,12 +42,20 @@ Installer
 >>> db.sync()
 >>> installer = Installer()
 >>> installer.resolv(package)
->>> installer.feed(install.resolved)
+>>> installer.feed(installer.resolved)
 >>> installer.packages
-[<ubik.package.Package object at 0x9688e6c>]
+[<ubik.package.Package object at 0x1009bd950>, <ubik.package.Package object at 0x1009bdb10>]
 >>> installer.download()
 >>> installer.install()
+>>> db.get_installed()
+[<ubik.package.Package object at 0x1009bdb10>, <ubik.package.Package object at 0x1009bd950>]
 ```
+
+
+More
+----
+
+For more information before full doc redaction you can take a look at ``Cli`` object, it's just an ``api`` client.
 
 Configuration
 -------------
