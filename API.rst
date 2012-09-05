@@ -1,4 +1,4 @@
-API
+Api
 ===
 
 Some examples of Ubik api, still work in progress.
