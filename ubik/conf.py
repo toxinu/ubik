@@ -40,7 +40,7 @@ def get_conf(conf_path):
 			if dist == 'debian':
 				vers = platform.dist()[1].split('.')[0]
 			elif dist == 'ubuntu':
-				vers = platform.dist()[1].replace('.', '')
+				vers = platform.dist()[1]
 			elif dist == 'centos':
 				vers = platform.dist()[1].split('.')[0]
 			elif dist == 'redhat':
