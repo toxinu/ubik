@@ -28,6 +28,7 @@ def get_conf(conf_path):
 			parser.set('system', 'arch', 'x86_64')
 
 	dist = 'unknown'
+	vers = 'unknown'
 	if not parser.has_option('system', 'dist'):
 		if isit.osx:
 			dist = 'osx'
