@@ -1,9 +1,9 @@
 # coding: utf-8
 import os
 import sys
-import struct
 import platform
 import re
+import isit
 from ConfigParser import SafeConfigParser
 
 def get_conf(conf_path):
@@ -21,37 +21,28 @@ def get_conf(conf_path):
 	parser.set('paths', 'infos', '%s/infos' % parser.get('settings', 'var_path'))
 
 	# Detect system info
-	_void_ptr_size = struct.calcsize('P')
 	if not parser.has_option('system', 'arch'):
-		bit32 = _void_ptr_size * 8 == 32
-		bit64 = _void_ptr_size * 8 == 64
-		if bit32:
+		if isit.bit32:
 			parser.set('system', 'arch', 'i386')
-		elif bit64:
+		elif isit.bit64:
 			parser.set('system', 'arch', 'x86_64')
 
 	if not parser.has_option('system', 'dist'):
-		if 'darwin' in str(sys.platform).lower():
-			dist = 'darwin'
-			vers = platform.mac_ver()[0]
-		else:
-			dist = platform.dist()[0].lower()
-			vers = 'n/a'
-			if dist == 'debian':
-				vers = platform.dist()[1].split('.')[0]
-			elif dist == 'ubuntu':
-				vers = platform.dist()[1]
-			elif dist == 'centos':
-				vers = platform.dist()[1].split('.')[0]
-			elif dist == 'redhat':
-				vers = platform.dist()[1].split('.')[0]
-			else:
-				# Archlinux
-				if os.path.exists('/etc/os-release'):
-					r = re.compile('"(.*?)"')
-					if r.search(open('/etc/os-release').readlines()[0]).group(1) == 'Arch Linux':
-						dist = 'archlinux'
-						vers = 'novers'
+		if isit.osx:
+			dist = 'osx'
+			vers = isit.osx_vers
+		elif isit.linux:
+			if isit.debian:
+				vers = isit.debian_vers
+			elif isit.ubuntu:
+				vers = isit.ubuntu_vers
+			elif isit.centos:
+				vers = isit.centos_vers
+			elif isit.redhat:
+				vers = isit.redhat_vers
+			elif isit.archlinux:
+				vers = isit.archlinux_vers
+
 		parser.set('system', 'dist', dist)
 		parser.set('system', 'vers', vers)
 
