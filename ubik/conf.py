@@ -39,18 +39,26 @@ def get_conf(conf_path):
 				dist = "debian"
 				if isit.debian_vers:
 					vers = isit.debian_vers
+
 			elif isit.ubuntu:
 				dist = "ubuntu"
 				if isit.ubuntu_vers:
 					vers = isit.ubuntu_vers
+
 			elif isit.centos:
 				dist = "centos"
 				if isit.centos_vers:
 					vers = isit.centos_vers
+				else:
+					vers = platform.dist()[1].split('.')[0]
+
 			elif isit.redhat:
 				dist = "redhat"
 				if isit.redhat_vers:
 					vers = isit.redhat_vers
+				else:
+					vers = platform.dist()[1].split('.')[0]
+
 			elif isit.archlinux:
 				dist = "archlinux"
 				if isit.archlinux_vers:
