@@ -27,28 +27,34 @@ def get_conf(conf_path):
 		elif isit.bit64:
 			parser.set('system', 'arch', 'x86_64')
 
-	dist = 'unknown'
-	vers = 'unknown'
 	if not parser.has_option('system', 'dist'):
+		dist = 'unknown'
+		vers = 'unknown'
+
 		if isit.osx:
 			dist = 'osx'
 			vers = isit.osx_vers
 		elif isit.linux:
 			if isit.debian:
 				dist = "debian"
-				vers = isit.debian_vers
+				if isit.debian_vers:
+					vers = isit.debian_vers
 			elif isit.ubuntu:
 				dist = "ubuntu"
-				vers = isit.ubuntu_vers
+				if isit.ubuntu_vers:
+					vers = isit.ubuntu_vers
 			elif isit.centos:
 				dist = "centos"
-				vers = isit.centos_vers
+				if isit.centos_vers:
+					vers = isit.centos_vers
 			elif isit.redhat:
 				dist = "redhat"
-				vers = isit.redhat_vers
+				if isit.redhat_vers:
+					vers = isit.redhat_vers
 			elif isit.archlinux:
 				dist = "archlinux"
-				vers = isit.archlinux_vers
+				if isit.archlinux_vers:
+					vers = isit.archlinux_vers
 
 		parser.set('system', 'dist', dist)
 		parser.set('system', 'vers', vers)
