@@ -45,7 +45,13 @@ def get_conf(conf_path):
 				vers = platform.dist()[1].split('.')[0]
 			elif dist == 'redhat':
 				vers = platform.dist()[1].split('.')[0]
-
+			else:
+				# Archlinux
+				if os.path.exists('/etc/os-release'):
+					r = re.compile('"(.*?)"')
+					if r.search(open('/etc/os-release').readlines()[0]).group(1) == 'Arch Linux':
+						dist = 'archlinux'
+						vers = 'novers'
 		parser.set('system', 'dist', dist)
 		parser.set('system', 'vers', vers)
 
