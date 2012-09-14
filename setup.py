@@ -15,7 +15,7 @@ if sys.argv[-1] == 'publish':
 
 setup(
 	name='ubik',
-	version='0.1.1',
+	version='0.1.2',
 	description='Minimal packages manager',
 	long_description=	open('README.rst').read() + '\n\n' +
 						open('API.rst').read() + '\n\n' +
@@ -27,7 +27,7 @@ setup(
 	keywords="ubik package linux",
 	packages = ['ubik'],
 	scripts=['bin/ubik','bin/echo_ubik_conf'],
-	install_requires=['progressbar==2.3', 'requests', 'docopt==0.5.0'],
+	install_requires=['progressbar==2.3', 'requests', 'docopt==0.5.0', 'isit==0.1.0'],
 	classifiers=(
 		'Intended Audience :: Developers',
 		'Natural Language :: English',
