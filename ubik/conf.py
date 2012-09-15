@@ -38,7 +38,7 @@ def get_conf(conf_path):
 			if isit.debian:
 				dist = "debian"
 				if isit.debian_vers:
-					vers = isit.debian_vers
+					vers = isit.debian_vers.split('.')[0]
 
 			elif isit.ubuntu:
 				dist = "ubuntu"
