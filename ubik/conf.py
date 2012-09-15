@@ -48,12 +48,12 @@ def get_conf(conf_path):
 			elif isit.centos:
 				dist = "centos"
 				if isit.centos_vers:
-					vers = isit.centos_vers
+					vers = isit.centos_vers.split('.')[0]
 
 			elif isit.redhat:
 				dist = "redhat"
 				if isit.redhat_vers:
-					vers = isit.redhat_vers
+					vers = isit.redhat_vers.split('.')[0]
 
 			elif isit.archlinux:
 				dist = "archlinux"
