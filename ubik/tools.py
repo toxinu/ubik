@@ -108,8 +108,11 @@ def unpacker(package):
 		for _dir in dirs:
 			src = '%s/%s' % (path, _dir)
 			dst = '%s' % src.replace(root_content, conf.get('settings', 'packages'))
-			if not os.path.exists(dst):
+			if os.path.islink(src):
+				shutil.move(src, dst)
+			elif not os.path.exists(dst):
 				os.makedirs(dst)
+
 		for _file in files:
 			src = '%s/%s' % (path, _file)
 			dst = '%s' % src.replace(root_content, conf.get('settings', 'packages'))
