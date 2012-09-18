@@ -16,15 +16,6 @@ set -u
 
 trap clean EXIT
 
-clean () {
-	echo " :: Clean before exit"
-	if [ -n "$WEBCODE" ]; then
-		kill -9 $WEBCODE > /dev/null 2>&1
-	fi
-}
-
-: ${WEBCODE:=""}
-
 if [ "${PWD##*/}" != "tests" ]; then
 	echo "Must be in tests dir"
 	exit 1
@@ -40,6 +31,13 @@ fi
 ##################################################
 tests_dir=$(pwd)
 env_name="venv"	# Used in .gitignore
+
+clean () {
+	echo " :: Clean before exit"
+	if [ -f $tests_dir/$env_name/.webpid ]; then
+		kill -9 $(cat $tests_dir/$env_name/.webpid) > /dev/null 2>&1
+	fi
+}
 
 ##################################################
 # Run tests
@@ -68,25 +66,16 @@ bash $tests_dir/tests/test_00_create_package.sh "$tests_dir/$env_name"
 echo " :: Create repo"
 bash $tests_dir/tests/test_01_create_repo.sh "$tests_dir/$env_name"
 
-# Run webserver
-echo " :: Run webserver"
-python -m SimpleHTTPServer 8080 &
-WEBCODE="$?"
-WEBPID="$!"
-if [ $WEBCODE -gt 0 ]; then
-	echo " :: Failed to start webserver"
-	exit 1
-fi
-echo "    + $WEBPID"
-
 TESTS=$(cd $tests_dir/tests && ls -1 . | grep test_ | grep .py)
 for TEST in $TESTS; do
 	echo " :: Run $TEST"
 	python $tests_dir/tests/$TEST -v
+	if [ $? -ne 0 ]; then exit 1; fi
 done
 
 # Stop webserver
 echo " :: Stop webserver"
-kill -9 $WEB_PID
+WEBPID=$(cat $tests_dir/$env_name/.webpid)
+kill -9 $WEBPID
 
 echo " :: Finised"

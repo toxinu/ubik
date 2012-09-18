@@ -19,8 +19,18 @@ class TestDatabase(unittest.TestCase):
 		self.assertEqual(self.db.get_installed(), [])
 
 	def test_03_find_package(self):
-		self.assertTrue(self.db.packages.get('test_deps'))
-		self.assertTrue(self.db.get('test_deps'))
+		pkg_a = ['package_01', 'package_02', 'package_03', 'package_04',
+				'package_06', 'package_10', 'package_11', 'package_12', 'package_13']
+		self.assertTrue(self.db.get(pkg_a))
+		for package in pkg_a:
+			self.assertTrue(self.db.packages.get(package))
+
+		pkg_b = ['package_07', 'package_08', 'package_09']
+		self.assertFalse(self.db.get(pkg_b))
+		for package in pkg_b:
+			self.assertFalse(self.db.packages.get(package))
+
+	# Need regexp tests
 
 if __name__ == '__main__':
 	unittest.main()
