@@ -12,6 +12,19 @@
 # Checks
 ##################################################
 set -e
+set -u
+
+trap clean EXIT
+
+clean () {
+	echo " :: Clean before exit"
+	if [ -n "$WEBCODE" ]; then
+		kill -9 $WEBCODE > /dev/null 2>&1
+	fi
+}
+
+: ${WEBCODE:=""}
+
 if [ "${PWD##*/}" != "tests" ]; then
 	echo "Must be in tests dir"
 	exit 1
@@ -26,7 +39,7 @@ fi
 # Variables
 ##################################################
 tests_dir=$(pwd)
-env_name="tests-env"	# Used in .gitignore
+env_name="venv"	# Used in .gitignore
 
 ##################################################
 # Run tests
@@ -35,23 +48,45 @@ if [ -e $tests_dir/$env_name ]; then
 	echo " :: Clean old tests"
 	rm -rf $tests_dir/$env_name
 fi
+
 echo " :: Create virtualenv"
-virtualenv $env_name
-cd $env_name
-source bin/activate
-pip install -e ../..
-mkdir -p {etc,opt,var/log}
-sed 's#%tests_dir%#'$(pwd)'#g' $tests_dir/ubik.conf > $tests_dir/$env_name/etc/ubik.conf
-cp $tests_dir/tests_env.py .
+virtualenv $tests_dir/$env_name
+cd $tests_dir/$env_name
+set +u
+source $tests_dir/$env_name/bin/activate
+set -u
+pip install -e $tests_dir/..
+mkdir -p $tests_dir/$env_name/{etc,opt,var}
+mkdir -p $tests_dir/$env_name/var/log
+sed 's#%tests_dir%#'$tests_dir/$env_name'#g' $tests_dir/ubik.conf > $tests_dir/$env_name/etc/ubik.conf
+cp $tests_dir/tests/env.py $tests_dir/$env_name
+pip install git+http://github.com/Socketubs/Ubik-toolbelt.git
 
-# Database tests
-echo " :: Run tests_database.py"
-cp $tests_dir/tests_database.py .
-python tests_database.py -v
+# Pre-Tests
+echo " :: Create packages"
+bash $tests_dir/tests/test_00_create_package.sh "$tests_dir/$env_name"
+echo " :: Create repo"
+bash $tests_dir/tests/test_01_create_repo.sh "$tests_dir/$env_name"
 
-# Package tests
-echo " :: Run tests_package.py"
-cp $tests_dir/tests_package.py .
-python tests_package.py -v
+# Run webserver
+echo " :: Run webserver"
+python -m SimpleHTTPServer 8080 &
+WEBCODE="$?"
+WEBPID="$!"
+if [ $WEBCODE -gt 0 ]; then
+	echo " :: Failed to start webserver"
+	exit 1
+fi
+echo "    + $WEBPID"
 
-echo " :: Done"
+TESTS=$(cd $tests_dir/tests && ls -1 . | grep test_ | grep .py)
+for TEST in $TESTS; do
+	echo " :: Run $TEST"
+	python $tests_dir/tests/$TEST -v
+done
+
+# Stop webserver
+echo " :: Stop webserver"
+kill -9 $WEB_PID
+
+echo " :: Finised"
