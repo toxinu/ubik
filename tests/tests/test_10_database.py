@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-import tests_env
+import env
 import unittest
 
 import ubik.core as api

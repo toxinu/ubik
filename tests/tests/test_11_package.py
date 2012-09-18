@@ -2,7 +2,7 @@
 # coding: utf-8
 import os
 
-import tests_env
+import env
 import unittest
 
 import ubik.core as api
