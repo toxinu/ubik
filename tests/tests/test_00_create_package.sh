@@ -1,4 +1,7 @@
 #!/bin
+set -e
+set -u
+
 ROOT="${1}"
 
 # i386
@@ -60,7 +63,7 @@ function set_deps() {
 	local PKG="${1}"
 	local DEPS="${2}"
 	cd $PKG_ROOT/$PKG
-	sed -i 's#REQUIRES=""#'REQUIRES\=\"$DEPS\"'#g' control
+	sed -i "" "s#REQUIRES=""#REQUIRES=\"$DEPS\"#g" control >/dev/null
 	cd -
 }
 
@@ -68,7 +71,7 @@ function set_bin() {
 	local PKG="${1}"
 	cd $PKG_ROOT/$PKG
 	mkdir -p src/bin >/dev/null
-	echo '#!/bin/bash\necho \"Im '$PKG'\"' > src/bin/$PKG
+	echo -e '#!/bin/bash'"\necho \"Im $PKG\"" > src/bin/$PKG
 	chmod +x src/bin/$PKG
 	cd -
 }
@@ -76,13 +79,15 @@ function set_bin() {
 function set_install() {
 	local PKG="${1}"
 	cd $PKG_ROOT/$PKG
-	sed -i 's#true#cp -R \$SRC/* \$DST#g' make.sh
+	sed -i "" "s#true#cp -R \$SRC/* \$DST#g" make.sh >/dev/null
+	cd -
 }
 
 function build_package() {
 	local PKG="${1}"
 	cd $PKG_ROOT/$PKG
-	./make.sh install && ./make.sh package
+	./make.sh install
+	./make.sh package
 	cd -
 }
 
@@ -103,9 +108,7 @@ send_to_repo "package_01" "i386" "debian" "6"
 
 # package_02
 create_package "package_02"
-set_deps "package_02" "package_02"
 build_package "package_02"
-send_to_repo "package_02"
 send_to_repo "package_02" "i386" "debian" "6"
 
 # package_03
@@ -122,7 +125,6 @@ send_to_repo "package_04" "noarch" "nodist" "novers"
 # package_05
 create_package "package_05"
 build_package "package_05"
-send_to_repo "package_05"
 send_to_repo "package_05" "noarch" "nodist" "novers"
 
 # package_06
