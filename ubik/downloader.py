@@ -19,12 +19,15 @@ def get_proxies():
 			if conf.get('proxy', 'http_proxy'):
 				if conf.has_option('proxy', 'http_auth'):
 					if conf.get('proxy', 'http_auth'): 
-						proxies['http_proxy'] = '%s@%s' % (
+						proxies['http'] = '%s@%s' % (
 						conf.get('proxy', 'http_auth'),
 						conf.get('proxy', 'http_proxy'))
 				else:			
-					proxies['http_proxy'] = '%s' % (
+					proxies['http'] = '%s' % (
 					conf.get('proxy', 'http_proxy'))
+	elif os.environ.get('http_proxy'):
+		proxies['http'] = os.environ['http_proxy']
+
 	if conf.has_option('proxy', 'https_proxy'):
 		if conf.get('proxy', 'https_proxy'):
 			if conf.has_option('proxy', 'https_auth'):
@@ -35,6 +38,11 @@ def get_proxies():
 			else:			
 				proxies['https_proxy'] = '%s' % (
 				conf.get('proxy', 'https_proxy'))
+
+	elif os.environ.get('https_proxy'):
+		proxies['https'] = os.environ['https_proxy']
+
+	return proxies
 
 def get_timeout():
 	timeout = 10
