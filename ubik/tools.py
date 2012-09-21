@@ -135,7 +135,7 @@ def unpacker(package):
 				linkto = os.readlink(src)
 				os.symlink(linkto, dst)
 			elif not os.path.exists(dst):
-				shutil.copyfile(src, dst)
+				shutil.copy2(src, dst)
 
 	shutil.rmtree(root_content)
 	archive.close()
