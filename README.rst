@@ -7,9 +7,6 @@ Description
 Ubik is a minimal package manager inspired by the ``pkgmgr`` of
 `Canopsis`_ but rewritten in Python (from bash).
 
-Not as sexy as `Homebrew`_ for ``OsX`` but available for every ``Unix``
-environment.
-
 .. image:: http://dl.dropbox.com/u/79447684/Github/Ubik/screenshot_01.png
 .. image:: http://dl.dropbox.com/u/79447684/Github/Ubik/screenshot_02.png
 
@@ -57,7 +54,6 @@ License is `AGPL3`_, it fully compatible with ``Canopsis``. See
 `LICENSE`_.
 
 .. _Canopsis: https://github.com/capensis/canopsis
-.. _Homebrew: http://mxcl.github.com/homebrew/
 .. _Ubik toolbelt: https://github.com/Socketubs/Ubik-toolbelt
 .. _Requests: https://github.com/kennethreitz/requests
 .. _Docopt: https://github.com/docopt/docopt
