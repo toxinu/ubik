@@ -18,3 +18,4 @@ if [ `ps -p$WEBPID | wc -l` -lt 2 ]; then
 else
     echo "$WEBPID" > $ROOT/.webpid
 fi
+sleep 3
