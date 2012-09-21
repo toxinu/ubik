@@ -138,7 +138,7 @@ def unpacker(package):
 					os.remove(dst)
 				os.symlink(linkto, dst)
 				
-			elif not os.path.exists(dst):
+			else:
 				shutil.copy2(src, dst)
 
 	shutil.rmtree(root_content)
