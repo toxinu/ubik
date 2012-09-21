@@ -109,7 +109,8 @@ def unpacker(package):
 			src = '%s/%s' % (path, _dir)
 			dst = '%s' % src.replace(root_content, conf.get('settings', 'packages'))
 			if os.path.islink(src):
-				shutil.move(src, dst)
+				linkto = os.readlink(src)
+				os.symlink(linkto, dst)
 			elif not os.path.exists(dst):
 				os.makedirs(dst)
 
@@ -127,7 +128,11 @@ def unpacker(package):
 							logger.debug('Config file conflict: %s/%s' % (path, _file))
 							dst += '.new'
 			logger.debug(" :: %s - %s" % (src, dst))
-			shutil.move(src, dst)
+			if os.path.islink(src):
+				linkto = os.readlink(src)
+				os.symlink(linkto, dst)
+			elif not os.path.exists(dst):
+				shutil.copyfile(src, dst)
 
 	shutil.rmtree(root_content)
 	archive.close()
