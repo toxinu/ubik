@@ -6,6 +6,7 @@ import subprocess
 import tarfile
 import shutil
 import bz2
+import filecmp
 
 from ubik.core import conf
 from ubik.logger import logger
@@ -125,6 +126,8 @@ def unpacker(package):
 					if os.path.isfile('%s/%s' % (path, _file)):
 						# If file already exist
 						if os.path.exists(dst):
+							if cmp(src, dst):
+								continue
 							logger.debug('Config file conflict: %s/%s' % (path, _file))
 							dst += '.new'
 			logger.debug(" :: %s - %s" % (src, dst))
