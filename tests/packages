@@ -1,0 +1,19 @@
+Package Available:
+    Good System:
+      - with one dep(success)      -> package_01
+      - without dep(success)       -> package_02
+      - with itself in dep(fail)   -> package_03
+
+    Any System:
+      - with one dep(success)      -> package_04
+      - without dep(success)       -> package_05
+      - with itself in dep(fail)   -> package_06
+
+    Other:
+      - Bad arch(fail)             -> package_07
+      - Bad dist(fail)             -> package_08
+      - Bad vers(fail)             -> package_09
+      - Unvailable dep(fail)       -> package_10
+      - Dep in another arch(fail)  -> package_11
+      - Dep in another dist(fail)  -> package_12
+      - Dep in another vers(fail)  -> package_13
