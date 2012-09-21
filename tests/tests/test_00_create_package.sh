@@ -63,11 +63,7 @@ function set_deps() {
 	local PKG="${1}"
 	local DEPS="${2}"
 	cd $PKG_ROOT/$PKG
-	if [[ $(uname -s) =~ "[Dd]arwin" ]]; then
-		sed -i "" "s#REQUIRES=""#REQUIRES=\"$DEPS\"#g" control >/dev/null
-	else
-		sed -i "s#REQUIRES=""#REQUIRES=\"$DEPS\"#g" control >/dev/null
-	fi
+	sed -i -e "s#REQUIRES=""#REQUIRES=\"$DEPS\"#g" control >/dev/null
 	cd -
 }
 
@@ -83,11 +79,7 @@ function set_bin() {
 function set_install() {
 	local PKG="${1}"
 	cd $PKG_ROOT/$PKG
-	if [[ $(uname -s) =~ "[Dd]arwin" ]]; then
-		sed -i "" "s#true#cp -R \$SRC/* \$DST#g" make.sh >/dev/null
-	else
-		sed -i "s#true#cp -R \$SRC/* \$DST#g" make.sh >/dev/null
-	fi
+	sed -i -e "s#true#cp -R \$SRC/* \$DST#g" make.sh >/dev/null
 	cd -
 }
 
