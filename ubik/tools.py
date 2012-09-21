@@ -133,7 +133,11 @@ def unpacker(package):
 			logger.debug(" :: %s - %s" % (src, dst))
 			if os.path.islink(src):
 				linkto = os.readlink(src)
+				
+				if os.path.exists(dst):
+					os.remove(dst)
 				os.symlink(linkto, dst)
+				
 			elif not os.path.exists(dst):
 				shutil.copy2(src, dst)
 
