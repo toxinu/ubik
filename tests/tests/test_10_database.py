@@ -30,7 +30,11 @@ class TestDatabase(unittest.TestCase):
 		for package in pkg_b:
 			self.assertFalse(self.db.packages.get(package))
 
-	# Need regexp tests
+		self.assertEqual(len(self.db.get('package_*')), 10)
+		self.assertEqual(len(self.db.get('package_0*')), 6)
+		self.assertEqual(len(self.db.get('package_0.$')), 6)
+		self.assertEqual(len(self.db.get('(.*)age')), 0)
+		self.assertEqual(len(self.db.get('(.*)age*')), 10)
 
 if __name__ == '__main__':
 	unittest.main()
