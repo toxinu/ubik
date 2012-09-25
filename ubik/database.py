@@ -86,9 +86,11 @@ class Database(object):
 				for key,value in self.packages.items():
 					if package[-1] != '*' and len(package) > 1:
 						pattern = re.compile(r'%s$' % package)
+					elif package[-1] == '*':
+						pattern = re.compile(package[:-1])
 					else:
 						pattern = re.compile(package)
-					if re.search(pattern, key):
+					if pattern.search(key):
 						result.append(value)
 			else:
 				try:
