@@ -8,6 +8,8 @@ Test machine is forced to be a ``debian 6 i386`` with ubik configuration file.
 Packages informations
 ---------------------
 
+Warning ! Table is not rendered on Github, see `raw <https://raw.github.com/Socketubs/Ubik/master/tests/README.rst>`_ file.
+
 ============  ======  ======  ======  ==========  ======  ================
 Name          Arch    Dist    Vers    Requires    Status  Description
 ------------  ------  ------  ------  ----------  ------  ----------------
@@ -24,9 +26,9 @@ package_10    i386    debian  6       jambon        KO
 package_11    i386    debian  6       package_07    KO
 package_12    i386    debian  6       package_08    KO
 package_13    i386    debian  6       package_09    KO
-package_14    i386    debian  6                     OK   Test symlink
-package_15    i386    debian  6                     OK   Test permissions
-============  ======  ======  ======  ==========  ====== ================
+package_14    i386    debian  6                     OK    Test symlink
+package_15    i386    debian  6                     OK    Test permissions
+============  ======  ======  ======  ==========  ======  ================
 
 test_00_create_package
 ######################
