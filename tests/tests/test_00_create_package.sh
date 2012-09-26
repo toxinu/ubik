@@ -4,40 +4,6 @@ set -u
 
 ROOT="${1}"
 
-# i386
-# debian
-# 6
-
-# package_01 : 	deps=[package_02]
-#		arch=i386
-#		dist=debian
-#		vers=6
-#
-# package_02 : 	deps=[]
-#		arch=i386
-#		dist=debian
-#		vers=6
-#
-# package_03 : 	deps=[package_03]
-#		arch=i386
-#		dist=debian
-#		vers=6
-#
-# package_04 : 	deps=[package_05]
-#		arch=noarch
-#		dist=nodist
-#		vers=novers
-#
-# package_05 : 	deps=[]
-#		arch=noarch
-#		dist=nodist
-#		vers=novers
-#
-# package_06 : 	deps=[package_03]
-#		arch=noarch
-#		dist=nodist
-#		vers=novers
-
 PKG_ROOT="$ROOT/home/packages"
 REPO_ROOT="$ROOT/home/repo"
 BRANCH="tests"
@@ -79,7 +45,7 @@ function set_bin() {
 function set_install() {
 	local PKG="${1}"
 	cd $PKG_ROOT/$PKG
-	sed -i -e "s#true#cp -R \$SRC/* \$DST#g" make.sh >/dev/null
+	sed -i -e "s#true#cp -p -R \$SRC/* \$DST#g" make.sh >/dev/null
 	cd -
 }
 
@@ -171,3 +137,19 @@ create_package "package_13"
 set_deps "package_13" "package_09"
 build_package "package_13"
 send_to_repo "package_13" "i386" "debian" "6"
+
+# package_14
+create_package "package_14"
+mkdir $PKG_ROOT/package_14/src/lib
+cd $PKG_ROOT/package_14/src/bin
+mv package_14 ../lib/package_14
+ln -s ../lib/package_14 package_14
+cd -
+build_package "package_14"
+send_to_repo "package_14" "i386" "debian" "6"
+
+# package_15
+create_package "package_15"
+chmod 777 $PKG_ROOT/package_15/src/bin/package_15
+build_package "package_15"
+send_to_repo "package_15" "i386" "debian" "6"

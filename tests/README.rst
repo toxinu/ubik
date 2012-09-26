@@ -52,10 +52,27 @@ Test machine is forced to be a DEBIAN 6 i386 with ubik configuration file.
 ## test_15_package_07_08_09
 
 - Try to get these packages from db object and must fail
+  - package_07 bad arch
+  - package_08 bad dist
+  - package_09 bad vers
 
 ## test_16_package_10
 
 - Try to resolv with Installer object and must faild with unvailable "jambon" dep
+
+## test_17_package_11_12_13
+
+- Try to install package with dep which have wrong arch (pacakge_11,package_07)
+- Try to install package with dep which have wrong arch (pacakge_12,package_08)
+- Try to install package with dep which have wrong arch (pacakge_13,package_09)
+
+## test_18_package_14
+
+- Install package with symlink and check it's ok after install
+
+## test_19_package_15
+
+- Install package with bin file in 777 permissions and check it's ok after install
 
 ### Packages informations
 
@@ -64,7 +81,8 @@ Package Available:
     + with package_02 dep(success)     -> package_01
     + without dep(success)             -> package_02
     + without dep(success)             -> package_03
-    - without dep, symlinks in package -> package_14
+    + without dep, symlinks in package -> package_14
+    + without dep, 777 on bin          -> package_15
 
   Any System (noarch/nodist/novers):
     + with package_05 dep(success)     -> package_04
@@ -76,11 +94,19 @@ Package Available:
     + Bad dist (ubuntu)(fail)                 -> package_08
     + Bad vers (5)(fail)                      -> package_09
     + Unvailable dep (jambon)(fail)           -> package_10
-    - Dep in another arch (package_07)(fail)  -> package_11
-    - Dep in another dist (package_08)(fail)  -> package_12
-    - Dep in another vers (package_09)(fail)  -> package_13
+    + Dep in another arch (package_07)(fail)  -> package_11
+    + Dep in another dist (package_08)(fail)  -> package_12
+    + Dep in another vers (package_09)(fail)  -> package_13
 
 Legend:
 
 - "-" not done
 - "+" already done
+
+### Todo
+
+- Test md5 checksum
+- Test package version upgrade
+- test package release upgrade
+- Test reinstall
+- Check safe_conf option
