@@ -66,6 +66,7 @@ bash $tests_dir/tests/test_00_create_package.sh "$tests_dir/$env_name"
 echo " :: Create repo"
 bash $tests_dir/tests/test_01_create_repo.sh "$tests_dir/$env_name"
 
+unset http_proxy
 TESTS=$(cd $tests_dir/tests && ls -1 . | grep test_ | grep .py)
 for TEST in $TESTS; do
 	echo " :: Run $TEST"
