@@ -1,20 +1,24 @@
-# Tests
+Tests
+=====
 
-Tests are executed in virtualenv, test_00 create different package, test_01 create local repo and another bunch of tests do the job.
+Tests are executed in virtualenv, ``test_00`` create different package, ``test_01`` create local repo and another bunch of tests do the job.
 
-Test machine is forced to be a DEBIAN 6 i386 with ubik configuration file.
+Test machine is forced to be a ``debian 6 i386`` with ubik configuration file.
 
-## test_00_create_package
+test_00_create_package
+----------------------
 
 - Create as many package as different package resolution I want
-- Test the ubik-package from ubik-toolbelt
+- Test the ``ubik-package`` from ``ubik-toolbelt``
 
-## test_01_create_repo
+test_01_create_repo
+-------------------
 
 - Create repo with previous packages
-- Test the ubik-repo from ubik-toolbelt
+- Test the ``ubik-repo`` from ``ubik-toolbelt``
 
-## test_10_database
+test_10_database
+----------------
 
 - Sync db with repo
 - Check if no package installed
@@ -22,9 +26,10 @@ Test machine is forced to be a DEBIAN 6 i386 with ubik configuration file.
 - Check simple package query
 - Check package query with regex
 
-## test_11_package_01_02
+test_11_package_01_02
+---------------------
 
-- Package 01 is available and good system with package_02 as dep
+- Package 01 is available and good system with ``package_02`` as dep
 - Package 02 is available and good system with no dep
 
 - Database search
@@ -32,53 +37,63 @@ Test machine is forced to be a DEBIAN 6 i386 with ubik configuration file.
 - Installer object
 - Dependencies resolver object
 - Some api methods
-- Bin script from package_01 and package_2
+- Bin script from ``package_01`` and ``package_2``
 - Remove packages
 - Check pacakge content files are removed
 - Some api methods
 
-## test_12_package_03
+test_12_package_03
+------------------
 
-- Same as previous but with package_03, which is available, good system and no dep
+- Same as previous but with ``package_03``, which is available, good system and no dep
 
-## test_13_package_04_05
+test_13_package_04_05
+---------------------
 
-- Same as test_11_package_01_02 but packages are (noarch/nodist/novers)
+- Same as ``test_11_package_01_02`` but packages are (noarch/nodist/novers)
 
-## test_14_package_06
+test_14_package_06
+------------------
 
 - Try to install noarch/nodist/novers package with itself in deps but must fail
 
-## test_15_package_07_08_09
+test_15_package_07_08_09
+------------------------
 
 - Try to get these packages from db object and must fail
-  - package_07 bad arch
-  - package_08 bad dist
-  - package_09 bad vers
+  - ``package_07`` bad arch
+  - ``package_08`` bad dist
+  - ``package_09`` bad vers
 
-## test_16_package_10
+test_16_package_10
+------------------
 
-- Try to resolv with Installer object and must faild with unvailable "jambon" dep
+- Try to resolv with Installer object and must faild with unvailable ``jambon`` dep
 
-## test_17_package_11_12_13
+test_17_package_11_12_13
+------------------------
 
-- Try to install package with dep which have wrong arch (pacakge_11,package_07)
-- Try to install package with dep which have wrong arch (pacakge_12,package_08)
-- Try to install package with dep which have wrong arch (pacakge_13,package_09)
+- Try to install package with dep which have wrong arch (``pacakge_11``, ``package_07``)
+- Try to install package with dep which have wrong arch (``pacakge_12``, ``package_08``)
+- Try to install package with dep which have wrong arch (``pacakge_13``, ``package_09``)
 
-## test_18_package_14
+test_18_package_14
+------------------
 
 - Install package with symlink and check it's ok after install
 
-## test_19_package_15
+test_19_package_15
+------------------
 
-- Install package with bin file in 777 permissions and check it's ok after install
+- Install package with bin file in ``777`` permissions and check it's ok after install
 
-### Packages informations
+Packages informations
+#####################
 
 Package Available:
   Good System (i386/debian/6):
-    + with package_02 dep(success)     -> package_01
+    + with package_02 dep(success)
+	+ package_01
     + without dep(success)             -> package_02
     + without dep(success)             -> package_03
     + without dep, symlinks in package -> package_14
@@ -98,12 +113,8 @@ Package Available:
     + Dep in another dist (package_08)(fail)  -> package_12
     + Dep in another vers (package_09)(fail)  -> package_13
 
-Legend:
-
-- "-" not done
-- "+" already done
-
-### Todo
+Todo
+####
 
 - Test md5 checksum
 - Test package version upgrade
