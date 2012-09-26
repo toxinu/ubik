@@ -44,7 +44,7 @@ class Reinstaller(object):
 		for dep in db.get(package.requires):
 			if dep not in self.resolved:
 				if dep in self.unresolved:
-					raise Exception('Circular reference detected: %s -> %s' % (package.name, dep.name))
+					raise ReinstallerException('Circular reference detected: %s -> %s' % (package.name, dep.name))
 				self.deps_resolv(dep, self.resolved, self.unresolved)
 		self.resolved.append(package)
 		self.unresolved.remove(package)
@@ -61,7 +61,7 @@ class Reinstaller(object):
 				if not checkmd5(package):
 					logger.info('%s md5 invalid' % package.name)
 					stream_logger.info('   | Md5 invalid, package corrumpt')	
-					ReinstallerException('Invalid Md5')
+					raise ReinstallerException('Invalid Md5')
 			# Cached
 			else:
 				logger.info('%s already in cache' % package.name)
@@ -72,13 +72,13 @@ class Reinstaller(object):
 					if not checkmd5(package):
 						logger.info('%s md5 invalid' % package.name)
 						stream_logger.info('   | Md5 invalid, package corrumpt')	
-						ReinstallerException('Invalid Md5')
+						raise ReinstallerException('Invalid Md5')
 				else:
 					stream_logger.info('    | %s already in cache' % package.name)
 
 	def reinstall(self, ignore_errors=False):
 		if not self.packages:
-			raise InstallerException('Nothing to reinstall')
+			raise ReinstallerException('Nothing to reinstall')
 		stream_logger.info(' :: Reinstall')	
 		for package in self.packages:
 			package.install(ignore_errors)

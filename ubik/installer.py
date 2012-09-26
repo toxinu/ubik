@@ -48,7 +48,7 @@ class Installer(object):
 			logger.debug(" + %s: %s" % (dep.name ,dep.requires))
 			if dep not in self.resolved:
 				if dep in self.unresolved:
-					raise Exception('Circular reference detected: %s -> %s' % (package.name, dep.name))
+					raise InstallerException('Circular reference detected: %s -> %s' % (package.name, dep.name))
 				self.deps_resolv(dep, self.resolved, self.unresolved, level+1)
 		self.resolved.append(package)
 		self.unresolved.remove(package)
@@ -65,7 +65,7 @@ class Installer(object):
 				if not checkmd5(package):
 					logger.info('%s md5 invalid' % package.name)
 					stream_logger.info('   | Md5 invalid, package corrumpt')	
-					InstallerException('Invalid Md5')
+					raise InstallerException('Invalid Md5')
 			# Cached
 			else:
 				logger.info('%s already in cache' % package.name)
@@ -76,7 +76,7 @@ class Installer(object):
 					if not checkmd5(package):
 						logger.info('%s md5 invalid' % package.name)
 						stream_logger.info('   | Md5 invalid, package corrumpt')	
-						InstallerException('Invalid Md5')
+						raise InstallerException('Invalid Md5')
 				else:
 					stream_logger.info('    | %s already in cache' % package.name)
 
