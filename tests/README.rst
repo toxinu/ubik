@@ -49,28 +49,36 @@ Test machine is forced to be a DEBIAN 6 i386 with ubik configuration file.
 
 - Try to install noarch/nodist/novers package with itself in deps but must fail
 
+## test_15_package_07_08_09
+
+- Try to get these packages from db object and must fail
+
+## test_16_package_10
+
+- Try to resolv with Installer object and must faild with unvailable "jambon" dep
+
 ### Packages informations
 
 Package Available:
-    Good System (i386/debian/6):
-      + with package_02 dep(success)     -> package_01
-      + without dep(success)             -> package_02
-      + without dep(success)             -> package_03
-      - without dep, symlinks in package -> package_14
+  Good System (i386/debian/6):
+    + with package_02 dep(success)     -> package_01
+    + without dep(success)             -> package_02
+    + without dep(success)             -> package_03
+    - without dep, symlinks in package -> package_14
 
-    Any System (noarch/nodist/novers):
-      + with package_05 dep(success)     -> package_04
-      + without dep(success)             -> package_05
-      + with itself in dep(fail)         -> package_06
+  Any System (noarch/nodist/novers):
+    + with package_05 dep(success)     -> package_04
+    + without dep(success)             -> package_05
+    + with itself in dep(fail)         -> package_06
 
-    Other:
-      - Bad arch (x86_64)(fail)                 -> package_07
-      - Bad dist (ubuntu)(fail)                 -> package_08
-      - Bad vers (5)(fail)                      -> package_09
-      - Unvailable dep (jambon)(fail)           -> package_10
-      - Dep in another arch (package_07)(fail)  -> package_11
-      - Dep in another dist (package_08)(fail)  -> package_12
-      - Dep in another vers (package_09)(fail)  -> package_13
+  Other:
+    + Bad arch (x86_64)(fail)                 -> package_07
+    + Bad dist (ubuntu)(fail)                 -> package_08
+    + Bad vers (5)(fail)                      -> package_09
+    + Unvailable dep (jambon)(fail)           -> package_10
+    - Dep in another arch (package_07)(fail)  -> package_11
+    - Dep in another dist (package_08)(fail)  -> package_12
+    - Dep in another vers (package_09)(fail)  -> package_13
 
 Legend:
 
