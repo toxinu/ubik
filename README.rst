@@ -36,7 +36,7 @@ Take a look at `Ubik toolbelt`_.
 Tests
 -----
 
-You can run tests with ``/tests/run_tests.sh``.
+You can run tests with ``tests/run_tests.sh`` script.
 
 Thanks
 ------
