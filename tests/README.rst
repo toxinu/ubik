@@ -5,20 +5,43 @@ Tests are executed in virtualenv, ``test_00`` create different package, ``test_0
 
 Test machine is forced to be a ``debian 6 i386`` with ubik configuration file.
 
+Packages informations
+---------------------
+
+============  ======  ======  ======  ==========  ======  ================
+Name          Arch    Dist    Vers    Requires    Status  Description
+------------  ------  ------  ------  ----------  ------  ----------------
+package_01    i386    debian  6       package_02    OK     
+package_02    i386    debian  6                     OK
+package_03    i386    debian  6                     OK
+package_04    noarch  nodist  novers  package_05    OK
+package_05    noarch  nodist  novers                OK
+package_06    noarch  nodist  novers  package_06    KO
+package_07    x86_64  debian  6                     KO
+package_08    i386    ubuntu  12.04                 KO
+package_09    i386    debian  5                     KO
+package_10    i386    debian  6       jambon        KO  
+package_11    i386    debian  6       package_07    KO
+package_12    i386    debian  6       package_08    KO
+package_13    i386    debian  6       package_09    KO
+package_14    i386    debian  6                     OK   Test symlink
+package_15    i386    debian  6                     OK   Test permissions
+============  ======  ======  ======  ==========  ====== ================
+
 test_00_create_package
-----------------------
+######################
 
 - Create as many package as different package resolution I want
 - Test the ``ubik-package`` from ``ubik-toolbelt``
 
 test_01_create_repo
--------------------
+###################
 
 - Create repo with previous packages
 - Test the ``ubik-repo`` from ``ubik-toolbelt``
 
 test_10_database
-----------------
+################
 
 - Sync db with repo
 - Check if no package installed
@@ -27,7 +50,7 @@ test_10_database
 - Check package query with regex
 
 test_11_package_01_02
----------------------
+#####################
 
 - Package 01 is available and good system with ``package_02`` as dep
 - Package 02 is available and good system with no dep
@@ -43,78 +66,52 @@ test_11_package_01_02
 - Some api methods
 
 test_12_package_03
-------------------
+##################
 
 - Same as previous but with ``package_03``, which is available, good system and no dep
 
 test_13_package_04_05
----------------------
+#####################
 
 - Same as ``test_11_package_01_02`` but packages are (noarch/nodist/novers)
 
 test_14_package_06
-------------------
+##################
 
 - Try to install noarch/nodist/novers package with itself in deps but must fail
 
 test_15_package_07_08_09
-------------------------
+########################
 
 - Try to get these packages from db object and must fail
-  - ``package_07`` bad arch
-  - ``package_08`` bad dist
-  - ``package_09`` bad vers
+  + ``package_07`` bad arch
+  + ``package_08`` bad dist
+  + ``package_09`` bad vers
 
 test_16_package_10
-------------------
+##################
 
 - Try to resolv with Installer object and must faild with unvailable ``jambon`` dep
 
 test_17_package_11_12_13
-------------------------
+########################
 
-- Try to install package with dep which have wrong arch (``pacakge_11``, ``package_07``)
-- Try to install package with dep which have wrong arch (``pacakge_12``, ``package_08``)
-- Try to install package with dep which have wrong arch (``pacakge_13``, ``package_09``)
+- Try to install package with dep which have wrong arch (``package_11``, ``package_07``)
+- Try to install package with dep which have wrong arch (``package_12``, ``package_08``)
+- Try to install package with dep which have wrong arch (``package_13``, ``package_09``)
 
 test_18_package_14
-------------------
+##################
 
 - Install package with symlink and check it's ok after install
 
 test_19_package_15
-------------------
+##################
 
 - Install package with bin file in ``777`` permissions and check it's ok after install
 
-Packages informations
-#####################
-
-Package Available:
-  Good System (i386/debian/6):
-    + with package_02 dep(success)
-	+ package_01
-    + without dep(success)             -> package_02
-    + without dep(success)             -> package_03
-    + without dep, symlinks in package -> package_14
-    + without dep, 777 on bin          -> package_15
-
-  Any System (noarch/nodist/novers):
-    + with package_05 dep(success)     -> package_04
-    + without dep(success)             -> package_05
-    + with itself in dep(fail)         -> package_06
-
-  Other:
-    + Bad arch (x86_64)(fail)                 -> package_07
-    + Bad dist (ubuntu)(fail)                 -> package_08
-    + Bad vers (5)(fail)                      -> package_09
-    + Unvailable dep (jambon)(fail)           -> package_10
-    + Dep in another arch (package_07)(fail)  -> package_11
-    + Dep in another dist (package_08)(fail)  -> package_12
-    + Dep in another vers (package_09)(fail)  -> package_13
-
 Todo
-####
+----
 
 - Test md5 checksum
 - Test package version upgrade
