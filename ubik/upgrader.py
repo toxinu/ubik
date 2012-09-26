@@ -44,7 +44,7 @@ class Upgrader(object):
 			if not checkmd5(package):
 				logger.info('%s md5 invalid' % package.name)
 				stream_logger.info('   | Md5 invalid, package corrumpt')	
-				UpgraderException('Invalid Md5')
+				raise UpgraderException('Invalid Md5')
 
 	def upgrade(self, ignore_errors=False):
 		if not self.packages:
