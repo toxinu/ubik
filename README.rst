@@ -36,6 +36,7 @@ Take a look at `Ubik toolbelt`_.
 Tests
 -----
 
+Take a look at `tests <https://github.com/Socketubs/Ubik/tree/master/tests>`_ page.  
 You can run tests with ``tests/run_tests.sh`` script.
 
 Thanks
