@@ -15,7 +15,7 @@ except Exception as err:
   sys.exit(1)
 
 
-doc = """Ubik, mininal package manager.
+doc = """Ubik, minimal package manager.
 
 Usage:
   ubik (list|update|clean|stats|conf)
