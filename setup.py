@@ -15,7 +15,7 @@ if sys.argv[-1] == 'publish':
 
 setup(
 	name='ubik',
-	version='0.1.2',
+	version='0.1.3',
 	description='Minimal packages manager',
 	long_description=	open('README.rst').read() + '\n\n' +
 						open('API.rst').read() + '\n\n' +
