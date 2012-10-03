@@ -126,9 +126,10 @@ def unpacker(package):
 					if os.path.isfile('%s/%s' % (path, _file)):
 						# If file already exist
 						if os.path.exists(dst):
-							if cmp(src, dst):
+							if filecmp.cmp(src, dst):
+								logger.info('CONFIG: config file not modified')
 								continue
-							logger.debug('Config file conflict: %s/%s' % (path, _file))
+							logger.info('CONFIG: config file conflict: %s/%s' % (path, _file))
 							dst += '.new'
 			logger.debug(" :: %s - %s" % (src, dst))
 			if os.path.islink(src):
