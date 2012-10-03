@@ -117,4 +117,4 @@ Todo
 - Test package version upgrade
 - test package release upgrade
 - Test reinstall
-- Check safe_conf option
+- Check safe_conf option (issue #36)
