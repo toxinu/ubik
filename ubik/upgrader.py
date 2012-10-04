@@ -54,7 +54,9 @@ class Upgrader(object):
 			package.upgrade(ignore_errors)
 			stream_logger.info('      | Update database')
 			package.status = "0"
-			package.set_raw_version(package.remote_vers)
-			package.remote_vers = ''
+			package.version = package.repo_version
+			package.release = package.repo_release
+			package.repo_version = ''
+			package.repo_release = ''
 			db.add(package)
 			db.save(conf.get('paths', 'local_db'))
