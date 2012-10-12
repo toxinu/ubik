@@ -1,5 +1,6 @@
 # coding: utf-8
 import os
+import sys
 import shutil
 
 from ubik.core import conf
@@ -9,7 +10,6 @@ from ubik.downloader import get_package
 from ubik.logger import logger
 from ubik.logger import stream_logger
 
-from ubik.control import Control
 from ubik.tools import unarchiver
 from ubik.tools import unpacker
 
@@ -57,35 +57,48 @@ class Package(object):
 	def unarchive(self):
 		unarchiver(self)
 
+	def import_control(self):
+		sys.path.append('%s/%s' % (conf.get('settings', 'cache'), self.name))
+		control_module =  __import__('control')
+		sys.path.remove('%s/%s' % (conf.get('settings', 'cache'), self.name))
+		self.control = control_module.Package()
+
 	def install(self, ignore_errors=False):
+		# Think about ignore_errors
 		stream_logger.info('    - %s' % self.name)
 		stream_logger.info('      | Unarchive')
 		self.unarchive()
-		control = Control(self, ignore_errors)
+		self.import_control()
+		# Pre-install
 		stream_logger.info('      | Pre Install')
-		control.pre_install()
+		self.control.pre_install()
 		stream_logger.info('      | Unpack')
 		unpacker(self)
+		# Post-install
 		stream_logger.info('      | Post Install')
-		control.post_install()
+		self.control.post_install()
 		stream_logger.info('      | Clean')
 		shutil.rmtree('%s/%s' % (conf.get('settings', 'cache'), self.name))
 
 	def upgrade(self, ignore_errors=False):
+		# Think about ignore_errors
 		stream_logger.info('    - %s' % self.name)
 		stream_logger.info('      | Unarchive')
 		self.unarchive()
-		control = Control(self, ignore_errors)
-		stream_logger.info('      | Pre Update')
-		control.pre_update()
+		self.import_control()
+		# Pre-upgrade
+		stream_logger.info('      | Pre Upgrade')
+		self.control.pre_upgrade()
 		stream_logger.info('      | Unpack')
 		unpacker(self)
-		stream_logger.info('      | Post Update')
-		control.post_update()
+		# Post-upgrade
+		stream_logger.info('      | Post Upgrade')
+		self.control.post_upgrade()
 		stream_logger.info('      | Clean')
 		shutil.rmtree('%s/%s' % (conf.get('settings', 'cache'), self.name))
 
 	def remove(self, ignore_errors=False):
+		# Think about ignore_errors
 		stream_logger.info('   - %s' % self.name)
 
 		# If archive not already extract
@@ -94,11 +107,10 @@ class Package(object):
 					self.name)):
 			self.unarchive()
 
-		control = Control(self, ignore_errors)
-
+		self.import_control()
 		# Pre Remove
-		stream_logger.info('     | Pre Remove')
-		control.pre_remove()
+		stream_logger.info('      | Pre Remove')
+		self.control.pre_remove()
 
 		# Remove
 		stream_logger.info('     | Remove')
@@ -111,8 +123,8 @@ class Package(object):
 			except:
 				pass
 		# Post Remove
-		stream_logger.info('     | Post Remove')
-		control.post_remove()
+		stream_logger.info('      | Post Remove')
+		self.control.post_remove()
 
 		stream_logger.info('     | Clean')
 		shutil.rmtree('%s/%s' % (conf.get('settings', 'cache'), self.name))

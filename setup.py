@@ -32,12 +32,12 @@ setup(
 						open('API.rst').read() + '\n\n' +
 						open('HISTORY.rst').read(), 
 	license = open("LICENSE").read(),
-	author = "Geoffrey Lehee",
+	author = "Geoffrey Lehée",
 	author_email = "geoffrey@lehee.name",
 	url = 'https://github.com/socketubs/Ubik/',
 	keywords = "ubik package linux",
-	packages = ['ubik'],
-	scripts = ['scripts/ubik','scripts/echo_ubik_conf'],
+	packages = ['ubik','ubik_toolbelt'],
+	scripts = ['scripts/ubik','scripts/echo_ubik_conf','scripts/ubik-package','scripts/ubik-repo'],
 	install_requires = ['progressbar==2.3', 'requests', 'docopt==0.5.0', 'isit==0.1.3'],
 	classifiers = (
 		'Intended Audience :: Developers',
