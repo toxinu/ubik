@@ -13,6 +13,7 @@ Usage:
   ubik-package create <package>
   ubik-package build
   ubik-package package
+  ubik-package archive
   ubik-package -h | --help
   ubik-package -v | --version
 
@@ -29,3 +30,5 @@ if __name__ == '__main__':
         package.build()
     elif args.get('package', False):
         package.package()
+    elif args.get('archive', False):
+        package.archive()

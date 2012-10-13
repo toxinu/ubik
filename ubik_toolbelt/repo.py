@@ -77,12 +77,27 @@ def get_package_infos(prefix, path, name):
 	infos['arch'] = path.split('/')[1]
 	infos['dist'] = path.split('/')[2]
 	infos['vers'] = path.split('/')[3]
+
+	if control.arch:
+		if control.arch != infos['arch']:
+			stream_logger.info('Bad arch (ignore it)')
+			return False
+
+		if control.dist:
+			if control.dist != infos['dist']:
+				stream_logger.info('Bad dist (ignore it)')
+				return False
+
+			if control.vers:
+				if control.vers != infos['vers']:
+					stream_logger.info('Bad vers (ignore it)')
+					return False
+
 	infos['md5'] = get_md5(path + '/' + name + '.tar')
 	return infos
 
 def write_packages_json(infos, branch):
 	path = branch + '/' + packages_json
-
 	json.dump(infos, open(path, 'w'))
 
 def clean(path, name):

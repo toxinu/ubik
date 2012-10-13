@@ -1,17 +1,22 @@
 # coding: utf-8
+import os
 
 from ubik_toolbelt.logger import stream_logger
 
 class Control(object):
     def __init__(self):
         self.name = ''
-        self.version = ''
-        self.release = ''
+        self.version = '0'
+        self.release = '0'
         self.requires = []
         self.arch = ''
         self.dist = ''
         self.vers = ''
         self.description = ''
+
+        self.cur_dir = os.getcwd()
+        self.src_dir = os.path.join(os.getcwd(), 'source')
+        self.pkg_dir = os.path.join(os.getcwd(), 'build')
 
     def build(self):
         stream_logger.info('Building...')
