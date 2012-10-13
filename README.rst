@@ -4,8 +4,8 @@ Ubik
 Description
 -----------
 
-Ubik is a minimal package manager inspired by the ``pkgmgr`` of
-`Canopsis`_ but rewritten in Python (from bash).
+Ubik is a minimal package manager written in Python.  
+It contain full toolchain for package creation and repository management.
 
 .. image:: http://dl.dropbox.com/u/79447684/Github/Ubik/screenshot_01.png
 .. image:: http://dl.dropbox.com/u/79447684/Github/Ubik/screenshot_02.png
@@ -17,9 +17,8 @@ Features
 -  Deps resolver for installation
 -  Cache
 -  Md5 checker
--  Control file for package
--  Post/Pre Install/Remove/Upgrade controls
--  Python
+-  Package control file are Python objects
+-  Full Python
 
 Installation
 ------------
@@ -31,7 +30,7 @@ Installation
 What about packages and repositories management ?
 -------------------------------------------------
 
-Take a look at `Ubik toolbelt`_.
+Take a look at `Ubik toolbelt`_ help.
 
 Tests
 -----
@@ -55,7 +54,7 @@ License is `AGPL3`_, it fully compatible with ``Canopsis``. See
 `LICENSE`_.
 
 .. _Canopsis: https://github.com/capensis/canopsis
-.. _Ubik toolbelt: https://github.com/Socketubs/Ubik-toolbelt
+.. _Ubik toolbelt: https://github.com/Socketubs/Ubik/blob/master/docs/TOOLBELT.rst
 .. _Requests: https://github.com/kennethreitz/requests
 .. _Docopt: https://github.com/docopt/docopt
 .. _ProgressBar: http://code.google.com/p/python-progressbar/

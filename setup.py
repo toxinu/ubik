@@ -11,39 +11,39 @@ except ImportError:
 	from distutils.core import setup
 
 def get_version():
-    VERSIONFILE="ubik/__init__.py"
-    initfile_lines = open(VERSIONFILE, "rt").readlines()
+    VERSIONFILE = 'ubik/__init__.py'
+    initfile_lines = open(VERSIONFILE, 'rt').readlines()
     VSRE = r"^__version__ = ['\"]([^'\"]*)['\"]"
     for line in initfile_lines:
         mo = re.search(VSRE, line, re.M)
         if mo:
             return mo.group(1)
-    raise RuntimeError("Unable to find version string in %s." % (VERSIONFILE,))
+    raise RuntimeError('Unable to find version string in %s.' % (VERSIONFILE,))
 
 if sys.argv[-1] == 'publish':
 	os.system('python setup.py sdist upload')
 	sys.exit()
 
 setup(
-	name = 'ubik',
-	version = get_version(),
-	description = 'Minimal packages manager',
-	long_description =	open('README.rst').read() + '\n\n' +
-						open('API.rst').read() + '\n\n' +
-						open('HISTORY.rst').read(), 
-	license = open("LICENSE").read(),
-	author = "Geoffrey Lehée",
-	author_email = "geoffrey@lehee.name",
-	url = 'https://github.com/socketubs/Ubik/',
-	keywords = "ubik package linux",
-	packages = ['ubik','ubik_toolbelt'],
-	scripts = ['scripts/ubik','scripts/echo_ubik_conf','scripts/ubik-package','scripts/ubik-repo'],
-	install_requires = ['progressbar==2.3', 'requests', 'docopt==0.5.0', 'isit==0.1.3'],
-	classifiers = (
-		'Intended Audience :: Developers',
-		'Natural Language :: English',
-		'License :: OSI Approved :: GNU Affero General Public License v3 or later (AGPLv3+)',
-		'Programming Language :: Python',
-		'Programming Language :: Python :: 2.6',
-		'Programming Language :: Python :: 2.7')
+    name = 'ubik',
+    version = get_version(),
+    description = 'Minimal packages manager',
+    long_description =  open('README.rst').read() + '\n\n' +
+                        open(os.path.join('docs', 'TOOLBELT.rst')).read() + '\n\n' +
+                        open(os.path.join('docs', 'API.rst')).read(),
+    license = open('LICENSE').read(),
+    author = 'Geoffrey Lehée',
+    author_email = 'geoffrey@lehee.name',
+    url = 'https://github.com/socketubs/Ubik/',
+    keywords = 'ubik package linux',
+    packages = ['ubik','ubik_toolbelt'],
+    scripts = ['scripts/ubik','scripts/echo_ubik_conf','scripts/ubik-package','scripts/ubik-repo'],
+    install_requires = ['progressbar==2.3', 'requests', 'docopt==0.5.0', 'isit==0.1.3'],
+    classifiers = (
+        'Intended Audience :: Developers',
+        'Natural Language :: English',
+        'License :: OSI Approved :: GNU Affero General Public License v3 or later (AGPLv3+)',
+        'Programming Language :: Python',
+        'Programming Language :: Python :: 2.6',
+        'Programming Language :: Python :: 2.7')
 )
