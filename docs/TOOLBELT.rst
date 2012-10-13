@@ -69,11 +69,6 @@ And this how to create your own repositorie:
 
 And you have just to put your packages into the good Branch/Arch/Dist/Vers and run ``ubik-repo generate`` in your repositorie root.
 
-Thanks
-------
-
-Thanks to `Docopt`_ to be awesome tool.
-
 License
 -------
 
@@ -83,4 +78,3 @@ See `LICENSE`_.
 .. _Ubik: https://github.com/socketubs/Ubik
 .. _LICENSE: https://raw.github.com/Socketubs/ubik/master/LICENSE
 .. _AGPL3: http://www.gnu.org/licenses/agpl.html
-.. _Docopt: https://github.com/docopt/docopt
