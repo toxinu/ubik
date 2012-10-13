@@ -7,7 +7,7 @@ PKG_ROOT="$ROOT/home/packages"
 REPO_ROOT="$ROOT/home/repo"
 
 cd $REPO_ROOT
-ubik-repo generate tests --old-format
+ubik-repo generate tests
 echo " :: Run webserver"
 python -m SimpleHTTPServer 8080 &
 WEBPID="$!"

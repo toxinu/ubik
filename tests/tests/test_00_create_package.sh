@@ -25,35 +25,27 @@ function create_package() {
 	set_install "$PKG"
 }
 
-function set_deps() {
-	local PKG="${1}"
-	local DEPS="${2}"
-	cd $PKG_ROOT/$PKG
-	sed -i -e "s#REQUIRES=""#REQUIRES=\"$DEPS\"#g" control >/dev/null
-	cd -
-}
-
 function set_bin() {
 	local PKG="${1}"
 	cd $PKG_ROOT/$PKG
-	mkdir -p src/bin >/dev/null
-	echo -e '#!/bin/bash'"\necho \"Im $PKG\"" > src/bin/$PKG
-	chmod +x src/bin/$PKG
+	mkdir -p source/bin >/dev/null
+	echo -e '#!/bin/bash'"\necho \"Im $PKG\"" > source/bin/$PKG
+	chmod +x source/bin/$PKG
 	cd -
 }
 
 function set_install() {
 	local PKG="${1}"
 	cd $PKG_ROOT/$PKG
-	sed -i -e "s#true#cp -p -R \$SRC/* \$DST#g" make.sh >/dev/null
+	cp $ROOT/../packages/${PKG}_control.py control.py >/dev/null
 	cd -
 }
 
 function build_package() {
 	local PKG="${1}"
 	cd $PKG_ROOT/$PKG
-	./make.sh install
-	./make.sh package
+	ubik-package package
+	ubik-package archive
 	cd -
 }
 
@@ -68,7 +60,6 @@ function send_to_repo() {
 
 # package_01
 create_package "package_01"
-set_deps "package_01" "package_02"
 build_package "package_01"
 send_to_repo "package_01" "i386" "debian" "6"
 
@@ -84,7 +75,6 @@ send_to_repo "package_03" "i386" "debian" "6"
 
 # package_04
 create_package "package_04"
-set_deps "package_04" "package_05"
 build_package "package_04"
 send_to_repo "package_04" "noarch" "nodist" "novers"
 
@@ -95,7 +85,6 @@ send_to_repo "package_05" "noarch" "nodist" "novers"
 
 # package_06
 create_package "package_06"
-set_deps "package_06" "package_06"
 build_package "package_06"
 send_to_repo "package_06" "noarch" "nodist" "novers"
 
@@ -116,32 +105,28 @@ send_to_repo "package_09" "i386" "debian" "5"
 
 # package_10
 create_package "package_10"
-set_deps "package_10" "jambon"
 build_package "package_10"
 send_to_repo "package_10" "i386" "debian" "6"
 
 # package_11
 create_package "package_11"
-set_deps "package_11" "package_07"
 build_package "package_11"
 send_to_repo "package_11" "i386" "debian" "6"
 
 # package_12
 create_package "package_12"
-set_deps "package_12" "package_08"
 build_package "package_12"
 send_to_repo "package_12" "i386" "debian" "6"
 
 # package_13
 create_package "package_13"
-set_deps "package_13" "package_09"
 build_package "package_13"
 send_to_repo "package_13" "i386" "debian" "6"
 
 # package_14
 create_package "package_14"
-mkdir $PKG_ROOT/package_14/src/lib
-cd $PKG_ROOT/package_14/src/bin
+mkdir $PKG_ROOT/package_14/source/lib
+cd $PKG_ROOT/package_14/source/bin
 mv package_14 ../lib/package_14
 ln -s ../lib/package_14 package_14
 cd -
@@ -150,6 +135,6 @@ send_to_repo "package_14" "i386" "debian" "6"
 
 # package_15
 create_package "package_15"
-chmod 777 $PKG_ROOT/package_15/src/bin/package_15
+chmod 777 $PKG_ROOT/package_15/source/bin/package_15
 build_package "package_15"
 send_to_repo "package_15" "i386" "debian" "6"
