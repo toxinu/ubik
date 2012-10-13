@@ -38,7 +38,7 @@ setup(
     keywords = 'ubik package linux',
     packages = ['ubik','ubik_toolbelt'],
     scripts = ['scripts/ubik','scripts/echo_ubik_conf','scripts/ubik-package','scripts/ubik-repo'],
-    install_requires = ['progressbar==2.3', 'requests', 'docopt==0.5.0', 'isit==0.1.3'],
+    install_requires = ['progressbar==2.3', 'requests==0.14.1', 'docopt==0.5.0', 'isit==0.1.3'],
     classifiers = (
         'Intended Audience :: Developers',
         'Natural Language :: English',
