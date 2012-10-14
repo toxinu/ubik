@@ -54,7 +54,7 @@ License is `AGPL3`_, it fully compatible with ``Canopsis``. See
 `LICENSE`_.
 
 .. _Canopsis: https://github.com/capensis/canopsis
-.. _Ubik toolbelt: https://github.com/Socketubs/Ubik/blob/master/docs/TOOLBELT.rst
+.. _Ubik toolbelt: https://github.com/Socketubs/Ubik/blob/0.2/docs/TOOLBELT.rst
 .. _Requests: https://github.com/kennethreitz/requests
 .. _Docopt: https://github.com/docopt/docopt
 .. _ProgressBar: http://code.google.com/p/python-progressbar/
