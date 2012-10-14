@@ -14,9 +14,9 @@ from ubik.core import conf
 class Package(Control):
     def __init__(self):
         Control.__init__(self)
-        self.name = 'package_02'
+        self.name = 'package_18'
         self.version = '0.1'
-        self.release = '2'
+        self.release = '0'
         self.requires = []
         self.arch = 'i386'
         self.dist = 'debian'

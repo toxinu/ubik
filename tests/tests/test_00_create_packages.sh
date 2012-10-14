@@ -8,6 +8,8 @@ PKG_ROOT="$ROOT/home/packages"
 REPO_ROOT="$ROOT/home/repo"
 BRANCH="tests"
 
+export UBIK_CONF="$ROOT/etc/ubik.conf"
+
 mkdir -p $PKG_ROOT
 ubik-repo create $REPO_ROOT
 mkdir -p $REPO_ROOT/tests/{noarch,i386,x86_64}
@@ -138,3 +140,30 @@ create_package "package_15"
 chmod 777 $PKG_ROOT/package_15/source/bin/package_15
 build_package "package_15"
 send_to_repo "package_15" "i386" "debian" "6"
+
+# package_16
+create_package "package_16"
+cd $PKG_ROOT/package_16
+mkdir -p source/etc >/dev/null
+echo -e "Configuration file form package_16" > source/etc/package_16.conf
+cd -
+build_package "package_16"
+send_to_repo "package_16" "i386" "debian" "6"
+
+# package_17
+create_package "package_17"
+cd $PKG_ROOT/package_17
+mkdir -p source/etc >/dev/null
+echo -e "Configuration file form package_17" > source/etc/package_17.conf
+cd -
+build_package "package_17"
+send_to_repo "package_17" "i386" "debian" "6"
+
+# package_18
+create_package "package_18"
+cd $PKG_ROOT/package_18
+mkdir -p source/etc >/dev/null
+echo -e "Configuration file form package_18" > source/etc/package_18.conf
+cd -
+build_package "package_18"
+send_to_repo "package_18" "i386" "debian" "6"

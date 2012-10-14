@@ -4,7 +4,6 @@
 # In order to run this tests you will need:
 #
 # 	- virtualenv
-#	- pip
 #	- Internet connection
 #		
 start_time=$(date +%s)
@@ -14,7 +13,7 @@ start_time=$(date +%s)
 set -e
 set -u
 
-trap clean EXIT
+trap clean SIGINT SIGTERM
 
 if [ "${PWD##*/}" != "tests" ]; then
 	echo "Must be in tests dir"
@@ -37,6 +36,8 @@ clean () {
 	if [ -f $tests_dir/$env_name/.webpid ]; then
 		kill -9 $(cat $tests_dir/$env_name/.webpid) > /dev/null 2>&1
 	fi
+	echo " :: FAILED"
+	exit 1
 }
 
 ##################################################
@@ -61,12 +62,33 @@ cp $tests_dir/tests/env.py $tests_dir/$env_name
 
 # Pre-Tests
 echo " :: Create packages"
-bash $tests_dir/tests/test_00_create_package.sh "$tests_dir/$env_name"
+bash $tests_dir/tests/test_00_create_packages.sh "$tests_dir/$env_name"
 echo " :: Create repo"
 bash $tests_dir/tests/test_01_create_repo.sh "$tests_dir/$env_name"
 
+# Tests
 unset http_proxy
-TESTS=$(cd $tests_dir/tests && ls -1 . | grep test_ | grep .py)
+# test_10
+TESTS=$(cd $tests_dir/tests && ls -1 . | grep test_1 | grep .py)
+for TEST in $TESTS; do
+	echo " :: Run $TEST"
+	python $tests_dir/tests/$TEST -v
+	if [ $? -ne 0 ]; then exit 1; fi
+done
+# test_20
+TESTS=$(cd $tests_dir/tests && ls -1 . | grep test_2 | grep .py)
+for TEST in $TESTS; do
+	echo " :: Run $TEST"
+	python $tests_dir/tests/$TEST -v
+	if [ $? -ne 0 ]; then exit 1; fi
+done
+
+# Tests_40_update packages
+echo " :: Update packages"
+bash $tests_dir/tests/test_40_update_packages.sh "$tests_dir/$env_name"
+
+# test_40
+TESTS=$(cd $tests_dir/tests && ls -1 . | grep test_4 | grep .py)
 for TEST in $TESTS; do
 	echo " :: Run $TEST"
 	python $tests_dir/tests/$TEST -v
@@ -80,4 +102,5 @@ kill -9 $WEBPID
 
 finish_time=$(date +%s)
 echo " :: Time duration: $((finish_time - start_time)) secs."
-echo " :: Finised"
+echo " :: SUCCESS"
+exit 0

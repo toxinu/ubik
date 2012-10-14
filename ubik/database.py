@@ -65,6 +65,11 @@ class Database(object):
 
 			self.packages[package.name] = package
 
+		for package in self.packages.values():
+			if package.name not in db_remote.packages.keys():
+				if package.status in ['10']:
+					del self.packages[package.name]
+
 		# Save databases
 		self.save(conf.get('paths', 'local_db'))
 

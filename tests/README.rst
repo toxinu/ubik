@@ -8,11 +8,11 @@ Test machine is forced to be a ``debian 6 i386`` with ubik configuration file.
 Packages informations
 ---------------------
 
-============  ======  ======  ======  ==========  ======  ================
+============  ======  ======  ======  ==========  ======  ========================
 Name          Arch    Dist    Vers    Requires    Status  Description
-============  ======  ======  ======  ==========  ======  ================
-package_01    i386    debian  6       package_02    OK     
-package_02    i386    debian  6                     OK
+============  ======  ======  ======  ==========  ======  ========================
+package_01    i386    debian  6       package_02    OK    version=0.2
+package_02    i386    debian  6                     OK    release=2
 package_03    i386    debian  6                     OK
 package_04    noarch  nodist  novers  package_05    OK
 package_05    noarch  nodist  novers                OK
@@ -26,7 +26,10 @@ package_12    i386    debian  6       package_08    KO
 package_13    i386    debian  6       package_09    KO
 package_14    i386    debian  6                     OK    Test symlink
 package_15    i386    debian  6                     OK    Test permissions
-============  ======  ======  ======  ==========  ======  ================
+package_16    i386    debian  6                     OK    With configuration file
+package_17    i386    debian  6                     OK    With configuration file
+package_18    i386    debian  6                     OK    With configuration file
+============  ======  ======  ======  ==========  ======  ========================
 
 test_00_create_package
 ######################
@@ -109,6 +112,48 @@ test_19_package_15
 ##################
 
 - Install package with bin file in ``777`` permissions and check it's ok after install
+
+test_20_package_16-17-18
+########################
+
+- Install two packages with ``/etc/package_.conf`` files in order to check ``safe_conf`` option later.
+
+test_40_update_packages
+#######################
+
+- ``package_01`` downgrade from ``0.2`` to ``0.1``
+- ``package_02`` downgrade release ``2`` to ``1``
+- ``package_14`` upgrade release ``0`` to ``1`` and version ``0.1`` to ``0.2``
+- ``package_15`` upgrade release ``0`` to ``1``
+- ``package_16`` upgrade version ``0.1`` to ``0.2``
+- ``package_03`` removed
+- ``package_04`` bad md5 on repositorie
+
+Regenerate repositorie Packages.db
+
+test_41_database
+################
+
+- ``package_03`` already installed but removed from repositorie, so check if always here
+- sync database
+
+test_45_package_05
+##################
+
+- reinstall ``package_05``
+- remove file from ``package_05`` and reinstall it
+- check if correct reinstalled
+
+test_46_database
+################
+
+- sync database
+- remove ``package_03``
+
+TODO
+
+- sync database and check if package_03 still available
+
 
 Todo
 ----

@@ -69,7 +69,7 @@ class TestPackage_01_02(unittest.TestCase):
 		self.assertEqual(str(self.package_02.release), '')
 
 	def test_08_repo_version_package_01(self):
-		self.assertEqual(str(self.package_01.repo_version), '0.1')
+		self.assertEqual(str(self.package_01.repo_version), '0.2')
 
 	def test_08_repo_version_package_02(self):
 		self.assertEqual(str(self.package_02.repo_version), '0.1')
@@ -78,7 +78,7 @@ class TestPackage_01_02(unittest.TestCase):
 		self.assertEqual(str(self.package_01.repo_release), '0')
 
 	def test_09_repo_release_package_02(self):
-		self.assertEqual(str(self.package_02.repo_release), '0')
+		self.assertEqual(str(self.package_02.repo_release), '2')
 
 	def test_100_install_package_01(self):
 		# Install 'package_01' package with it's 'package_02' require
