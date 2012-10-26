@@ -4,6 +4,7 @@ import sys
 import platform
 import re
 import isit
+
 from ConfigParser import SafeConfigParser
 
 def get_conf(conf_path):
