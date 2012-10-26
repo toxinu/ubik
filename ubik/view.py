@@ -3,8 +3,10 @@ import json
 import os
 
 from ubik.core import conf
-from ubik.core import logger
 from ubik.core import db
+
+from ubik.logger import logger
+from ubik.logger import stream_logger
 
 from ubik.database import Database
 from ubik.status import status
@@ -18,7 +20,10 @@ def get_stats():
 				'data': db.count_upgrades()},
 			{	'info': 'Total packages',
 				'data': db.count_packages()}]
-	print('\n' + TablePrinter(fmt, ul='=')(data) + '\n')
+
+	stream_logger.info('')
+	stream_logger.info(TablePrinter(fmt, data, ul='='))
+	stream_logger.info('')
 
 def get_conf():
 	fmt = [('Section/Key', 'key', 25), ('Value', 'value', 50)]
@@ -26,8 +31,10 @@ def get_conf():
 	for section in conf.sections():
 		for key, value in conf.items(section):
 			data.append({'key': '%s/%s' % (section, key), 'value': value})
-	print('\n' + TablePrinter(fmt, ul='=')(data) + '\n')
 
+	stream_logger.info('')
+	stream_logger.info(TablePrinter(fmt, data, ul='-'))
+	stream_logger.info('')
 
 def get_view():
 
@@ -40,7 +47,6 @@ def get_view():
  System : %s %s %s
  Repo   : %s/%s/%s
  Last Update : %s
-
 """ % (	conf.get('system', 'dist').title(),
 		conf.get('system', 'vers'),
 		conf.get('system', 'arch'),
@@ -71,16 +77,18 @@ def get_view():
 						'status': status[package.status]})
 
 	if not data:
-		print(header + 'No package installed')
+		stream_logger.info(header)
+		stream_logger.info('No package installed')
 		return
 
 	data = sorted(data, key=lambda k: k['name'])
 
-	print(header + TablePrinter(fmt, ul='-')(data))
+	stream_logger.info(header)
+	stream_logger.info(TablePrinter(fmt, data, ul='-'))
 
 class TablePrinter(object):
 	"Print a list of dicts as a table"
-	def __init__(self, fmt, sep=' ', ul=None):
+	def __init__(self, fmt, data, sep=' ', ul=None):
 		"""		
 		@param fmt: list of tuple(heading, key, width)
 						heading: str, column label
@@ -89,18 +97,18 @@ class TablePrinter(object):
 		@param sep: string, separation between columns
 		@param ul: string, character to underline column label, or None for no underlining
 		"""
-		super(TablePrinter,self).__init__()
-		self.fmt   = str(sep).join('{lb}{0}:{1}{rb}'.format(key, width, lb='{', rb='}') for heading,key,width in fmt)
-		self.head  = dict((key, heading) for (heading,key,width) in fmt)
+		self.datalist = data
+		self.fmt = str(sep).join('{lb}{0}:{1}{rb}'.format(key, width, lb='{', rb='}') for heading,key,width in fmt)
+		self.head = dict((key, heading) for (heading,key,width) in fmt)
 		self.ul	= dict((key, str(ul)*width) for (heading,key,width) in fmt) if ul else None
 		self.width = dict((key,width) for (heading,key,width) in fmt)
 
 	def row(self, data):
 		return self.fmt.format(**dict((k,str(data.get(k,''))[:w]) for (k,w) in self.width.iteritems()))
 
-	def __call__(self, dataList):
+	def __str__(self):
 		_r = self.row
-		res = [_r(data) for data in dataList]
+		res = [_r(data) for data in self.datalist]
 		res.insert(0, _r(self.head))
 		if self.ul:
 			res.insert(1, _r(self.ul))
