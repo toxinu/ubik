@@ -3,7 +3,8 @@ Tests
 
 Tests are executed in virtualenv, ``test_00`` create different package, ``test_01`` create local repo and another bunch of tests do the job.
 
-Test machine is forced to be a ``debian 6 i386`` with ubik configuration file.
+Test machine is forced to be a ``debian 6 i386`` with ubik configuration file.  
+Tests must be executed in a strict order, ``run_tests.sh``.
 
 Packages informations
 ---------------------
@@ -35,13 +36,13 @@ test_00_create_package
 ######################
 
 - Create as many package as different package resolution I want
-- Test the ``ubik-package`` from ``ubik-toolbelt``
+- Test the ``ubik-package`` command from ``ubik-toolbelt``
 
 test_01_create_repo
 ###################
 
 - Create repo with previous packages
-- Test the ``ubik-repo`` from ``ubik-toolbelt``
+- Test the ``ubik-repo`` command from ``ubik-toolbelt``
 
 test_10_database
 ################
@@ -86,7 +87,7 @@ test_14_package_06
 test_15_package_07_08_09
 ########################
 
-- Try to get these packages from db object and must fail
+- Try to get these packages from db object and must failed
   + ``package_07`` bad arch
   + ``package_08`` bad dist
   + ``package_09`` bad vers
@@ -94,7 +95,7 @@ test_15_package_07_08_09
 test_16_package_10
 ##################
 
-- Try to resolv with Installer object and must faild with unvailable ``jambon`` dep
+- Try to resolv with Installer object and must failed with unvailable ``jambon`` dep
 
 test_17_package_11_12_13
 ########################
@@ -102,6 +103,8 @@ test_17_package_11_12_13
 - Try to install package with dep which have wrong arch (``package_11``, ``package_07``)
 - Try to install package with dep which have wrong arch (``package_12``, ``package_08``)
 - Try to install package with dep which have wrong arch (``package_13``, ``package_09``)
+
+- All of these tests must failed
 
 test_18_package_14
 ##################
@@ -116,18 +119,22 @@ test_19_package_15
 test_20_package_16-17-18
 ########################
 
-- Install two packages with ``/etc/package_.conf`` files in order to check ``safe_conf`` option later.
+- Install three packages with ``/etc/package_.conf`` files in order to check ``safe_conf`` option later
 
 test_40_update_packages
 #######################
 
+- Many packages modification on repositorie
+
 - ``package_01`` downgrade from ``0.2`` to ``0.1``
 - ``package_02`` downgrade release ``2`` to ``1``
-- ``package_14`` upgrade release ``0`` to ``1`` and version ``0.1`` to ``0.2``
-- ``package_15`` upgrade release ``0`` to ``1``
-- ``package_16`` upgrade version ``0.1`` to ``0.2``
 - ``package_03`` removed
 - ``package_04`` bad md5 on repositorie
+- ``package_14`` upgrade release ``0`` to ``1`` and version ``0.1`` to ``0.2``
+- ``package_15`` upgrade release ``0`` to ``1``
+- ``package_16`` upgrade version ``0.1`` to ``0.2`` and modifie configuration file (etc/package_16.conf)
+- ``package_17`` upgrade release ``0`` to ``1``
+- ``package_18`` upgrade release ``0`` to ``1``
 
 Regenerate repositorie Packages.db
 
@@ -135,25 +142,30 @@ test_41_database
 ################
 
 - ``package_03`` already installed but removed from repositorie, so check if always here
+  + Must be here
 - sync database
 
 test_45_package_05
 ##################
 
-- reinstall ``package_05``
-- remove file from ``package_05`` and reinstall it
+- test reinstall ``package_05``
+- remove file from ``package_05`` and reinstall it again
 - check if correct reinstalled
 
 test_46_database
 ################
 
 - sync database
-- remove ``package_03``
+- remove ``package_03`` on system
+- sync database
+- check if package_03 still available
 
-TODO
+test_47_package_04
+##################
 
-- sync database and check if package_03 still available
-
+- invalidate local archive md5 with a simple echo
+- try install it and downloader will want to download remote package
+- downloader must failed cause of bad md5 remote package (test_40_update_packages)
 
 Todo
 ----
@@ -161,5 +173,4 @@ Todo
 - Test md5 checksum
 - Test package version upgrade
 - test package release upgrade
-- Test reinstall
 - Check safe_conf option (issue #36)
