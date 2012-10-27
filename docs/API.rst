@@ -22,9 +22,9 @@ There are many ways to get a package from database.
 ::
 
     >>> db.get(['test_deps', 'hello_world'])
-    >>> db['test_deps']
     >>> db.get('hello*')
     >>> db.get('hello', regexp = False)
+    >>> db['test_deps']
 
 ::
 
