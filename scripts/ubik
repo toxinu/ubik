@@ -15,7 +15,7 @@ except Exception as err:
   sys.exit(1)
 
 
-doc = """Ubik, minimal package manager.
+doc = """Ubik is a minimal package manager for Unix.
 
 Usage:
   ubik (list|update|clean|stats|conf)
@@ -33,6 +33,8 @@ Options:
   --ignore-errors  Ignore control commands errors
   -h --help        Show help
   -v --version     Show version
+
+Ubik is safe when used as directed.
 """
 
 if __name__ == '__main__':

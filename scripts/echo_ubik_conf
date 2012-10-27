@@ -41,4 +41,4 @@ var_path        = /var/lib/ubik
 log_file        = /var/log/ubik.log
 cache           = /var/lib/ubik/packages
 packages        = /opt/ubik-packages
-DELIM≤
+DELIM
