@@ -13,7 +13,7 @@ start_time=$(date +%s)
 set -e
 set -u
 
-trap clean SIGINT SIGTERM
+trap clean SIGINT SIGQUIT SIGTERM
 
 if [ "${PWD##*/}" != "tests" ]; then
 	echo "Must be in tests dir"
@@ -35,6 +35,7 @@ clean () {
 	echo " :: Clean before exit"
 	if [ -f $tests_dir/$env_name/.webpid ]; then
 		kill -9 $(cat $tests_dir/$env_name/.webpid) > /dev/null 2>&1
+		rm $tests_dir/$env_name/.webpid > /dev/null 2>&1
 	fi
 	echo " :: FAILED"
 	exit 1
@@ -51,6 +52,7 @@ fi
 echo " :: Create virtualenv"
 virtualenv $tests_dir/$env_name
 cd $tests_dir/$env_name
+echo "export UBIK_CONF=$tests_dir/$env_name/etc/ubik.conf" >> $tests_dir/$env_name/bin/activate
 set +u
 source $tests_dir/$env_name/bin/activate
 set -u
@@ -66,34 +68,46 @@ bash $tests_dir/tests/test_00_create_packages.sh "$tests_dir/$env_name"
 echo " :: Create repo"
 bash $tests_dir/tests/test_01_create_repo.sh "$tests_dir/$env_name"
 
-# Tests
 unset http_proxy
-# test_10
+###########
+# test_10 #
+###########
 TESTS=$(cd $tests_dir/tests && ls -1 . | grep test_1 | grep .py)
+set +e
 for TEST in $TESTS; do
 	echo " :: Run $TEST"
 	python $tests_dir/tests/$TEST -v
-	if [ $? -ne 0 ]; then exit 1; fi
+	if [ $? -ne 0 ]; then clean; fi
 done
-# test_20
+set -e
+
+###########
+# test_20 #
+###########
 TESTS=$(cd $tests_dir/tests && ls -1 . | grep test_2 | grep .py)
+set +e
 for TEST in $TESTS; do
 	echo " :: Run $TEST"
 	python $tests_dir/tests/$TEST -v
-	if [ $? -ne 0 ]; then exit 1; fi
+	if [ $? -ne 0 ]; then clean; fi
 done
+set -e
 
 # Tests_40_update packages
 echo " :: Update packages"
 bash $tests_dir/tests/test_40_update_packages.sh "$tests_dir/$env_name"
 
-# test_40
+###########
+# test_40 #
+###########
 TESTS=$(cd $tests_dir/tests && ls -1 . | grep test_4 | grep .py)
+set +e
 for TEST in $TESTS; do
 	echo " :: Run $TEST"
 	python $tests_dir/tests/$TEST -v
-	if [ $? -ne 0 ]; then exit 1; fi
+	if [ $? -ne 0 ]; then clean; fi
 done
+set -e
 
 # Stop webserver
 echo " :: Stop webserver"

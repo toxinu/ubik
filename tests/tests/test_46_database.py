@@ -38,5 +38,16 @@ class Test_Database_Package_03(unittest.TestCase):
         path = "%s/bin/package_03" % api.conf.get('settings', 'packages')
         self.assertFalse(os.path.exists(path))
 
+    def test_301_check_package_03_here(self):
+        # Package_03 have been removed from repositorie, so check if still present
+        # Must not be
+        self.db.sync()
+        self.assertFalse(self.db.get('package_03'), msg='Package_03 still available')
+        try:
+            self.db.packages['package_03']
+            raise Exception('Package_03 still available')
+        except:
+            pass
+
 if __name__ == '__main__':
     unittest.main()

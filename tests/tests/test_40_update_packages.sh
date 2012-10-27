@@ -12,6 +12,15 @@ export UBIK_CONF="$ROOT/etc/ubik.conf"
 
 cd $PKG_ROOT
 
+function set_bin() {
+    local PKG="${1}"
+    cd $PKG_ROOT/$PKG
+    mkdir -p source/bin >/dev/null
+    echo -e '#!/bin/bash'"\necho \"Im $PKG\"" > source/bin/$PKG
+    chmod +x source/bin/$PKG
+    cd -
+}
+
 function set_install() {
     local PKG="${1}"
     cd $PKG_ROOT/$PKG
@@ -60,8 +69,20 @@ build_package "package_15"
 send_to_repo "package_15" "i386" "debian" "6"
 
 # package_16
+cd $PKG_ROOT/package_16
+mkdir -p source/etc >/dev/null
+echo -e "Configuration file form package_16.2" > source/etc/package_16.conf
+cd -
 build_package "package_16"
 send_to_repo "package_16" "i386" "debian" "6"
+
+# package_17
+build_package "package_17"
+send_to_repo "package_17" "i386" "debian" "6"
+
+# package_18
+build_package "package_18"
+send_to_repo "package_18" "i386" "debian" "6"
 
 rm $REPO_ROOT/$BRANCH/i386/debian/6/package_03.tar
 
