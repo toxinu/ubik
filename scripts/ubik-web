@@ -1,5 +1,11 @@
 #!/usr/bin/env python
 # coding: utf-8
+import sys
+try:
+    import flask
+except ImportError:
+    print("Error: you need to install flask dependencie (pip install flask)")
+    sys.exit(1)
 
 from ubik.web import app
 
