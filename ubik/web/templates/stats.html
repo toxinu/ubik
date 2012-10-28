@@ -1,6 +1,8 @@
 {% extends "layout.html" %}
 {% block body %}
-    <br>
+<br>
+<div class="row-fluid">
+    <div class="span8">
     <table class="table">
             <thead>
                 <tr>
@@ -16,4 +18,12 @@
                 {% endfor %}
             </tbody>
     </table>
+    </div>
+    <div class="span4">
+        <div class="well">
+            <h3>Last logs</h3>
+                <ul id="logs"></ul>
+        </div>
+    </div>
+</div>
 {% endblock %}
