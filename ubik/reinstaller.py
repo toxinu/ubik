@@ -83,10 +83,5 @@ class Reinstaller(object):
 		for package in self.packages:
 			package.install(ignore_errors)
 			stream_logger.info('      | Update database')
-			package.status = "0"
-			package.version = package.repo_version
-			package.release = package.repo_release
-			package.repo_version = ''
-			package.repo_release = ''
 			db.add(package)
 			db.save(conf.get('paths', 'local_db'))
