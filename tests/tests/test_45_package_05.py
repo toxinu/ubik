@@ -52,6 +52,12 @@ class TestPackage_05(unittest.TestCase):
         self.assertTrue(self.db.get('package_05'))
         self.assertEqual(self.db.count_installed(), 5)
 
+        self.package.version = '0.1'
+        self.package.remote_version = ''
+
+        self.package.release = '0'
+        self.package.remote_release = ''
+
     def test_111_bin_package(self):
         p = Popen('package_05', shell=True, stdin=PIPE, stdout=PIPE, stderr=STDOUT, close_fds=True)
         self.assertEqual(p.stdout.read(), 'Im package_05\n')
