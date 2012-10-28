@@ -93,7 +93,6 @@ class Cli(object):
 				print(' :: %s' % err)
 				sys.exit(1)
 
-			logger.debug(reinstaller.packages)
 			if not reinstaller.packages:
 				stream_logger.info(' :: No package(s) to reinstall')
 				sys.exit(0)
