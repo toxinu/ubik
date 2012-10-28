@@ -20,6 +20,7 @@ def get_conf(conf_path):
 	parser.set('paths', 'local_db', '%s/packages.db' % parser.get('settings', 'var_path'))
 	parser.set('paths', 'lock', '%s/db.lock' % parser.get('settings', 'var_path'))
 	parser.set('paths', 'infos', '%s/infos' % parser.get('settings', 'var_path'))
+	parser.set('paths', 'web_data', '%s/ubik-web.dat' % parser.get('settings', 'var_path'))
 
 	# Detect system info
 	if not parser.has_option('system', 'arch'):
