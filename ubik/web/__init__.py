@@ -26,9 +26,9 @@ login_manager.setup_app(app)
 
 # Users
 from ubik.web.auth import auth_db
-auth_db.addUser('admin', 'admin')
-auth_db.addUser('socketubs', 'jambon')
-auth_db.addUser('mimi', 'mimi', active=False)
+
+# auth_db.addUser('admin', 'admin')
+# auth_db.addUser('socketubs', 'socketubs', active=False)
 
 lock = []
 sync_state = {  'success': None,

@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import os
 import json
 
 from flask.ext.login import UserMixin
@@ -16,7 +17,20 @@ class AuthDB(object):
         if self.database_file is None:
             self.db = self.newDB()
         else:
-            self.db = self.retrieve_db(self.database_file)
+            self.retrieveDB()
+
+    def retrieveDB(self):
+        if not os.path.exists(self.database_file):
+            self.db = self.newDB()
+        try:
+            users = json.load(open(self.database_file))
+            self.db = {}
+            for user in users:
+                _id = self.get_id()
+                new_user = User(user['username'], user['password'], _id)
+                self.db[_id] = new_user
+        except:
+            return self.newDB()
 
     def newDB(self):
         return dict()
@@ -58,7 +72,7 @@ class User(UserMixin):
     def is_active(self):
         return self.active
 
-auth_db = AuthDB()
+auth_db = AuthDB(database_file=api.conf.get('webui', 'users_file'))
 
 @login_manager.user_loader
 def load_user(id):

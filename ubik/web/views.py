@@ -64,10 +64,11 @@ def stats():
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
-    if request.method == "POST" and "username" in request.form:
+    if request.method == "POST" and "username" in request.form and "password" in request.form:
         username = request.form["username"]
         password = request.form["password"]
         remember = request.form.get("remember", "no") == "yes"
+        print(auth_db.db)
         if auth_db.challenge(username, password):
             if login_user(auth_db.getUser(username), remember=remember):
                 flash("Welcome on Ubik Web Interface %s!" % username, "success")
