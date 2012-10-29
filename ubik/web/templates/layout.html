@@ -33,10 +33,10 @@
                         <li><a href="/stats">Stats</a></li>
                     </ul>
                     <ul class="nav pull-right">
+                        <li><a href="{{ url_for('logout') }}" class="">Logout</a></li>
                         <li class="divider-vertical"></li>
                         <li><button id="refresh" type="button" class="btn">Refresh</button></li>
-                                                <li class="divider-vertical"></li>
-
+                        <li class="divider-vertical"></li>
                         <li><button id="sync" type="button" class="btn btn-info" data-original-title="{{ last_update }}" rel="tooltip">Sync</button></li>
                     </ul>
                 </div>
@@ -50,19 +50,22 @@
                 <center><strong>{{ g.api.conf.get('system', 'dist')|title }} {{ g.api.conf.get('system', 'vers')|title }} {{ g.api.conf.get('system', 'arch') }} @ {{ g.system }} (Ubik {{ g.ubik_version }})</strong></center>
             </div>
         </div>
-        {% with messages = get_flashed_messages(with_categories=true) %}
-            {% if messages %}
-                {% for category, message in messages %}
-                    <div class="alert alert-{{ category }}">
-                        <a class="close" href="/">&times;</a>{{ message }}
-                    </div>
-                {% endfor %}
-            {% endif %}
-        {% endwith %}
-        <div>
-
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    <br>
+                    <div class="row-fluid">
+                        <div class="span12">
+                        {% for category, message in messages %}
+                            <div class="alert alert-{{ category }}">
+                                <a class="close" href="/">&times;</a>{{ message }}
+                            </div>
+                        {% endfor %}
+                         </div>
+                     </div>
+                {% endif %}
+            {% endwith %}
+            
         {% block body %}{% endblock %}
-    </div> 
 
     <script src="{{ url_for('static', filename='js/jquery-1.8.2.min.js') }}"></script>
     <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>

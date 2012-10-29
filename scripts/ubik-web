@@ -1,24 +1,166 @@
 #!/usr/bin/env python
 # coding: utf-8
+import os
 import sys
+import json
+import hashlib
+
+from getpass import getpass
+
+from docopt import docopt
+
+requirements = ['flask', 'flask-login', 'flask-bcrypt', 'gevent', 'gevent-websocket']
+
+if len(sys.argv) > 1:
+  if sys.argv[1] == "requirements":
+      print(' '.join(requirements))
+      sys.exit(0)
 
 try:
     import flask
     from gevent.pywsgi import WSGIServer
     from geventwebsocket.handler import WebSocketHandler
+    from flask.ext.bcrypt import generate_password_hash
+    from flaskext.bcrypt import check_password_hash
 except ImportError as err:
-    print("Error: you need to install gevent dependencie (pip install flask gevent gevent-websocket)")
+    print("Error: you need to install ubik-web dependencie")
+    print("Fix: pip install $(ubik-web requirements)")
     print("Trackback: %s" % err)
     sys.exit(1)
 
 from ubik.web import ubik_web
 from ubik.web import logger
 
+import ubik.core as api
+
+doc = """Ubik-web is a Web Interface for Ubik.
+
+Usage:
+  ubik-web serve [<host>] [<port>] [--debug]
+  ubik-web users list
+  ubik-web users (add|del|passwd) <username>
+  ubik-web requirements
+  ubik-web -h | --help
+  ubik-web -v | --version
+
+Options:
+  --debug          Enable Debug mode for Flask (disable websocket) [default: false]
+  -h --help        Show help
+  -v --version     Show version
+
+Ubik is safe when used as directed.
+"""
+
+def md5Checksum(filePath):
+  fh = open(filePath, 'rb')
+  m = hashlib.md5()
+  while True:
+      data = fh.read(8192)
+      if not data:
+          break
+      m.update(data)
+  return m.hexdigest()
+
+def save_users_file(users, md5):
+  if not check_users_file(md5):
+    print('Someone else work with the database. Abort.')
+    sys.exit(1)
+  json.dump(users, open(api.conf.get('webui', 'users_file'), 'w'))
+
+def check_users_file(md5):
+  new_md5 = md5Checksum(api.conf.get('webui', 'users_file'))
+  if md5 != new_md5:
+    return False
+  return True
+
 if __name__ == '__main__':
-    try:
-        http_server = WSGIServer(('',5000), ubik_web, handler_class=WebSocketHandler)
-        http_server.serve_forever()
-    except KeyboardInterrupt:
-        logger.save()
-        print('Stopping.')
+    args = docopt(doc, version='0.1')
+    debug = args.get('--debug')
+
+    if args.get('requirements'):
+      print(' '.join(requirements))
+      sys.exit(0)
+
+    elif args.get('users'):
+      if not os.path.exists(api.conf.get('webui', 'users_file')):
+        open(api.conf.get('webui', 'users_file'), 'w').close()
+      try:
+        users = json.load(open(api.conf.get('webui', 'users_file')))
+      except:
+        users = {}
+      md5 = md5Checksum(api.conf.get('webui', 'users_file'))
+
+      # List
+      if args.get('list'):
+        for user in users.values():
+          print(user['username'])
+        sys.exit(0)
+
+      # Add
+      elif args.get('add'):
+        name = args.get('<username>')
+
+        if name in [_user['username'] for _user in users.values()]:
+          print('User already exist.')
+          sys.exit(1)
+
+        password = getpass('Password:')
+        password2 = getpass('Password Again:')
+        if password != password2:
+          print('Password are not same.')
+          sys.exit(1)
+
+        try:
+            user_id = max([float(i) for i in users.keys()]) + 1
+        except ValueError:
+            user_id = 0
+
+        users[int(user_id)] = {'username': name, 'password': generate_password_hash(password)}
+        save_users_file(users, md5)
+        sys.exit(0)
+
+      # Del
+      elif args.get('del'):
+        name = args.get('<username>')
+        user_id = [_id for _id, user in users.items() if user['username'] == name.lower()][0]
+        if user_id:
+          del users[user_id]
+          save_users_file(users, md5)
+          sys.exit(0)
+        print('User not exist.')
         sys.exit(1)
+
+      # Passwd
+      elif args.get('passwd'):
+        name = args.get('<username>')
+        if not name in [_user['username'] for _user in users.values()]:
+          print('User not exist.')
+          sys.exit(1)
+
+        user_id = [_id for _id, user in users.items() if user['username'] == name.lower()][0]
+        user = users[user_id]
+
+        old_password = user['password']
+        old_password_input = getpass('Old password:')
+        if not check_password_hash(old_password, old_password_input):
+          print('Bad password.')
+          sys.exit(1)
+        password = getpass('New Password:')
+        password2 = getpass('Password Again:')
+
+        users[user_id]['password'] = generate_password_hash(password)
+        save_users_file(users, md5)
+        sys.exit(0)
+
+    if not debug:
+        try:
+            http_server = WSGIServer(('',5000), ubik_web, handler_class=WebSocketHandler)
+            http_server.serve_forever()
+        except KeyboardInterrupt:
+            logger.save()
+            print('Stopping.')
+            sys.exit(1)
+    else:
+        from ubik.web import app
+        app.run(debug=True)
+

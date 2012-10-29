@@ -3,8 +3,6 @@ import json
 
 import ubik.core as api
 
-from flask import g
-
 from ubik.web import lock
 from ubik.web import logger
 from ubik.web import sync_state
