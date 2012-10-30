@@ -2,9 +2,9 @@
 
 cat <<DELIM
 [repo]
-url     = http://ubik-packages.herokuapp.com:80
+url     = http://ubik-repo.herokuapp.com:80
 base    = 
-branch  = stable
+branch  = public
 
 [system]
 # Uncomment to overwrite system info
@@ -37,8 +37,11 @@ control_methods =
 safe_conf       = True
 
 [settings]
-var_path        = /var/lib/ubik
-log_file        = /var/log/ubik.log
-cache           = /var/lib/ubik/packages
-packages        = /opt/ubik-packages
+var_path        = /usr/local/Ubik/var/lib
+log_file        = /usr/local/Ubik/var/ubik.log
+cache           = /usr/local/Ubik/var/lib/packages
+packages        = /usr/local/Ubik
+
+[webui]
+users_file      = /usr/local/Ubik/etc/ubik.users
 DELIM
