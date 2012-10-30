@@ -1,5 +1,4 @@
 # coding: utf-8
-# For Python < 2.6
 from __future__ import with_statement
 
 import os

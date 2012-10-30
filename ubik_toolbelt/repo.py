@@ -1,5 +1,4 @@
 # coding: utf-8
-# For Python < 2.6
 from __future__ import with_statement
 
 import os
@@ -9,7 +8,6 @@ import subprocess
 import hashlib
 import shutil
 
-# For Python < 2.6
 try:
     import json
 except ImportError:
@@ -24,13 +22,14 @@ packages_json = 'Packages.json'
 
 def create(repo_name):
 
-	if os.path.exists(repo_name):
+	if os.path.exists(repo_name) and repo_name != ".":
 		stream_logger.info(' :: Dir already exist')
 		sys.exit(1)
 
 	stream_logger.info(' :: Create repository structure')
-	os.makedirs(repo_name)
-	os.chdir(repo_name)
+	if repo_name != '.':
+		os.makedirs(repo_name)
+		os.chdir(repo_name)
 	open('.repo_root', 'w').close
 
 	stream_logger.info(' :: Create default "stable" branch and two examples')
