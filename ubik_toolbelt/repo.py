@@ -28,7 +28,7 @@ def create(repo_name):
 		stream_logger.info(' :: Dir already exist')
 		sys.exit(1)
 
-	stream_logger.info(' :: Create repositorie structure')
+	stream_logger.info(' :: Create repository structure')
 	os.makedirs(repo_name)
 	os.chdir(repo_name)
 	open('.repo_root', 'w').close
@@ -105,7 +105,7 @@ def clean(path, name):
 
 def generate(branches=False, old_format=False, tmp_dir=False):
 	if not os.path.exists('.repo_root'):
-		stream_logger.info(' :: Need to be at repositorie root')
+		stream_logger.info(' :: Need to be at repository root')
 		sys.exit(1)
 
 	if not tmp_dir:
