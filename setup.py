@@ -28,9 +28,7 @@ setup(
     name = 'ubik',
     version = get_version(),
     description = 'Minimal packages manager',
-    long_description =  open('README.rst').read() + '\n\n' +
-                        open(os.path.join('docs', 'TOOLBELT.rst')).read() + '\n\n' +
-                        open(os.path.join('docs', 'API.rst')).read(),
+    long_description =  open('README.rst').read(),
     license = open('LICENSE').read(),
     author = 'Geoffrey Lehée',
     author_email = 'geoffrey@lehee.name',
