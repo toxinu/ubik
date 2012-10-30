@@ -1,14 +1,10 @@
 .. image:: http://dl.dropbox.com/u/79447684/Github/Ubik/ubik_logo.jpg
 
-Ubik
-====
-
-.. image:: https://secure.travis-ci.org/Socketubs/Ubik.png?branch=0.2
-        :target: https://secure.travis-ci.org/Socketubs/Ubik
-
 Ubik is a minimal package manager written in Python.  
 It contain full toolchain for package creation and repository management.
 
+.. image:: https://secure.travis-ci.org/Socketubs/Ubik.png?branch=0.2
+        :target: https://secure.travis-ci.org/Socketubs/Ubik
 
 Features
 --------
