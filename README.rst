@@ -1,7 +1,9 @@
 .. image:: http://dl.dropbox.com/u/79447684/Github/Ubik/ubik_logo.jpg
 
-Ubik is a minimal package manager written in Python.  
+Ubik is lightweight, elegant, no-external web service linked and easy to use package manager. Inspired by the elegant Homebrew for OSX. 
 It contain full toolchain for package creation and repository management.
+
+Written in Python.
 
 .. image:: https://secure.travis-ci.org/Socketubs/Ubik.png?branch=0.2
         :target: https://secure.travis-ci.org/Socketubs/Ubik
