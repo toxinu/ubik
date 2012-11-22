@@ -32,7 +32,7 @@ class TestPackage_04(unittest.TestCase):
         os.system('echo "jambon" >> %s/var/lib/ubik/packages/package_04.tar' % api.conf.get('settings', 'packages'))
         self.db.sync()
         installer = Installer()
-        installer.resolv(self.package)
+        installer.resolve(self.package)
         installer.feed(installer.resolved)
         self.assertEqual(len(installer.packages), 2)
 

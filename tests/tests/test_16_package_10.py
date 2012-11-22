@@ -53,7 +53,7 @@ class TestPackage_10(unittest.TestCase):
         self.db.sync()
         installer = Installer()
 	try:
-		installer.resolv(self.package)
+		installer.resolve(self.package)
 		raise Exception('Dependence must be unvailable')
 	except DatabaseException:
 		pass

@@ -33,14 +33,14 @@ class Installer(object):
 			else:
 				logger.debug('%s ignored' % package.name)
 	
-	def resolv(self, package):
+	def resolve(self, package):
 		self.package = package
 		self.tree = [self.package]
 		self.resolved = []
 		logger.debug("Resolv deps for '%s':" % package.name)
-		self.deps_resolv(self.package, self.resolved, [])
+		self.deps_resolve(self.package, self.resolved, [])
 
-	def deps_resolv(self, package, resolved, unresolved, level=0):
+	def deps_resolve(self, package, resolved, unresolved, level=0):
 		logger.debug("[%s] %s: %s" % (level, package.name ,package.requires))
 		self.unresolved = unresolved
 		self.unresolved.append(package)
@@ -49,7 +49,7 @@ class Installer(object):
 			if dep not in self.resolved:
 				if dep in self.unresolved:
 					raise InstallerException('Circular reference detected: %s -> %s' % (package.name, dep.name))
-				self.deps_resolv(dep, self.resolved, self.unresolved, level+1)
+				self.deps_resolve(dep, self.resolved, self.unresolved, level+1)
 		self.resolved.append(package)
 		self.unresolved.remove(package)
 

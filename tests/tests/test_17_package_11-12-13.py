@@ -75,7 +75,7 @@ class TestPackage_11_12_13(unittest.TestCase):
         self.db.sync()
         installer = Installer()
 	try:
-		installer.resolv(self.package_11)
+		installer.resolve(self.package_11)
 		raise Exception('Dependences resolving must failed')
 	except DatabaseException:
 		pass
@@ -92,7 +92,7 @@ class TestPackage_11_12_13(unittest.TestCase):
         self.db.sync()
         installer = Installer()
 	try:
-		installer.resolv(self.package_12)
+		installer.resolve(self.package_12)
 		raise Exception('Dependences resolving must failed')
 	except DatabaseException:
 		pass
@@ -109,7 +109,7 @@ class TestPackage_11_12_13(unittest.TestCase):
         self.db.sync()
         installer = Installer()
 	try:
-		installer.resolv(self.package_13)
+		installer.resolve(self.package_13)
 		raise Exception('Dependences resolving must failed')
 	except DatabaseException:
 		pass

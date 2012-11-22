@@ -53,7 +53,7 @@ class TestPackage_06(unittest.TestCase):
         self.db.sync()
         installer = Installer()
 	try:
-		installer.resolv(self.package)
+		installer.resolve(self.package)
 		raise Exception('Dependences resolving must failed')
 	except InstallerException:
 		pass

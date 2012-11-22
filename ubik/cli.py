@@ -82,10 +82,10 @@ class Cli(object):
 				if self.args.get('--with-deps', False):
 					for package in db.get(packages):
 						try:
-							reinstaller.resolv(package)
+							reinstaller.resolve(package)
 							reinstaller.feed(reinstaller.resolved)
 						except RuntimeError as err:
-							print(' :: Dependencies resolv failed (%s)' % err)
+							print(' :: Dependencies resolve failed (%s)' % err)
 							sys.exit(1)
 				else:
 					reinstaller.feed(db.get(packages))
@@ -129,7 +129,7 @@ class Cli(object):
 				sys.exit(1)
 			# Create installer
 			installer = Installer()
-			# Resolv deps
+			# Resolve deps
 			stream_logger.info(' :: Resolving dependencies') 
 			if not isinstance(self.args['<package>'], list):
 				packages = [self.args['<package>']]
@@ -139,10 +139,10 @@ class Cli(object):
 			try:
 				for package in db.get(packages):
 					try:
-						installer.resolv(package)
+						installer.resolve(package)
 						installer.feed(installer.resolved)
 					except RuntimeError as err:
-						print(' :: Dependencies resolv failed (%s)' % err)
+						print(' :: Dependencies resolve failed (%s)' % err)
 						sys.exit(1)
 			except DatabaseException as err:
 				print(' :: %s' % err)

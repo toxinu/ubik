@@ -42,7 +42,7 @@ def install_package(ws, package):
         installer = Installer()
         package = api.db.get(package)[0]
         log(ws, 'Resolve dependencies')
-        installer.resolv(package)
+        installer.resolve(package)
         installer.feed(installer.resolved)
         installed_packages = "<ul>"
         for p in installer.packages:
@@ -72,7 +72,7 @@ def reinstall_package(ws, package):
         package = api.db.get(package)[0]
         print(package)
         log(ws, 'Resolve dependencies')
-        reinstaller.resolv(package)
+        reinstaller.resolve(package)
         reinstaller.feed(reinstaller.resolved)
         reinstalled_packages = "<ul>"
         for p in reinstaller.packages:

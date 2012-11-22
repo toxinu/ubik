@@ -84,7 +84,7 @@ class TestPackage_04_05(unittest.TestCase):
         # Install 'package_04' package with it's 'package_05' require
         self.db.sync()
         installer = Installer()
-        installer.resolv(self.package_04)
+        installer.resolve(self.package_04)
         installer.feed(installer.resolved)
         self.assertEqual(len(installer.packages), 2)
 

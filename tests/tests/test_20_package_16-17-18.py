@@ -32,11 +32,11 @@ class TestPackage_16_17_18(unittest.TestCase):
     def test_100_install_package(self):
         self.db.sync()
         installer = Installer()
-        installer.resolv(self.package_16)
+        installer.resolve(self.package_16)
         installer.feed(installer.resolved)
-        installer.resolv(self.package_17)
+        installer.resolve(self.package_17)
         installer.feed(installer.resolved)
-        installer.resolv(self.package_18)
+        installer.resolve(self.package_18)
         installer.feed(installer.resolved)
         self.assertEqual(len(installer.packages), 3)
 

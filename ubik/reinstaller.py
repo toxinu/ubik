@@ -32,20 +32,20 @@ class Reinstaller(object):
 				else:
 					stream_logger.info('    - %s not installed' % package.name)
 
-	def resolv(self, package):
+	def resolve(self, package):
 		self.package = package
 		self.tree = [self.package]
 		self.resolved = []
-		self.deps_resolv(self.package, self.resolved, [])
+		self.deps_resolve(self.package, self.resolved, [])
 
-	def deps_resolv(self, package, resolved, unresolved):
+	def deps_resolve(self, package, resolved, unresolved):
 		self.unresolved = unresolved
 		self.unresolved.append(package)
 		for dep in db.get(package.requires):
 			if dep not in self.resolved:
 				if dep in self.unresolved:
 					raise ReinstallerException('Circular reference detected: %s -> %s' % (package.name, dep.name))
-				self.deps_resolv(dep, self.resolved, self.unresolved)
+				self.deps_resolve(dep, self.resolved, self.unresolved)
 		self.resolved.append(package)
 		self.unresolved.remove(package)
 
