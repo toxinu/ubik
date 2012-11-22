@@ -39,7 +39,7 @@ Thanks to `Requests`_, `Docopt`_ and `ProgressBar`_ to be awesome tools.
 
 For information:
 
-``Canopsis is a hypervisor, built on top of all open source monitoring solutions to agregate, correlate and ponderate events flowing from them.``
+    Canopsis is a hypervisor, built on top of all open source monitoring solutions to agregate, correlate and ponderate events flowing from them.
 
 License
 -------
