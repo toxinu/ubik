@@ -21,7 +21,6 @@ Synchronization retrieve remote ``Packages.json`` file and merge it with local d
      u'nginx'  : <ubik.package.Package object at 0x100965c10>,
      u'python3': <ubik.package.Package object at 0x100976f10>,
      u'python2': <ubik.package.Package object at 0x100977c10>}
-    >>> db.sync()
 
 Package
 -------

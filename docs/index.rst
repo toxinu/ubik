@@ -27,6 +27,7 @@ User Guide
    :maxdepth: 2
 
    user/install
+   user/usage
 
 Toolbelt Guide
 --------------
@@ -55,10 +56,10 @@ Feature Support
 Ubik can be use on every Unix.
 
 - Install, Remove, Upgrade, Reinstall actions
-- Dependecies resolver for Installation
-- Package cache managment
-- Package integrity check via Md5
-- Web UI for package managment
+- Dependencies resolver for Installation
+- Package cache management
+- Package integrity check via md5
+- Web UI for package management
 - Package control file are Python objects
 - Ubik is full Python
 
