@@ -22,3 +22,9 @@ def get_user_name():
 
 def get_user_group():
     return grp.getgrgid(pwd.getpwuid(os.getuid()).pw_gid).gr_name
+
+def which(file):
+    for path in os.environ["PATH"].split(":"):
+        if file in os.listdir(path):
+            return "%s/%s" % (path, file)
+    return False
