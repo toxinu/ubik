@@ -25,10 +25,6 @@ Installation
 
     pip install ubik
 
-What about packages and repositories management ?
--------------------------------------------------
-
-Take a look at `Ubik toolbelt`_ help.
 
 Tests
 -----
