@@ -226,11 +226,9 @@ class Cli(object):
 			# Create remover
 			remover = Remover()
 			stream_logger.info(' :: Resolving') 
-			if not isinstance(self.args['<package>'], list):
-				packages = [self.args['<package>']]
-			else:
-				packages = self.args['<package>']
+			packages = db.get(self.args.get('<package>'))
 
+			print(packages)
 			try:
 				remover.feed(packages)
 			except DatabaseException as err:
