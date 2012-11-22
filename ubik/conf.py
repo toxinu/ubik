@@ -28,6 +28,8 @@ def get_conf(conf_path):
 			parser.set('system', 'arch', 'i386')
 		elif isit.bit64:
 			parser.set('system', 'arch', 'x86_64')
+	else:
+		parser.set('system', 'arch', parser.get('system', 'arch').lower())
 
 	if not parser.has_option('system', 'dist'):
 		dist = 'unknown'
@@ -64,5 +66,10 @@ def get_conf(conf_path):
 
 		parser.set('system', 'dist', dist)
 		parser.set('system', 'vers', vers)
+	else:
+		parser.set('system', 'dist', parser.get('system', 'dist').lower())
+
+	if parser.has_option('system', 'vers'):
+		parser.set('system', 'vers', parser.get('system', 'vers').lower())
 
 	return parser
