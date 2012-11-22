@@ -33,8 +33,8 @@ setup(
     author = 'Geoffrey Lehée',
     author_email = 'geoffrey@lehee.name',
     url = 'https://github.com/socketubs/Ubik/',
-    keywords = 'ubik package linux',
-    packages = ['ubik','ubik_toolbelt'],
+    keywords = 'ubik package linux unix',
+    packages = ['ubik','ubik_toolbelt','ubik_toolbelt.contrib'],
     scripts = ['scripts/ubik','scripts/echo_ubik_conf','scripts/ubik-package','scripts/ubik-repo','scripts/ubik-web'],
     install_requires = ['progressbar==2.3', 'requests==0.14.2', 'docopt==0.5.0', 'isit==0.1.3'],
     classifiers = (
