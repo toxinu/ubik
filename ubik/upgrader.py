@@ -59,4 +59,3 @@ class Upgrader(object):
 			package.repo_version = ''
 			package.repo_release = ''
 			db.add(package)
-			db.save(conf.get('paths', 'local_db'))
