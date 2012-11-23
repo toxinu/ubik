@@ -11,7 +11,7 @@ source $ROOT/bin/activate
 set -u
 
 cd $REPO_ROOT
-ubik-repo generate tests --old-format
+ubik-repo generate tests
 echo " :: Run webserver"
 python -m SimpleHTTPServer 8080 &
 WEBPID="$!"
