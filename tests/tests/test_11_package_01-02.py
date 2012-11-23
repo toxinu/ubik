@@ -85,7 +85,7 @@ class TestPackage_01_02(unittest.TestCase):
 		self.db.sync()
 		installer = Installer()
 		installer.resolve(self.package_01)
-		installer.feed(installer.resolved)
+		installer.feed(installer.get_resolved())
 		self.assertEqual(len(installer.packages), 2)
 
 		installer.download()

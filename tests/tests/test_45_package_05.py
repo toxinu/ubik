@@ -28,7 +28,7 @@ class TestPackage_05(unittest.TestCase):
         self.db.sync()
         installer = Installer()
         installer.resolve(self.package)
-        installer.feed(installer.resolved)
+        installer.feed(installer.get_resolved())
         self.assertEqual(len(installer.packages), 1)
 
         installer.download()
@@ -44,7 +44,7 @@ class TestPackage_05(unittest.TestCase):
         self.db.sync()
         reinstaller = Reinstaller()
         reinstaller.resolve(self.package)
-        reinstaller.feed(reinstaller.resolved)
+        reinstaller.feed(reinstaller.get_resolved())
         self.assertEqual(len(reinstaller.packages), 1)
 
         reinstaller.download()
@@ -69,7 +69,7 @@ class TestPackage_05(unittest.TestCase):
         self.db.sync()
         reinstaller = Reinstaller()
         reinstaller.resolve(self.package)
-        reinstaller.feed(reinstaller.resolved)
+        reinstaller.feed(reinstaller.get_resolved())
         self.assertEqual(len(reinstaller.packages), 1)
 
         reinstaller.download()

@@ -52,19 +52,20 @@ class TestPackage_06(unittest.TestCase):
     def test_100_install_package(self):
         self.db.sync()
         installer = Installer()
-	try:
-		installer.resolve(self.package)
-		raise Exception('Dependences resolving must failed')
-	except InstallerException:
-		pass
+        try:
+            installer.resolve(self.package)
+            raise Exception('Dependences resolving must failed')
+        except InstallerException:
+            pass
+
         self.assertEqual(len(installer.packages), 0)
         self.assertTrue(self.db.get('package_06'))
 
-	# Just package_03 installed
+        # Just package_03 installed
         self.assertEqual(self.db.count_installed(), 1)
 
-	path = "%s/bin/package_06" % api.conf.get('settings', 'packages')
-	self.assertFalse(os.path.exists(path))
+        path = "%s/bin/package_06" % api.conf.get('settings', 'packages')
+        self.assertFalse(os.path.exists(path))
 
 if __name__ == '__main__':
     unittest.main()
