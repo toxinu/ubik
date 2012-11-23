@@ -42,8 +42,8 @@ class Reinstaller(object):
 		self.unresolved = unresolved
 		self.unresolved[package.name] = package
 		for dep in db.get(package.requires):
-			if dep not in self.resolved.keys():
-				if dep in self.unresolved.keys():
+			if dep.name not in self.resolved.keys():
+				if dep.name in self.unresolved.keys():
 					raise ReinstallerException('Circular reference detected: %s -> %s' % (package.name, dep.name))
 				self.deps_resolv(dep, self.resolved, self.unresolved)
 		self.resolved[package.name] = package

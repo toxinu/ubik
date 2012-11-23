@@ -16,8 +16,8 @@ from ubik.exceptions import DatabaseException
 
 class Database(object):
 	def __init__(self, content=None, file_path=None):
-		self.content = self.content
-		self.file_path = self.file_path
+		self.content = content
+		self.file_path = file_path
 
 		if not self.content and self.file_path:
 			self.content = json.load(open(self.file_path))
