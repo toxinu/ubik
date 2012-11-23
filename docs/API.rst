@@ -57,7 +57,7 @@ The ``ubik.installer.Installer`` object do the complex install process for you. 
 Steps:
 
 - Give ``Packages`` to ``Installer`` to resolve dependencies
-- Feed the ``Installer`` with all the ``Installer.resolved`` packages
+- Feed the ``Installer`` with all the ``Installer.get_resolved()`` packages
 - Take a look at which packages ``Installer`` want to install
 - Download packages with ``Installer.download()`` method
 - Install packages with ``Installer.install()`` method
@@ -68,7 +68,7 @@ Steps:
     >>> db.sync()
     >>> installer = Installer()
     >>> installer.resolv(package)
-    >>> installer.feed(installer.resolved)
+    >>> installer.feed(installer.get_resolved())
     >>> installer.packages
     [<ubik.package.Package object at 0x1009bd950>,
      <ubik.package.Package object at 0x1009bdb10>]
