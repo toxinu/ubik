@@ -83,7 +83,7 @@ class Cli(object):
 					for package in db.get(packages):
 						try:
 							reinstaller.resolv(package)
-							reinstaller.feed(reinstaller.resolved)
+							reinstaller.feed(reinstaller.get_resolved())
 						except RuntimeError as err:
 							print(' :: Dependencies resolv failed (%s)' % err)
 							sys.exit(1)
@@ -141,7 +141,7 @@ class Cli(object):
 				for package in db.get(packages):
 					try:
 						installer.resolv(package)
-						installer.feed(installer.resolved)
+						installer.feed(installer.get_resolved())
 					except RuntimeError as err:
 						print(' :: Dependencies resolv failed (%s)' % err)
 						sys.exit(1)
@@ -227,10 +227,7 @@ class Cli(object):
 			# Create remover
 			remover = Remover()
 			stream_logger.info(' :: Resolving') 
-			if not isinstance(self.args['<package>'], list):
-				packages = [self.args['<package>']]
-			else:
-				packages = self.args['<package>']
+			packages = db.get(self.args.get('<package>'))
 
 			try:
 				remover.feed(packages)

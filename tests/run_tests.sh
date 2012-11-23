@@ -58,7 +58,7 @@ mkdir -p $tests_dir/$env_name/{etc,opt,var}
 mkdir -p $tests_dir/$env_name/var/log
 sed 's#%tests_dir%#'$tests_dir/$env_name'#g' $tests_dir/ubik.conf > $tests_dir/$env_name/etc/ubik.conf
 cp $tests_dir/tests/env.py $tests_dir/$env_name
-pip install git+http://github.com/Socketubs/Ubik-toolbelt.git
+pip install git+http://github.com/socketubs/ubik-toolbelt.git --upgrade
 
 # Pre-Tests
 echo " :: Create packages"

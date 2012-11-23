@@ -46,4 +46,3 @@ class Remover(object):
 			package.version = ''
 			package.release = ''
 			db.add(package)
-			db.save(conf.get('paths', 'local_db'))

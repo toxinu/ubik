@@ -36,4 +36,5 @@ if not os.path.exists(conf.get('paths', 'local_db')):
 	logger.warning('No packages.db found, is it normal ?')
 	with open(conf.get('paths', 'local_db'), 'w') as f:
 		f.write('[]')
-db = Database(json.load(open(conf.get('paths', 'local_db'))))
+db = Database(file_path=conf.get('paths', 'local_db'))
+

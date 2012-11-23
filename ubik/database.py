@@ -15,18 +15,22 @@ from ubik.downloader import get_database
 from ubik.exceptions import DatabaseException
 
 class Database(object):
-	def __init__(self, content=None):
-		self.content = content
-		self.file_path = None
+	def __init__(self, content=None, file_path=None):
+		self.content = self.content
+		self.file_path = self.file_path
+
+		if not self.content and self.file_path:
+			self.content = json.load(open(self.file_path))
 		
 		self.parse()
 
 	def sync(self):
+		self.load()
 		stream_logger.info('    | Get %s/%s/%s/Packages.json' % (
 						conf.get('repo', 'url'),
 						conf.get('repo', 'base'),
 						conf.get('repo', 'branch')))
-		db_remote = Database(get_database())
+		db_remote = Database(content=get_database())
 
 		for package in db_remote.packages.values():
 			# Check installed
@@ -66,7 +70,7 @@ class Database(object):
 			self.packages[package.name] = package
 
 		# Save databases
-		self.save(conf.get('paths', 'local_db'))
+		self.save()
 
 		# Save informations
 		if not os.path.exists(conf.get('paths', 'infos')):
@@ -76,7 +80,8 @@ class Database(object):
 			{'last_update': time.ctime()},
 		open(conf.get('paths', 'infos'), 'w'))
 
-	def get(self, packages, regexp = True):
+	def get(self, packages, regexp=True):
+		self.load()
 		if not isinstance(packages, list):
 			packages = [packages]
 
@@ -136,11 +141,14 @@ class Database(object):
 		self.packages = packages
 
 	def add(self, package):
+		self.load()
 		if not isinstance(package, Package):
 			raise DatabaseException('Package must be Package object')
 		self.packages[package.name] = package
+		self.save()
 
 	def delete(self, package):
+		self.load()
 		if not isinstance(package, Package):
 			package_name = package
 		else:
@@ -149,10 +157,15 @@ class Database(object):
 			del self.packages[package_name]
 		except:
 			pass
+		self.save()
 
-	def save(self, path):
-		self.file_path = path
-		open(path, 'w').close()
+	def load(self):
+		self.save()
+		self.content = json.load(open(self.file_path))
+		self.parse()
+
+	def save(self):
+		open(self.file_path, 'w').close()
 		new_json = []
 		for package in self.packages.values():
 			_package = {'name': package.name,
@@ -168,7 +181,7 @@ class Database(object):
 						'repo_release': package.repo_release}
 			new_json.append(_package)
 		
-		json.dump(new_json, open(path, 'w'))	
+		json.dump(new_json, open(self.file_path, 'w'))	
 
 	def get_upgrades(self):
 		res = []

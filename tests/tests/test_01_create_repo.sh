@@ -6,6 +6,10 @@ ROOT="${1}"
 PKG_ROOT="$ROOT/home/packages"
 REPO_ROOT="$ROOT/home/repo"
 
+set +u
+source $ROOT/bin/activate
+set -u
+
 cd $REPO_ROOT
 ubik-repo generate tests --old-format
 echo " :: Run webserver"

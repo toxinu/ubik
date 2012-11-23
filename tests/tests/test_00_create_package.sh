@@ -8,6 +8,10 @@ PKG_ROOT="$ROOT/home/packages"
 REPO_ROOT="$ROOT/home/repo"
 BRANCH="tests"
 
+set +u
+source $ROOT/bin/activate
+set -u
+
 mkdir -p $PKG_ROOT
 ubik-repo create $REPO_ROOT
 mkdir -p $REPO_ROOT/tests/{noarch,i386,x86_64}
