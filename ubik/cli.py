@@ -83,7 +83,7 @@ class Cli(object):
 					for package in db.get(packages):
 						try:
 							reinstaller.resolve(package)
-							reinstaller.feed(reinstaller.get_resolved())
+							reinstaller.feed(reinstaller.resolved)
 						except RuntimeError as err:
 							print(' :: Dependencies resolve failed (%s)' % err)
 							sys.exit(1)
@@ -140,7 +140,7 @@ class Cli(object):
 				for package in db.get(packages):
 					try:
 						installer.resolve(package)
-						installer.feed(installer.get_resolved())
+						installer.feed(installer.resolved)
 					except RuntimeError as err:
 						print(' :: Dependencies resolve failed (%s)' % err)
 						sys.exit(1)
