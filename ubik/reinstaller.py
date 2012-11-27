@@ -35,22 +35,19 @@ class Reinstaller(object):
 	def resolv(self, package):
 		self.package = package
 		self.tree = [self.package]
-		self.resolved = {}
-		self.deps_resolv(self.package, self.resolved, {})
+		self.resolved = []
+		self.deps_resolv(self.package, self.resolved, [])
 
 	def deps_resolv(self, package, resolved, unresolved):
 		self.unresolved = unresolved
-		self.unresolved[package.name] = package
+		self.unresolved.append(package)
 		for dep in db.get(package.requires):
-			if dep.name not in self.resolved.keys():
-				if dep.name in self.unresolved.keys():
+			if dep.name not in [_dep.name for _dep in self.resolved]:
+				if dep.name in [_dep.name for _dep in self.unresolved]:
 					raise ReinstallerException('Circular reference detected: %s -> %s' % (package.name, dep.name))
 				self.deps_resolv(dep, self.resolved, self.unresolved)
-		self.resolved[package.name] = package
-		del self.unresolved[package.name]
-
-	def get_resolved(self):
-		return self.resolved.values()
+		self.resolved.append(package)
+		self.unresolved.remove(package)
 
 	def download(self):
 		stream_logger.info(' :: Download')	
