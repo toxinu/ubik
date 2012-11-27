@@ -69,7 +69,7 @@ class Cli(object):
 				db.sync()
 			except Exception as err:
 				stream_logger.error('Error: %s' % err)
-				sys.exit(1)
+				#sys.exit(1)
 			# Create installer
 			stream_logger.info(' :: Resolving') 
 			reinstaller = Reinstaller()
@@ -127,7 +127,7 @@ class Cli(object):
 				db.sync()
 			except Exception as err:
 				stream_logger.error('Error: %s' % err)
-				sys.exit(1)
+				#sys.exit(1)
 			# Create installer
 			installer = Installer()
 			# Resolv deps
@@ -182,7 +182,7 @@ class Cli(object):
 				db.sync()
 			except Exception as err:
 				stream_logger.error('Error: %s' % err)
-				sys.exit(1)
+				#sys.exit(1)
 			# Create Upgrader
 			upgrader = Upgrader()
 			stream_logger.info(' :: Resolving') 
