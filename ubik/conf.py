@@ -5,7 +5,10 @@ import platform
 import re
 import isit
 
-from ConfigParser import SafeConfigParser
+try:
+  from configparser import SafeConfigParser
+except ImportError:
+  from ConfigParser import SafeConfigParser
 
 def get_conf(conf_path):
 	conf_path = conf_path
@@ -37,32 +40,32 @@ def get_conf(conf_path):
 
 		if isit.osx:
 			dist = 'osx'
-			vers = isit.osx_vers
+			vers = isit.osx_version
 		elif isit.linux:
 			if isit.debian:
 				dist = "debian"
-				if isit.debian_vers:
-					vers = isit.debian_vers.split('.')[0]
+				if isit.debian_version:
+					vers = isit.debian_version.split('.')[0]
 
 			elif isit.ubuntu:
 				dist = "ubuntu"
-				if isit.ubuntu_vers:
-					vers = isit.ubuntu_vers
+				if isit.ubuntu_version:
+					vers = isit.ubuntu_version
 
 			elif isit.centos:
 				dist = "centos"
-				if isit.centos_vers:
-					vers = isit.centos_vers.split('.')[0]
+				if isit.centos_version:
+					vers = isit.centos_version.split('.')[0]
 
 			elif isit.redhat:
 				dist = "redhat"
-				if isit.redhat_vers:
-					vers = isit.redhat_vers.split('.')[0]
+				if isit.redhat_version:
+					vers = isit.redhat_version.split('.')[0]
 
 			elif isit.archlinux:
 				dist = "archlinux"
-				if isit.archlinux_vers:
-					vers = isit.archlinux_vers
+				if isit.archlinux_version:
+					vers = isit.archlinux_version
 
 		parser.set('system', 'dist', dist)
 		parser.set('system', 'vers', vers)

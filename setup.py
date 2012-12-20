@@ -10,6 +10,14 @@ try:
 except ImportError:
 	from distutils.core import setup
 
+if sys.version < '3':
+  import codecs
+  def u(x):
+    return codecs.unicode_escape_decode(x)[0]
+else:
+  def u(x):
+    return x
+
 def get_version():
     VERSIONFILE = 'ubik/__init__.py'
     initfile_lines = open(VERSIONFILE, 'rt').readlines()
@@ -17,7 +25,7 @@ def get_version():
     for line in initfile_lines:
         mo = re.search(VSRE, line, re.M)
         if mo:
-            return mo.group(1)
+            return u(mo.group(1))
     raise RuntimeError('Unable to find version string in %s.' % (VERSIONFILE,))
 
 if sys.argv[-1] == 'publish':
@@ -25,19 +33,19 @@ if sys.argv[-1] == 'publish':
 	sys.exit()
 
 setup(
-    name = 'ubik',
-    version = get_version(),
-    description = 'Minimal packages manager',
-    long_description =  open('README.rst').read(),
-    license = open('LICENSE').read(),
-    author = 'Geoffrey Lehée',
-    author_email = 'geoffrey@lehee.name',
-    url = 'https://github.com/socketubs/Ubik/',
-    keywords = 'ubik package linux unix',
-    packages = ['ubik','ubik_toolbelt','ubik_toolbelt.contrib'],
-    scripts = ['scripts/ubik','scripts/echo_ubik_conf','scripts/ubik-package','scripts/ubik-repo','scripts/ubik-web'],
-    install_requires = ['progressbar==2.3', 'requests==0.14.2', 'docopt==0.5.0', 'isit==0.1.3'],
-    classifiers = (
+    name='ubik',
+    version=get_version(),
+    description=u('Minimal and elegant packages manager'),
+    long_description=open('README.rst').read(),
+    license=open('LICENSE').read(),
+    author=u('Geoffrey Lehée'),
+    author_email=u('geoffrey@lehee.name'),
+    url='https://github.com/socketubs/ubik/',
+    keywords='ubik package linux unix',
+    packages=['ubik','ubik_toolbelt','ubik_toolbelt.contrib'],
+    scripts=['scripts/ubik', 'scripts/echo_ubik_conf', 'scripts/ubik-package', 'scripts/ubik-repo', 'scripts/ubik-web'],
+    install_requires=['progressbar==2.3', 'requests==1.0.3', 'docopt==0.5.0', 'isit==0.2.2'],
+    classifiers=[
         'Intended Audience :: Developers',
         'Natural Language :: English',
         'License :: OSI Approved :: GNU Affero General Public License v3 or later (AGPLv3+)',
@@ -45,6 +53,7 @@ setup(
         'Programming Language :: Python :: 2.6',
         'Programming Language :: Python :: 2.7',
         'Programming Language :: Python :: 3.2',
+        'Programming Language :: Python :: 3.3',
         'Programming Language :: Python :: Implementation :: CPython',
-        'Programming Language :: Python :: Implementation :: PyPy')
+        'Programming Language :: Python :: Implementation :: PyPy'],
 )
