@@ -69,4 +69,3 @@ class UpgraderError(UpgraderException):
 		self.parameter = value
 	def __str__(self):
 		return repr(self.parameter)
-		
