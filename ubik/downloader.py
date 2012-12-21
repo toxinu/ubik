@@ -18,11 +18,11 @@ def get_proxies():
 		if conf.has_option('proxy', 'http_proxy'):
 			if conf.get('proxy', 'http_proxy'):
 				if conf.has_option('proxy', 'http_auth'):
-					if conf.get('proxy', 'http_auth'): 
+					if conf.get('proxy', 'http_auth'):
 						proxies['http'] = '%s@%s' % (
 						conf.get('proxy', 'http_auth'),
 						conf.get('proxy', 'http_proxy'))
-				else:			
+				else:
 					proxies['http'] = '%s' % (
 					conf.get('proxy', 'http_proxy'))
 	elif os.environ.get('http_proxy'):
@@ -31,11 +31,11 @@ def get_proxies():
 	if conf.has_option('proxy', 'https_proxy'):
 		if conf.get('proxy', 'https_proxy'):
 			if conf.has_option('proxy', 'https_auth'):
-				if conf.get('proxy', 'https_auth'): 
+				if conf.get('proxy', 'https_auth'):
 					proxies['https_proxy'] = '%s@%s' % (
 					conf.get('proxy', 'https_auth'),
 					conf.get('proxy', 'https_proxy'))
-			else:			
+			else:
 				proxies['https_proxy'] = '%s' % (
 				conf.get('proxy', 'https_proxy'))
 
@@ -68,7 +68,7 @@ def get_database(file_path=None):
 		json.dump(r.json, open(file_path, 'w'))
 		return r
 	else:
-		return r.json
+		return r.json()
 
 def get_package(package):
 	if not isinstance(package, ubik.package.Package):
@@ -86,8 +86,8 @@ def get_package(package):
 	proxies = get_proxies()
 	timeout = get_timeout()
 
-	r = requests.get(url, timeout=timeout, proxies=proxies, prefetch=False)
-	r.raise_for_status()	
+	r = requests.get(url, timeout=timeout, proxies=proxies, stream=False)
+	r.raise_for_status()
 
 	size = int(r.headers['Content-Length'].strip())
 	bytes = 0
