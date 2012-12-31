@@ -5,8 +5,8 @@ It contain full toolchain for package creation and repository management.
 
 Written in Python.
 
-.. image:: https://secure.travis-ci.org/Socketubs/Ubik.png?branch=0.2
-        :target: https://secure.travis-ci.org/Socketubs/Ubik
+.. image:: https://secure.travis-ci.org/socketubs/ubik.png?branch=master
+        :target: https://secure.travis-ci.org/socketubs/ubik
 
 Features
 --------
