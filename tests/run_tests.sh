@@ -53,12 +53,17 @@ cd $tests_dir/$env_name
 set +u
 source $tests_dir/$env_name/bin/activate
 set -u
+
+pip install http://pypi.python.org/packages/source/r/requests/requests-1.0.4.tar.gz
+pip install http://pypi.python.org/packages/source/i/isit/isit-0.2.3.tar.gz
+
 pip install -e $tests_dir/..
 mkdir -p $tests_dir/$env_name/{etc,opt,var}
 mkdir -p $tests_dir/$env_name/var/log
 sed 's#%tests_dir%#'$tests_dir/$env_name'#g' $tests_dir/ubik.conf > $tests_dir/$env_name/etc/ubik.conf
 cp $tests_dir/tests/env.py $tests_dir/$env_name
-pip install git+http://github.com/socketubs/ubik-toolbelt.git --upgrade
+pip uninstall ubik-toolbelt > /dev/null 2>&1 || true
+pip install git+http://github.com/socketubs/ubik-toolbelt.git
 
 # Pre-Tests
 echo " :: Create packages"
