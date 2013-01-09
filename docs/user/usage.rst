@@ -11,18 +11,18 @@ Before everything, you have to setup your configuration file.
 Configuration
 -------------
 
-For example, you can save your personal configuration file in your home.::
+For example, you can save your personal configuration file in your home: ::
 
     $ echo_ubik_conf > ~/.ubik.conf
 
-And set an environment variable which give to Ubik the path to this file.::
+And set an environment variable which give to Ubik the path to this file: ::
 
     $ export UBIK_CONF="~/.ubik.conf"
 
 Database
 --------
 
-Synchronize your local database with your remote repository, this is the first thing to do::
+Synchronize your local database with your remote repository, this is the first thing to do: ::
 
     $ ubik update
      :: Update
@@ -46,7 +46,7 @@ And now list all packages::
 Operations
 ----------
 
-Install a package::
+Install a package: ::
 
     $ ubik install wget
      :: Update
