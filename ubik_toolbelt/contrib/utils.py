@@ -2,6 +2,7 @@
 import os
 import pwd
 import grp
+import hashlib
 
 def user_exists(user):
     try:
@@ -28,3 +29,13 @@ def which(file):
         if file in os.listdir(path):
             return "%s/%s" % (path, file)
     return False
+
+def get_md5(file, block_size=2**20):
+    md5 = hashlib.md5()
+    _file = open(file, 'rb')
+    while True:
+        data = _file.read(block_size)
+        if not data:
+            break
+        md5.update(data)
+    return md5.hexdigest()
