@@ -59,7 +59,7 @@ class Cli(object):
             try:
                 db.sync()
             except Exception as err:
-                if conf.get('logger','level') >= 2:
+                if int(conf.get('logger','level')) >= 2:
                     traceback.print_exc(file=sys.stdout)
                 self.error_link()
         ###################
@@ -77,7 +77,7 @@ class Cli(object):
             try:
                 db.sync()
             except Exception as err:
-                if conf.get('logger','level') >= 2:
+                if int(conf.get('logger','level')) >= 2:
                     traceback.print_exc(file=sys.stdout)
                 self.error_link()
             # Create installer
@@ -95,14 +95,14 @@ class Cli(object):
                             reinstaller.resolve(package)
                             reinstaller.feed(reinstaller.resolved)
                         except RuntimeError as err:
-                            if conf.get('logger','level') >= 2:
+                            if int(conf.get('logger','level')) >= 2:
                                 traceback.print_exc(file=sys.stdout)
                             stream_logger.info(' :: Dependencies resolve failed (%s)' % err)
                             sys.exit(1)
                 else:
                     reinstaller.feed(db.get(packages))
             except DatabaseException as err:
-                if conf.get('logger','level') >= 2:
+                if int(conf.get('logger','level')) >= 2:
                     traceback.print_exc(file=sys.stdout)
                 self.error_link()
 
@@ -118,7 +118,7 @@ class Cli(object):
                     try:
                         reinstaller.reinstall(ignore_errors=self.args.get('--ignore-errors', False))
                     except Exception as err:
-                        if conf.get('logger','level') >= 2:
+                        if int(conf.get('logger','level')) >= 2:
                             traceback.print_exc(file=sys.stdout)
                         raise
                 else:
@@ -129,7 +129,7 @@ class Cli(object):
                 try:
                     reinstaller.reinstall(ignore_errors=self.args.get('--ignore-errors', False))
                 except Exception as err:
-                    if conf.get('logger','level') >= 2:
+                    if int(conf.get('logger','level')) >= 2:
                         traceback.print_exc(file=sys.stdout)
                     raise
 
@@ -142,7 +142,7 @@ class Cli(object):
             try:
                 db.sync()
             except Exception as err:
-                if conf.get('logger','level') >= 2:
+                if int(conf.get('logger','level')) >= 2:
                     traceback.print_exc(file=sys.stdout)
                 self.error_link()
             # Create installer
@@ -160,12 +160,12 @@ class Cli(object):
                         installer.resolve(package)
                         installer.feed(installer.resolved)
                     except RuntimeError as err:
-                        if conf.get('logger','level') >= 2:
+                        if int(conf.get('logger','level')) >= 2:
                             traceback.print_exc(file=sys.stdout)
                         stream_logger.info(' :: Dependencies resolve failed (%s)' % err)
                         sys.exit(1)
             except DatabaseException as err:
-                if conf.get('logger','level') >= 2:
+                if int(conf.get('logger','level')) >= 2:
                     traceback.print_exc(file=sys.stdout)
                 self.error_link()
 
@@ -182,7 +182,7 @@ class Cli(object):
                     try:
                         installer.install(ignore_errors=self.args.get('--ignore-errors', False))
                     except Exception as err:
-                        if conf.get('logger','level') >= 2:
+                        if int(conf.get('logger','level')) >= 2:
                             traceback.print_exc(file=sys.stdout)
                         raise
                 else:
@@ -193,7 +193,7 @@ class Cli(object):
                 try:
                     installer.install(ignore_errors=self.args.get('--ignore-errors', False))
                 except Exception as err:
-                    if conf.get('logger','level') >= 2:
+                    if int(conf.get('logger','level')) >= 2:
                         traceback.print_exc(file=sys.stdout)
                     raise
         ###################
@@ -205,7 +205,7 @@ class Cli(object):
             try:
                 db.sync()
             except Exception as err:
-                if conf.get('logger','level') >= 2:
+                if int(conf.get('logger','level')) >= 2:
                     traceback.print_exc(file=sys.stdout)
                 self.error_link()
             # Create Upgrader
@@ -235,7 +235,7 @@ class Cli(object):
                     try:
                         upgrader.upgrade(ignore_errors=self.args.get('--ignore-errors', False))
                     except Exception as err:
-                        if conf.get('logger','level') >= 2:
+                        if int(conf.get('logger','level')) >= 2:
                             traceback.print_exc(file=sys.stdout)
                         raise
                 else:
@@ -246,7 +246,7 @@ class Cli(object):
                 try:
                     upgrader.upgrade(ignore_errors=self.args.get('--ignore-errors', False))
                 except Exception as err:
-                    if conf.get('logger','level') >= 2:
+                    if int(conf.get('logger','level')) >= 2:
                         traceback.print_exc(file=sys.stdout)
                     raise
         ###################
@@ -261,7 +261,7 @@ class Cli(object):
             try:
                 remover.feed(packages)
             except DatabaseException as err:
-                if conf.get('logger','level') >= 2:
+                if int(conf.get('logger','level')) >= 2:
                     traceback.print_exc(file=sys.stdout)
                 self.error_link()
 
@@ -282,6 +282,6 @@ class Cli(object):
                 try:
                     remover.remove(ignore_errors=self.args.get('--ignore-errors', False))
                 except Exception as err:
-                    if conf.get('logger','level') >= 2:
+                    if int(conf.get('logger','level')) >= 2:
                         traceback.print_exc(file=sys.stdout)
                         raise

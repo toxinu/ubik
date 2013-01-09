@@ -32,7 +32,7 @@ class Installer(object):
 					stream_logger.info('    - %s already installed' % package.name)
 			else:
 				logger.debug('%s ignored' % package.name)
-	
+
 	def resolve(self, package):
 		self.package = package
 		self.tree = [self.package]
@@ -53,7 +53,7 @@ class Installer(object):
 		self.unresolved.remove(package)
 
 	def download(self):
-		stream_logger.info(' :: Download')	
+		stream_logger.info(' :: Download')
 		for package in self.packages:
 			logger.info('Download %s' % package.name)
 			# Not cached
@@ -63,7 +63,7 @@ class Installer(object):
 				# Invalid Md5
 				if not checkmd5(package):
 					logger.info('%s md5 invalid' % package.name)
-					stream_logger.info('   | Md5 invalid, package corrumpt')	
+					stream_logger.info('   | Md5 invalid, package corrumpt')
 					raise InstallerException('Invalid Md5')
 			# Cached
 			else:
@@ -74,7 +74,7 @@ class Installer(object):
 					get_package(package)
 					if not checkmd5(package):
 						logger.info('%s md5 invalid' % package.name)
-						stream_logger.info('   | Md5 invalid, package corrumpt')	
+						stream_logger.info('   | Md5 invalid, package corrumpt')
 						raise InstallerException('Invalid Md5')
 				else:
 					stream_logger.info('    | %s already in cache' % package.name)
@@ -82,7 +82,7 @@ class Installer(object):
 	def install(self, ignore_errors=False):
 		if not self.packages:
 			raise InstallerException('Nothing to install')
-		stream_logger.info(' :: Install')	
+		stream_logger.info(' :: Install')
 		for package in self.packages:
 			package.install(ignore_errors=ignore_errors)
 			stream_logger.info('      | Update database')
