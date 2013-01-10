@@ -53,7 +53,7 @@ def get_conf(conf_path):
             elif isit.ubuntu:
                 dist = "ubuntu"
                 if isit.ubuntu_version:
-                    vers = isit.ubuntu_version
+                    vers = isit.ubuntu_version.replace('.', '')
 
             elif isit.centos:
                 dist = "centos"
