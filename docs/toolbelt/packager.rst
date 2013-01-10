@@ -24,11 +24,16 @@ Now you have to put your sources in ``source``:
     # Edit your control.py
     vim control.py
 
+I heavily advise you to every time set ``--prefix`` option at ``/usr/local/ubik`` for your ``./configure`` process in order
+to provide clean package.
+If you give package with custom prefix, links will be broken on user system.
+You can find examples belove.
+
 The ``build`` operation will run ``build`` method in ``control.py``.
 It's recommended that this method must just work in ``source`` directory.
 
 After that, the ``package`` method must do the ``installation``, ``source`` to ``build``.
-
+It's important to understand that ubik will recursivly copy every files in ``build`` to Ubik packages root.
 
 ::
 
@@ -38,6 +43,17 @@ After that, the ``package`` method must do the ``installation``, ``source`` to `
 
 And you have your ``my_package.tar``.
 
+Ubik install process
+====================
+
+This is the Ubik install process in chronologic order:
+
+* Download archive package
+* Extract it
+* Run ``pre_install`` method
+* Extract ``files.bz2`` archive which is your ``build`` directory to Ubik packages root
+* Run ``post_install`` method
+
 Examples
 ========
 
@@ -45,6 +61,21 @@ This is an example repository_ with different packages and their sources.
 
 .. _repository: https://github.com/socketubs/ubik-repo
 
+You can find more packages examples here:
+
+* pyhn_ (Hacker news python client)
+* python3_
+* flask_ (Python web framework)
+* urwid_ (Python lib)
+* wget_
+* htop_
+
+.. _pyhn: 
+.. _python3:
+.. _flask:
+.. _urwid:
+.. _wget:
+.. _htop:
 
 FAQ
 ===
