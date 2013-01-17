@@ -18,10 +18,13 @@ class Upgrader(object):
 		if not isinstance(packages, list):
 			packages = [packages]
 
-		for package in packages:
+		for index, package in enumerate(packages):
 			if not isinstance(package, Package):
-				packages += db.get(package)
-				del packages[packages.index(package)]
+				package = db.get(package)
+				if package and len(package):
+					packages[index] = package[0]
+				else:
+					del packages[index]
 
 		for package in packages:
 			if package not in self.packages:
