@@ -15,31 +15,29 @@ import ubik.package
 def get_proxies():
 	proxies = {}
 	if conf.has_section('proxy'):
-		if conf.has_option('proxy', 'http_proxy'):
-			if conf.get('proxy', 'http_proxy'):
-				if conf.has_option('proxy', 'http_auth'):
-					if conf.get('proxy', 'http_auth'):
-						proxies['http'] = '%s@%s' % (
-						conf.get('proxy', 'http_auth'),
-						conf.get('proxy', 'http_proxy'))
-				else:
-					proxies['http'] = '%s' % (
-					conf.get('proxy', 'http_proxy'))
-	elif os.environ.get('http_proxy'):
+
+		if conf.has_option('proxy', 'http_proxy') and conf.get('proxy', 'http_proxy'):
+			if conf.has_option('proxy', 'http_auth') and conf.get('proxy', 'http_auth'):
+				proxies['http'] = 'http://%s@%s' % (
+				conf.get('proxy', 'http_auth'),
+				conf.get('proxy', 'http_proxy'))
+			else:
+				proxies['http'] = 'http://%s' % (
+				conf.get('proxy', 'http_proxy'))
+
+		if conf.has_option('proxy', 'https_proxy') and conf.get('proxy', 'https_proxy'):
+			if conf.has_option('proxy', 'https_auth') and conf.get('proxy', 'https_auth'):
+				proxies['https_proxy'] = 'http://%s@%s' % (
+				conf.get('proxy', 'https_auth'),
+				conf.get('proxy', 'https_proxy'))
+			else:
+				proxies['https_proxy'] = 'http://%s' % (
+				conf.get('proxy', 'https_proxy'))
+	
+	if os.environ.get('http_proxy'):
 		proxies['http'] = os.environ['http_proxy']
 
-	if conf.has_option('proxy', 'https_proxy'):
-		if conf.get('proxy', 'https_proxy'):
-			if conf.has_option('proxy', 'https_auth'):
-				if conf.get('proxy', 'https_auth'):
-					proxies['https_proxy'] = '%s@%s' % (
-					conf.get('proxy', 'https_auth'),
-					conf.get('proxy', 'https_proxy'))
-			else:
-				proxies['https_proxy'] = '%s' % (
-				conf.get('proxy', 'https_proxy'))
-
-	elif os.environ.get('https_proxy'):
+	if os.environ.get('https_proxy'):
 		proxies['https'] = os.environ['https_proxy']
 
 	return proxies
