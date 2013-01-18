@@ -135,7 +135,7 @@ def unpacker(package):
 			if os.path.islink(src):
 				linkto = os.readlink(src)
 				
-				if os.path.exists(dst):
+				if os.path.lexists(dst):
 					os.remove(dst)
 				os.symlink(linkto, dst)
 				
