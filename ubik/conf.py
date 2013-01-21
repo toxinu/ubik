@@ -61,6 +61,8 @@ def get_conf(conf_path):
 					vers = isit.archlinux_version
 
 		parser.set('system', 'dist', dist)
-		parser.set('system', 'vers', vers)
+
+		if not parser.has_option('system', 'vers'):
+			parser.set('system', 'vers', vers)
 
 	return parser
