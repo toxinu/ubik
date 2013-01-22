@@ -14,9 +14,9 @@ class Control(object):
         self.vers = ''
         self.description = ''
 
-#        self.cur_dir = os.getcwd()
-#        self.src_dir = os.path.join(os.getcwd(), 'source')
-#        self.pkg_dir = os.path.join(os.getcwd(), 'build')
+        self.cur_dir = os.getcwd()
+        self.src_dir = os.path.join(os.getcwd(), 'source')
+        self.pkg_dir = os.path.join(os.getcwd(), 'build')
 
     def build(self):
         stream_logger.info('Building...')

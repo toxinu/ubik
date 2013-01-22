@@ -18,6 +18,7 @@ from ubik.exceptions import *
 class Package(object):
     def __init__(self, name):
         self.name = name
+        self.description = ''
         self.version = ''
         self.release = ''
         self.status = ''
@@ -33,6 +34,8 @@ class Package(object):
         for key in kwargs:
             if key == 'name':
                 self.name = kwargs[key]
+            elif key == 'description':
+                self.description = kwargs[key]
             elif key == 'version':
                 self.version = kwargs[key]
             elif key == 'release':

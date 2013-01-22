@@ -24,6 +24,7 @@ Usage:
   ubik upgrade [--force-yes] [--ignore-errors]
   ubik upgrade <package>... [--force-yes] [--ignore-errors]
   ubik remove <package>... [--force-yes] [--ignore-errors]
+  ubik search <package>
   ubik -h | --help
   ubik -v | --version
 

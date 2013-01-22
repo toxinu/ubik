@@ -21,6 +21,8 @@ from ubik.view import TablePrinter
 from ubik.tools import confirm
 from ubik.tools import clean
 
+from ubik.status import status
+
 from ubik.exceptions import *
 
 class Cli(object):
@@ -285,3 +287,29 @@ class Cli(object):
                     if int(conf.get('logger','level')) >= 2:
                         traceback.print_exc(file=sys.stdout)
                         raise
+        ##########
+        # search #
+        ##########
+        elif self.args.get('search', False):
+            packages = db.get(self.args.get('<package>'))
+            if not packages:
+                stream_logger.info('!! No package found')
+                sys.exit(1)
+            for package in packages:
+                stream_logger.info('Name: %s' % package.name)
+                if package in db.get_installed():
+                    stream_logger.info('Version: %s-%s' % (package.version, package.release))
+                    stream_logger.info('Status: %s' % status[package.status])
+                else:
+                    stream_logger.info('Version: %s-%s' % (package.repo_version, package.repo_release))
+                    stream_logger.info('Status: %s' % status[package.status])
+
+                stream_logger.info('Requires: %s' % ','.join(package.requires))
+                stream_logger.info('Description: %s' % package.description)
+                stream_logger.info('Architecture: %s' % package.arch)
+                stream_logger.info('Distribution: %s' % package.dist)
+                stream_logger.info('Distribution version: %s' % package.vers)
+                if package is not packages[-1]:
+                    stream_logger.info('')
+
+            sys.exit(0)

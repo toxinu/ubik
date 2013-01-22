@@ -23,14 +23,6 @@ class Package(Control):
         self.vers = '6'
         self.description = ''
 
-        self.cur_dir = os.getcwd()
-        self.src_dir = os.path.join(os.getcwd(), 'source')
-        self.pkg_dir = os.path.join(os.getcwd(), 'build')
-
-        #
-        # You can easily add some pre_install, post_install, *_upgrade and *_remove methods
-        #
-
     def build(self):
         stream_logger.info('Building...')
 

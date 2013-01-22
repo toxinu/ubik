@@ -10,6 +10,8 @@ if isit.py3:
 else:
   from ConfigParser import SafeConfigParser
 
+from ubik.exceptions import ConfigException
+
 def get_conf(conf_path):
     """
     Read the configuration file and return it
@@ -22,13 +24,21 @@ def get_conf(conf_path):
     # Default
     parser.set('packages', 'safe_conf', 'True')
 
+    if not parser.has_section('settings'):
+        raise ConfigException('Missing settings section in configuration file')
+    if not parser.has_option('settings', 'var_path'):
+        raise ConfigException('Missing var_path option in settings section in configuration file')
+
     # Create paths
-    parser.set('paths', 'local_db', '%s/packages.db' % parser.get('settings', 'var_path'))
-    parser.set('paths', 'lock', '%s/db.lock' % parser.get('settings', 'var_path'))
-    parser.set('paths', 'infos', '%s/infos' % parser.get('settings', 'var_path'))
-    parser.set('paths', 'web_data', '%s/ubik-web.dat' % parser.get('settings', 'var_path'))
+    parser.set('paths', 'local_db', os.path.join(parser.get('settings', 'var_path'), 'packages.db'))
+    parser.set('paths', 'lock', os.path.join(parser.get('settings', 'var_path'), 'db.lock'))
+    parser.set('paths', 'infos', os.path.join(parser.get('settings', 'var_path'), 'infos'))
+    parser.set('paths', 'web_data', os.path.join(parser.get('settings', 'var_path'), 'ubik-web.dat'))
 
     # Detect system info
+    if not parser.has_section('system'):
+        parser.add_section('system')
+
     if not parser.has_option('system', 'arch'):
         if isit.bit32:
             parser.set('system', 'arch', 'i386')
@@ -48,23 +58,19 @@ def get_conf(conf_path):
             if isit.debian:
                 dist = "debian"
                 if isit.debian_version:
-                    vers = isit.debian_version.split('.')[0]
-
+                    vers = isit.debian_version
             elif isit.ubuntu:
                 dist = "ubuntu"
                 if isit.ubuntu_version:
                     vers = isit.ubuntu_version.replace('.', '')
-
             elif isit.centos:
                 dist = "centos"
                 if isit.centos_version:
-                    vers = isit.centos_version.split('.')[0]
-
+                    vers = isit.centos_version
             elif isit.redhat:
                 dist = "redhat"
                 if isit.redhat_version:
-                    vers = isit.redhat_version.split('.')[0]
-
+                    vers = isit.redhat_version
             elif isit.archlinux:
                 dist = "archlinux"
                 if isit.archlinux_version:

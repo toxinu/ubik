@@ -11,13 +11,13 @@ import filecmp
 from ubik.core import conf
 from ubik.logger import logger
 from ubik.logger import stream_logger
-from ubik.exceptions import CmdException
+from ubik.exceptions import CoreException
 
 import ubik.package
 
 def cached(package):
     if not isinstance(package, ubik.package.Package):
-        raise Exception('Need to be a Package object')
+        raise CoreException('Need to be a Package object')
 
     if not os.path.exists(os.path.join(conf.get('settings', 'cache'), package.name + ".tar")):
         return False
@@ -26,7 +26,7 @@ def cached(package):
 
 def checkmd5(package):
     if not isinstance(package, ubik.package.Package):
-        raise Exception('Need to be a Package object')
+        raise CoreException('Need to be a Package object')
 
     package_path = os.path.join(conf.get('settings', 'cache'), package.name + ".tar")
 
@@ -41,19 +41,6 @@ def checkmd5(package):
     if package.md5 != m.hexdigest():
         return False
     return True
-
-def launch_cmd(cmd, ignore_errors=False):
-    if conf.get('packages', 'control_methods'):
-        cmd = ['bash', '-c', '. %s; %s' % (conf.get('packages', 'control_methods'), cmd)]
-    else:
-        cmd = ['bash', '-c', cmd]
-    popen = subprocess.Popen(cmd)
-    popen.wait()
-    if popen.returncode >= 1:
-        if ignore_errors:
-            stream_logger.info('Cmd failed (%s)' % cmd)
-        else:
-            raise CmdException('Cmd failed (%s)' % cmd)
 
 def confirm(prompt=None, resp=False):
     try:

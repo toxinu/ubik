@@ -1,70 +1,46 @@
 # coding: utf-8
 
 # Core
-class CoreException(RuntimeError):
-	""" Core Error """
+class UbikError(RuntimeError):
+	""" Ubik Error """
 
-class CoreError(CoreException):
+class CoreException(UbikError):
 	def __init__(self, value):
 		self.parameter = value
 	def __str__(self):
 		return repr(self.parameter)
 
-# Database
-class DatabaseException(RuntimeError):
-	""" Database Error """
-
-class DatabaseError(DatabaseException):
+class DatabaseException(UbikError):
 	def __init__(self, value):
 		self.parameter = value
 	def __str__(self):
 		return repr(self.parameter)
 
-# Command
-class CmdException(RuntimeError):
-	""" Cmd Error """
-
-class CmdError(CmdException):
+class InstallerException(UbikError):
 	def __init__(self, value):
 		self.parameter = value
 	def __str__(self):
 		return repr(self.parameter)
 
-# Installer
-class InstallerException(RuntimeError):
-	""" Installer Error """
-
-class InstallerError(InstallerException):
+class ReinstallerException(UbikError):
 	def __init__(self, value):
 		self.parameter = value
 	def __str__(self):
 		return repr(self.parameter)
 
-# Reinstaller
-class ReinstallerException(RuntimeError):
-	""" Reinstaller Error """
-
-class ReinstallerError(ReinstallerException):
+class RemoverException(UbikError):
 	def __init__(self, value):
 		self.parameter = value
 	def __str__(self):
 		return repr(self.parameter)
 
-# Remover
-class RemoverException(RuntimeError):
-	""" Remover Error """
-
-class RemoverError(RemoverException):
+class UpgraderException(UbikError):
 	def __init__(self, value):
 		self.parameter = value
 	def __str__(self):
 		return repr(self.parameter)
 
-# Upgrader
-class UpgraderException(RuntimeError):
-	""" Upgrader Error """
-
-class UpgraderError(UpgraderException):
+class ConfigException(UbikError):
 	def __init__(self, value):
 		self.parameter = value
 	def __str__(self):

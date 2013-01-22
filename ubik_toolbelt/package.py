@@ -18,6 +18,15 @@ from ubik_toolbelt.logger import stream_logger
 from ubik_toolbelt.control import Control
 
 class Package(Control):
+    \"\"\"
+        Control object attributs ::
+            self.cur_dir    Current directory
+            self.src_dir    Source directory
+            self.pkg_dir    Build directory
+
+        Help ::
+            http://ubik.socketubs.net/toolbelt/packager.html
+    \"\"\"
     def __init__(self):
         Control.__init__(self)
         self.name = '%s'
@@ -28,14 +37,6 @@ class Package(Control):
         self.dist = ''
         self.vers = ''
         self.description = ''
-
-        self.cur_dir = os.getcwd()
-        self.src_dir = os.path.join(os.getcwd(), 'source')
-        self.pkg_dir = os.path.join(os.getcwd(), 'build')
-
-        #
-        # You can easily add some pre_install, post_install, *_upgrade and *_remove methods
-        #
 
     def build(self):
         stream_logger.info('Building...')
