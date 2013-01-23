@@ -26,7 +26,7 @@ class Database(object):
 
     def sync(self):
         self.load()
-        stream_logger.info('    | Get %s/%s/%s/Packages.json' % (
+        stream_logger.info('   | Retrieving %s/%s/%s/Packages.json' % (
                         conf.get('repo', 'url'),
                         conf.get('repo', 'base'),
                         conf.get('repo', 'branch')))

@@ -45,12 +45,12 @@ def checkmd5(package):
 def confirm(prompt=None, resp=False):
     try:
         if prompt is None:
-            prompt = 'Confirm'
+            prompt = 'Do you want to continue'
 
         if resp:
-            prompt = '%s [%s|%s]: ' % (prompt, 'n', 'Y')
+            prompt = '%s [%s|%s]? ' % (prompt, 'n', 'Y')
         else:
-            prompt = '%s [%s|%s]: ' % (prompt, 'y', 'N')
+            prompt = '%s [%s|%s]? ' % (prompt, 'y', 'N')
 
         while True:
             ans = raw_input(prompt)
@@ -98,6 +98,7 @@ def unpacker(package):
             dst = '%s' % src.replace(root_content, conf.get('settings', 'packages'))
             if os.path.islink(src):
                 linkto = os.readlink(src)
+                os.remove(dst)
                 os.symlink(linkto, dst)
             elif not os.path.exists(dst):
                 os.makedirs(dst)
@@ -122,7 +123,7 @@ def unpacker(package):
             if os.path.islink(src):
                 linkto = os.readlink(src)
 
-                if os.path.exists(dst):
+                if os.path.lexists(dst):
                     os.remove(dst)
                 os.symlink(linkto, dst)
 

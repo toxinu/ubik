@@ -57,7 +57,7 @@ class Cli(object):
         # update          #
         ###################
         elif self.args.get('update', False):
-            stream_logger.info(' :: Update')
+            stream_logger.info('=> Update')
             try:
                 db.sync()
             except Exception as err:
@@ -68,14 +68,14 @@ class Cli(object):
         # clean           #
         ###################
         elif self.args.get('clean', False):
-            stream_logger.info(' :: Clean')
+            stream_logger.info('=> Cleaning')
             clean()
         ###################
         # reinstall       #
         ###################
         elif self.args.get('reinstall', False):
             # Sync Database
-            stream_logger.info(' :: Update')
+            stream_logger.info('=> Updating')
             try:
                 db.sync()
             except Exception as err:
@@ -83,7 +83,7 @@ class Cli(object):
                     traceback.print_exc(file=sys.stdout)
                 self.error_link()
             # Create installer
-            stream_logger.info(' :: Resolving')
+            stream_logger.info('=> Resolving')
             reinstaller = Reinstaller()
             if not isinstance(self.args['<package>'], list):
                 packages = [self.args['<package>']]
@@ -99,7 +99,7 @@ class Cli(object):
                         except RuntimeError as err:
                             if int(conf.get('logger','level')) >= 2:
                                 traceback.print_exc(file=sys.stdout)
-                            stream_logger.info(' :: Dependencies resolve failed (%s)' % err)
+                            stream_logger.info('!! Dependencies resolve failed (%s)' % err)
                             sys.exit(1)
                 else:
                     reinstaller.feed(db.get(packages))
@@ -109,11 +109,11 @@ class Cli(object):
                 self.error_link()
 
             if not reinstaller.packages:
-                stream_logger.info(' :: No package(s) to reinstall')
+                stream_logger.info('=> No package(s) to reinstall')
                 sys.exit(0)
-            stream_logger.info(' :: Following packages will be reinstalled:')
+            stream_logger.info('=> Following packages will be reinstalled:')
             for package in reinstaller.packages:
-                stream_logger.info('    - %s' % package.name)
+                stream_logger.info('   - %s' % package.name)
             if not self.args.get('--force-yes', False):
                 if confirm():
                     reinstaller.download()
@@ -140,7 +140,7 @@ class Cli(object):
         ###################
         elif self.args.get('install', False):
             # Sync Database
-            stream_logger.info(' :: Update')
+            stream_logger.info('=> Updating')
             try:
                 db.sync()
             except Exception as err:
@@ -150,7 +150,7 @@ class Cli(object):
             # Create installer
             installer = Installer()
             # Resolve deps
-            stream_logger.info(' :: Resolving dependencies')
+            stream_logger.info('=> Resolving dependencies')
             if not isinstance(self.args['<package>'], list):
                 packages = [self.args['<package>']]
             else:
@@ -164,7 +164,7 @@ class Cli(object):
                     except RuntimeError as err:
                         if int(conf.get('logger','level')) >= 2:
                             traceback.print_exc(file=sys.stdout)
-                        stream_logger.info(' :: Dependencies resolve failed (%s)' % err)
+                        stream_logger.info('!! Dependencies resolve failed (%s)' % err)
                         sys.exit(1)
             except DatabaseException as err:
                 if int(conf.get('logger','level')) >= 2:
@@ -172,11 +172,11 @@ class Cli(object):
                 self.error_link()
 
             if not installer.packages:
-                stream_logger.info('    - No package(s) found')
+                stream_logger.info('   - No package(s) found')
                 sys.exit(1)
-            stream_logger.info(' :: Following dependencies will be installed:')
+            stream_logger.info('=> Following dependencies will be installed:')
             for dep in installer.packages:
-                stream_logger.info('    - %s' % dep.name)
+                stream_logger.info('   - %s' % dep.name)
 
             if not self.args.get('--force-yes', False):
                 if confirm():
@@ -203,7 +203,7 @@ class Cli(object):
         ###################
         elif self.args.get('upgrade', False):
             # Sync Database
-            stream_logger.info(' :: Update')
+            stream_logger.info('=> Updating')
             try:
                 db.sync()
             except Exception as err:
@@ -212,7 +212,7 @@ class Cli(object):
                 self.error_link()
             # Create Upgrader
             upgrader = Upgrader()
-            stream_logger.info(' :: Resolving')
+            stream_logger.info('=> Resolving')
             if not isinstance(self.args['<package>'], list):
                 packages = [self.args['<package>']]
             else:
@@ -224,12 +224,12 @@ class Cli(object):
                 upgrader.feed(packages)
 
             if not upgrader.packages:
-                stream_logger.info(' :: No package(s) to upgrade')
+                stream_logger.info('!! No package(s) to upgrade')
                 sys.exit(0)
 
-            stream_logger.info(' :: Following packages will be upgraded:')
+            stream_logger.info('=> Following packages will be upgraded:')
             for package in upgrader.packages:
-                stream_logger.info('    - %s' % package.name)
+                stream_logger.info('   - %s' % package.name)
 
             if not self.args.get('--force-yes', False):
                 if confirm():
@@ -257,7 +257,6 @@ class Cli(object):
         elif self.args.get('remove', False):
             # Create remover
             remover = Remover()
-            stream_logger.info(' :: Resolving')
             packages = db.get(self.args.get('<package>'))
 
             try:
@@ -270,9 +269,9 @@ class Cli(object):
             if not remover.packages:
                 sys.exit(0)
 
-            stream_logger.info(' :: Following packages will be removed:')
+            stream_logger.info('=> Following packages will be removed:')
             for package in remover.packages:
-                stream_logger.info('    - %s' % package.name)
+                stream_logger.info('   - %s' % package.name)
 
             if not self.args.get('--force-yes', False):
                 if confirm():
@@ -311,5 +310,4 @@ class Cli(object):
                 stream_logger.info('Distribution version: %s' % package.vers)
                 if package is not packages[-1]:
                     stream_logger.info('')
-
             sys.exit(0)

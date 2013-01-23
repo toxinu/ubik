@@ -120,7 +120,7 @@ class Package(object):
 
         self.import_control()
         # Pre Remove
-        stream_logger.info('      | Pre Remove')
+        stream_logger.info('     | Pre Remove')
         self.control.pre_remove()
 
         # Remove
@@ -135,7 +135,7 @@ class Package(object):
             except:
                 pass
         # Post Remove
-        stream_logger.info('      | Post Remove')
+        stream_logger.info('     | Post Remove')
         self.control.post_remove()
 
         stream_logger.info('     | Clean')
