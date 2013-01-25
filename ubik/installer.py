@@ -24,14 +24,15 @@ class Installer(object):
 				packages += db.get(package)
 				del packages[packages.index(package)]
 
+		# Remove dups packages
+		packages_name = [ package.name for package in self.packages ]
+		packages = [ package for package in packages if package.name not in packages_name ]
+
 		for package in packages:
-			if package not in self.packages:
-				if package.status in ['10']:
-					self.packages.append(package)
-				else:
-					stream_logger.info('    - %s already installed' % package.name)
+			if package.status in ['10']:
+				self.packages.append(package)
 			else:
-				logger.debug('%s ignored' % package.name)
+				stream_logger.info('    - %s already installed' % package.name)
 	
 	def resolv(self, package):
 		self.package = package
