@@ -111,7 +111,8 @@ def unpacker(package):
 			dst = '%s' % src.replace(root_content, conf.get('settings', 'packages'))
 			if os.path.islink(src):
 				linkto = os.readlink(src)
-				os.remove(dst)
+				if os.path.lexists(dst):
+					os.remove(dst)
 				os.symlink(linkto, dst)
 			elif not os.path.exists(dst):
 				os.makedirs(dst)
