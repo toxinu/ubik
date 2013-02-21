@@ -2,6 +2,8 @@
 import os
 import requests
 
+from requests.auth import HTTPProxyAuth
+
 from progressbar import ProgressBar
 from progressbar import Bar
 from progressbar import FileTransferSpeed
@@ -16,29 +18,36 @@ def get_proxies():
 	proxies = {}
 	if conf.has_section('proxy'):
 
+		auth = None
+		if conf.has_option('proxy', 'http_auth') and conf.get('proxy', 'http_auth'):
+			auth = conf.get('proxy', 'http_auth')
+
+		if conf.has_option('proxy', 'https_auth') and conf.get('proxy', 'https_auth'):
+			auth = conf.get('proxy', 'https_auth')
+
+		if auth and len(auth.split(':')) == 2:
+			proxies['login'] = auth.split(':')[0]
+			proxies['pass']  = auth.split(':')[1]
+
 		if conf.has_option('proxy', 'http_proxy') and conf.get('proxy', 'http_proxy'):
-			if conf.has_option('proxy', 'http_auth') and conf.get('proxy', 'http_auth'):
-				proxies['http'] = 'http://%s@%s' % (
-				conf.get('proxy', 'http_auth'),
-				conf.get('proxy', 'http_proxy'))
-			else:
-				proxies['http'] = 'http://%s' % (
-				conf.get('proxy', 'http_proxy'))
+			proxies['http'] = 'http://%s' % (
+				conf.get('proxy', 'http_proxy')
+			)
 
 		if conf.has_option('proxy', 'https_proxy') and conf.get('proxy', 'https_proxy'):
-			if conf.has_option('proxy', 'https_auth') and conf.get('proxy', 'https_auth'):
-				proxies['https_proxy'] = 'http://%s@%s' % (
-				conf.get('proxy', 'https_auth'),
-				conf.get('proxy', 'https_proxy'))
-			else:
-				proxies['https_proxy'] = 'http://%s' % (
-				conf.get('proxy', 'https_proxy'))
+			proxies['https_proxy'] = 'http://%s' % (
+				conf.get('proxy', 'https_proxy')
+			)
 	
 	if os.environ.get('http_proxy'):
 		proxies['http'] = os.environ['http_proxy']
 
 	if os.environ.get('https_proxy'):
 		proxies['https'] = os.environ['https_proxy']
+
+	proxies['auth'] = None
+	if auth:
+		proxies['auth'] = HTTPProxyAuth(proxies['login'], proxies['pass'])
 
 	return proxies
 
@@ -57,7 +66,7 @@ def get_database(file_path=None):
 	proxies = get_proxies()
 	timeout = get_timeout()
 
-	r = requests.get(url, timeout=timeout, proxies=proxies)
+	r = requests.get(url, timeout=timeout, proxies=proxies, auth=proxies['auth'])
 	r.raise_for_status()
 
 	if file_path:
@@ -84,7 +93,7 @@ def get_package(package):
 	proxies = get_proxies()
 	timeout = get_timeout()
 
-	r = requests.get(url, timeout=timeout, proxies=proxies, stream=False)
+	r = requests.get(url, timeout=timeout, proxies=proxies, stream=False, auth=proxies['auth'])
 	r.raise_for_status()
 
 	size = int(r.headers['Content-Length'].strip())
