@@ -1,4 +1,4 @@
-.. image:: http://dl.dropbox.com/u/79447684/Github/Ubik/ubik_logo.jpg
+.. image:: https://raw.github.com/socketubs/ubik/master/ubik_logo.jpg
 
 Ubik is lightweight, elegant, no-external web service linked and easy to use package manager. Inspired by the elegant Homebrew for OSX. 
 It contain full toolchain for package creation and repository management.
