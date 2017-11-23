@@ -1,12 +1,12 @@
-.. image:: https://raw.github.com/socketubs/ubik/master/ubik_logo.jpg
+.. image:: https://raw.github.com/toxinu/ubik/master/ubik_logo.jpg
 
 Ubik is lightweight, elegant, no-external web service linked and easy to use package manager. Inspired by the elegant Homebrew for OSX. 
 It contain full toolchain for package creation and repository management.
 
 Written in Python.
 
-.. image:: https://secure.travis-ci.org/socketubs/ubik.png?branch=master
-        :target: https://secure.travis-ci.org/socketubs/ubik
+.. image:: https://secure.travis-ci.org/toxinu/ubik.png?branch=master
+        :target: https://secure.travis-ci.org/toxinu/ubik
 
 Features
 --------
@@ -29,7 +29,7 @@ Installation
 Tests
 -----
 
-Take a look at `tests <https://github.com/Socketubs/Ubik/tree/master/tests>`_ page.  
+Take a look at `tests <https://github.com/toxinu/ubik/tree/master/tests>`_ page.  
 You can run tests with ``tests/run_tests.sh`` script.
 
 Thanks
@@ -48,9 +48,9 @@ License is `AGPL3`_, it fully compatible with ``Canopsis``. See
 `LICENSE`_.
 
 .. _Canopsis: https://github.com/capensis/canopsis
-.. _Ubik toolbelt: https://github.com/Socketubs/Ubik/blob/0.2/docs/TOOLBELT.rst
+.. _Ubik toolbelt: https://github.com/toxinu/ubik/blob/0.2/docs/TOOLBELT.rst
 .. _Requests: https://github.com/kennethreitz/requests
 .. _Docopt: https://github.com/docopt/docopt
 .. _ProgressBar: http://code.google.com/p/python-progressbar/
 .. _AGPL3: http://www.gnu.org/licenses/agpl.html
-.. _LICENSE: https://raw.github.com/Socketubs/ubik/master/LICENSE
+.. _LICENSE: https://raw.github.com/toxinu/ubik/master/LICENSE
