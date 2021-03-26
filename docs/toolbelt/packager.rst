@@ -59,7 +59,7 @@ Examples
 
 This is an example repository_ with different packages and their sources.
 
-.. _repository: https://github.com/socketubs/ubik-repo
+.. _repository: https://github.com/toxinu/ubik
 
 You can find more packages examples here:
 
@@ -84,11 +84,11 @@ FAQ
 
 Let's see an example_ together, ``pyhn``.
 
-.. _example: https://github.com/socketubs/ubik-repo/tree/master/public/noarch/nodist/novers/pyhn.source
+.. _example: https://github.com/toxinu/ubik/tree/master/public/noarch/nodist/novers/pyhn.source
 
 It's more easy to leave ``setuptools`` do it's job, so just put your ``.tar.gz`` in ``sources``,
 Set your ``build`` method to copy it in your ``/tmp/ubik/pyhn-0.1.8.tar.gz``.
 
 And the installation will be done by ``post_install`` method, take a loot at source_.
 
-.. _source: https://github.com/socketubs/ubik-repo/blob/master/public/noarch/nodist/novers/pyhn.source/control.py
+.. _source: https://github.com/toxinu/ubik/blob/master/public/noarch/nodist/novers/pyhn.source/control.py

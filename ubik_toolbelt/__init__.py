@@ -3,6 +3,6 @@
 
 __title__ = 'ubik_toolbelt'
 __version__ = '0.2.0'
-__author__ = 'Geoffrey Lehée'
+__author__ = 'toxinu'
 __license__ = 'AGPL3'
-__copyright__ = 'Copyright 2012 Geoffrey Lehée'
+__copyright__ = 'Copyright 2012 toxinu'

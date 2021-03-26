@@ -33,19 +33,19 @@ From the Source
 ---------------
 
 Ubik is developed on GitHub, where the code is
-`always available <https://github.com/socketubs/ubik>`_.
+`always available <https://github.com/toxinu/ubik>`_.
 
 You can either clone the public repository::
 
-    git clone git://github.com/socketubs/ubik.git
+    git clone git://github.com/toxinu/ubik.git
 
-Download the `tarball <https://github.com/socketubs/ubik/tarball/master>`_::
+Download the `tarball <https://github.com/toxinu/ubik/tarball/master>`_::
 
-    $ curl -OL https://github.com/socketubs/ubik/tarball/master
+    $ curl -OL https://github.com/toxinu/ubik/tarball/master
 
-Or, download the `zipball <https://github.com/socketubs/ubik/zipball/master>`_::
+Or, download the `zipball <https://github.com/toxinu/ubik/zipball/master>`_::
 
-    $ curl -OL https://github.com/socketubs/ubik/zipball/master
+    $ curl -OL https://github.com/toxinu/ubik/zipball/master
 
 
 Once you have a copy of the source, you can embed it in your Python package,

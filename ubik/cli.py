@@ -33,7 +33,7 @@ class Cli(object):
     def error_link(self, exit=True):
         stream_logger.info('!! Sorry Ubik failed. Please report this issue on my bug tracker')
         stream_logger.info('!! Before post issue, please set logging at least at level 2. Thanks!')
-        stream_logger.info('Link: https://github.com/socketubs/ubik/issues?state=open')
+        stream_logger.info('Link: https://github.com/toxinu/ubik/issues?state=open')
         if exit:
            sys.exit(1)
 

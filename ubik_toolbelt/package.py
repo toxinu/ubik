@@ -25,7 +25,7 @@ class Package(Control):
             self.pkg_dir    Build directory
 
         Help ::
-            http://ubik.socketubs.net/toolbelt/packager.html
+            http://github.com/toxinu/ubik
     \"\"\"
     def __init__(self):
         Control.__init__(self)

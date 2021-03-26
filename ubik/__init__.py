@@ -3,8 +3,8 @@
 
 __title__ = 'ubik'
 __version__ = '0.2.6'
-__author__ = 'Geoffrey Lehée'
+__author__ = 'toxinu'
 __license__ = 'AGPL3'
-__copyright__ = 'Copyright 2012 Geoffrey Lehée'
+__copyright__ = 'Copyright 2012 toxinu'
 
 import core
